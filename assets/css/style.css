@@ -553,86 +553,66 @@ html[data-theme="dark"] .project-cover { color: #0c0a09; }
 
 .contact-grid {
   display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: 3rem;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 2.5rem;
   align-items: stretch;
   margin-top: 1rem;
 }
 
-.contact-info {
+.contact-form-card {
+  background: var(--paper);
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  padding: 2.2rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+}
+
+html[data-theme="dark"] .contact-form-card {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.contact-form-card h3 {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 0.35rem;
+}
+
+.contact-form-card p.form-subtitle {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 600px) {
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+
+.contact-side {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.contact-info-card {
+  background: var(--paper);
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  padding: 1.75rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-}
-
-.contact-details {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-  margin: 1.5rem 0;
-}
-
-.contact-detail-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.85rem;
-}
-
-.contact-detail-item svg {
-  width: 22px;
-  height: 22px;
-  flex-shrink: 0;
-  stroke: var(--accent);
-  margin-top: 2px;
-}
-
-.contact-detail-text strong {
-  display: block;
-  font-size: 0.82rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--ink-soft);
-  margin-bottom: 0.15rem;
-}
-
-.contact-detail-text span,
-.contact-detail-text a {
-  font-size: 1.05rem;
-  color: var(--ink);
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.contact-detail-text a:hover {
-  color: var(--accent);
-}
-
-.btn-open-modal {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.85rem 1.6rem;
-  background: var(--accent);
-  color: var(--paper);
-  border: none;
-  border-radius: 6px;
-  font-family: var(--font-display);
-  font-size: 0.95rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.3s var(--ease);
-  width: fit-content;
-  margin-top: 0.5rem;
-}
-
-.btn-open-modal:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 18px rgba(9, 54, 60, 0.25);
-}
-
-html[data-theme="dark"] .btn-open-modal:hover {
-  box-shadow: 0 8px 18px rgba(26, 158, 158, 0.25);
 }
 
 /* Map Wrapper */
@@ -807,19 +787,37 @@ html[data-theme="dark"] .contact-map iframe {
 }
 
 .form-group input,
+.form-group input,
+.form-group select,
 .form-group textarea {
   width: 100%;
-  padding: 0.75rem;
+  padding: 0.75rem 0.85rem;
   border: 1px solid var(--line);
   border-radius: 6px;
   font-family: var(--font-body);
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: var(--ink);
   background: var(--paper);
   transition: border-color 0.3s;
 }
 
+.form-group select {
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%2357534e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 0.85rem center;
+  background-size: 16px;
+  padding-right: 2.5rem;
+}
+
+html[data-theme="dark"] .form-group select {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%23a8a29e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>');
+}
+
 .form-group input:focus,
+.form-group select:focus,
 .form-group textarea:focus {
   outline: none;
   border-color: var(--accent);
@@ -828,11 +826,11 @@ html[data-theme="dark"] .contact-map iframe {
 
 .form-group textarea {
   resize: vertical;
-  min-height: 120px;
+  min-height: 110px;
 }
 
 .form-privacy {
-  margin-top: -0.5rem;
+  margin-top: -0.25rem;
   margin-bottom: 1.25rem;
 }
 
@@ -850,10 +848,15 @@ html[data-theme="dark"] .contact-map iframe {
 .checkbox-label input[type="checkbox"] {
   width: 18px !important;
   height: 18px !important;
+  min-width: 18px !important;
+  min-height: 18px !important;
   margin-top: 2px;
   cursor: pointer;
   accent-color: var(--accent);
   flex-shrink: 0;
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 .checkbox-label a {
