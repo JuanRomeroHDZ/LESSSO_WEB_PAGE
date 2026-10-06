@@ -122,6 +122,24 @@ async function handleFormSubmit(event) {
 
   const formData = new FormData(form);
 
+  // Netlify Forms solo funcionan en producción, si estamos local o en file://, simulamos éxito
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:') {
+    console.warn('Formularios de Netlify no funcionan localmente. Simulando envío exitoso.');
+    setTimeout(() => {
+      if (statusEl) {
+        statusEl.textContent = '✅ [MODO LOCAL] Mensaje simulado enviado con éxito.';
+        statusEl.className = 'form-status success';
+        statusEl.style.display = 'block';
+      }
+      form.reset();
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Enviar mensaje';
+      }
+    }, 800);
+    return;
+  }
+
   try {
     const response = await fetch('/', {
       method: 'POST',

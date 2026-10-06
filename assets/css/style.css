@@ -786,8 +786,7 @@ html[data-theme="dark"] .contact-map iframe {
   font-size: 0.95rem;
 }
 
-.form-group input,
-.form-group input,
+.form-group input:not([type="checkbox"]),
 .form-group select,
 .form-group textarea {
   width: 100%;
@@ -816,7 +815,7 @@ html[data-theme="dark"] .form-group select {
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%23a8a29e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>');
 }
 
-.form-group input:focus,
+.form-group input:not([type="checkbox"]):focus,
 .form-group select:focus,
 .form-group textarea:focus {
   outline: none;
@@ -1143,6 +1142,17 @@ html[data-theme="dark"] .fab-contact {
 }
 
 /* ============ RESPONSIVE ============ */
+@media (max-width: 992px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .contact-map,
+  .contact-map iframe {
+    min-height: 350px;
+  }
+}
+
 @media (max-width: 768px) {
   :root { --pad: clamp(1rem, 3vw, 2rem); }
 
