@@ -311,7 +311,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     &nbsp;·&nbsp;
     <a href="terminos.html" style="color: inherit;">Términos y Condiciones</a>
     &nbsp;·&nbsp;
-    <button type="button" class="privacy-prefs-link" id="openPrivacySettings">Preferencias de privacidad</button>
+    <button type="button" class="site-notice-link" id="openSiteNotice">Preferencias y Privacidad</button>
   </p>
 </footer>
 
@@ -324,13 +324,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <span class="fab-label">WhatsApp</span>
 </a>
 
-<!-- Aviso de Consentimiento de Privacidad (Resistente a bloqueadores como Brave) -->
-<aside class="privacy-consent-sheet" id="privacyConsentBanner" aria-label="Aviso de privacidad y métricas" role="dialog">
-  <h3>🛡️ Privacidad y Métricas</h3>
-  <p>En LESSSO respetamos tu privacidad. Utilizamos métricas anónimas para evaluar el rendimiento técnico. No vendemos datos ni usamos rastreadores intrusivos. Puedes aceptarlas o continuar en modo privado. Consulta nuestro <a href="aviso-de-privacidad.html">Aviso de Privacidad</a>.</p>
-  <div class="privacy-consent-actions">
-    <button type="button" class="btn-consent-allow" id="consentAcceptBtn">Permitir métricas</button>
-    <button type="button" class="btn-consent-deny" id="consentRejectBtn">Solo esenciales</button>
+<!-- Dock de Estado y Privacidad (Inmune a bloqueadores y con detección de Brave/Adblock) -->
+<aside class="site-notice-dock" id="siteNoticeDock" aria-label="Aviso de privacidad y métricas" role="dialog">
+  <div class="dock-header">
+    <h3 id="dockTitle">🛡️ Privacidad & Seguridad</h3>
+    <button type="button" class="dock-close" id="dockCloseBtn" aria-label="Cerrar">&times;</button>
+  </div>
+  
+  <div id="adblockDetectedBox" class="adblock-alert" style="display: none;">
+    <div class="adblock-badge">🛡️ Brave Shields / Adblock activo</div>
+    <p>Detectamos que tu navegador bloquea rastreadores de forma activa. En LESSSO respetamos tu privacidad: las métricas están 100% desactivadas y el sitio opera con total normalidad.</p>
+  </div>
+
+  <div id="standardNoticeBox">
+    <p>Utilizamos cookies esenciales y métricas técnicas anónimas para evaluar rendimiento. Puedes aceptarlas o continuar en modo estrictamente esencial. Consulta nuestro <a href="aviso-de-privacidad.html">Aviso de Privacidad</a>.</p>
+    <div class="dock-actions">
+      <button type="button" class="btn-dock-accept" id="dockAcceptBtn">Aceptar métricas</button>
+      <button type="button" class="btn-dock-reject" id="dockRejectBtn">Solo esenciales</button>
+    </div>
   </div>
 </aside>
 

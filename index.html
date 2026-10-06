@@ -222,51 +222,74 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <h2>Proyectos</h2>
       <div class="section-intro">Trabajo real, laboratorios documentados y herramientas que construimos. Cada proyecto es una prueba de lo que sabemos hacer.</div>
     </div>
-    <div class="projects-grid">
-      <article class="project reveal">
-        <div class="project-cover">
-          <svg viewBox="0 0 24 24"><rect x="2" y="14" width="20" height="8" rx="2"/><rect x="2" y="2" width="20" height="8" rx="2"/><path d="M6 6h.01M6 18h.01"/></svg>
+    <div class="projects-carousel-wrapper">
+      <div class="projects-carousel-bar">
+        <div class="carousel-hint">
+          <span class="hint-icon">↔</span>
+          <span>Desliza para explorar proyectos</span>
         </div>
-        <div class="project-body">
-          <div class="project-tags">
-            <span class="project-tag">Redes</span>
-            <span class="project-tag">CCNA</span>
-          </div>
-          <h3>Homelab de Infraestructura</h3>
-          <p>Diseño y segmentación de red empresarial simulada: VLANs, routing inter-VLAN, ACLs y endurecimiento de switches y routers. Documentación completa de topología y decisiones de diseño.</p>
-          <a class="project-link" href="https://github.com" target="_blank" rel="noopener">Ver en GitHub →</a>
+        <div class="carousel-arrows">
+          <button type="button" class="carousel-arrow prev" id="projPrevBtn" aria-label="Proyecto anterior">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button type="button" class="carousel-arrow next" id="projNextBtn" aria-label="Siguiente proyecto">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
         </div>
-      </article>
+      </div>
 
-      <article class="project reveal">
-        <div class="project-cover">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
-        </div>
-        <div class="project-body">
-          <div class="project-tags">
-            <span class="project-tag">Pentesting</span>
-            <span class="project-tag">CPTS</span>
+      <div class="projects-grid" id="projectsSlider">
+        <article class="project reveal">
+          <div class="project-cover">
+            <svg viewBox="0 0 24 24"><rect x="2" y="14" width="20" height="8" rx="2"/><rect x="2" y="2" width="20" height="8" rx="2"/><path d="M6 6h.01M6 18h.01"/></svg>
           </div>
-          <h3>Write-ups de Pentesting</h3>
-          <p>Resolución documentada de máquinas vulnerables (HackTheBox y similares): enumeración, explotación, escalada de privilegios y reporte profesional. Práctica continua rumbo a la certificación CPTS.</p>
-          <a class="project-link" href="https://github.com" target="_blank" rel="noopener">Ver write-ups →</a>
-        </div>
-      </article>
+          <div class="project-body">
+            <div class="project-tags">
+              <span class="project-tag">Redes</span>
+              <span class="project-tag">CCNA</span>
+            </div>
+            <h3>Homelab de Infraestructura</h3>
+            <p>Diseño y segmentación de red empresarial simulada: VLANs, routing inter-VLAN, ACLs y endurecimiento de switches y routers. Documentación completa de topología y decisiones de diseño.</p>
+            <a class="project-link" href="https://github.com" target="_blank" rel="noopener">Ver en GitHub →</a>
+          </div>
+        </article>
 
-      <article class="project reveal">
-        <div class="project-cover">
-          <svg viewBox="0 0 24 24"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg>
-        </div>
-        <div class="project-body">
-          <div class="project-tags">
-            <span class="project-tag">Desarrollo Web</span>
-            <span class="project-tag">Full Stack</span>
+        <article class="project reveal">
+          <div class="project-cover">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
           </div>
-          <h3>Sitios y Apps Web</h3>
-          <p>Sitios rápidos y responsivos con énfasis en seguridad desde el código: formularios protegidos, cabeceras HTTP seguras y despliegue endurecido. Desarrollo asistido por IA con revisión humana línea por línea.</p>
-          <a class="project-link" href="https://github.com" target="_blank" rel="noopener">Ver repositorios →</a>
-        </div>
-      </article>
+          <div class="project-body">
+            <div class="project-tags">
+              <span class="project-tag">Pentesting</span>
+              <span class="project-tag">CPTS</span>
+            </div>
+            <h3>Write-ups de Pentesting</h3>
+            <p>Resolución documentada de máquinas vulnerables (HackTheBox y similares): enumeración, explotación, escalada de privilegios y reporte profesional. Práctica continua rumbo a la certificación CPTS.</p>
+            <a class="project-link" href="https://github.com" target="_blank" rel="noopener">Ver write-ups →</a>
+          </div>
+        </article>
+
+        <article class="project reveal">
+          <div class="project-cover">
+            <svg viewBox="0 0 24 24"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg>
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span class="project-tag">Desarrollo Web</span>
+              <span class="project-tag">Full Stack</span>
+            </div>
+            <h3>Sitios y Apps Web</h3>
+            <p>Sitios rápidos y responsivos con énfasis en seguridad desde el código: formularios protegidos, cabeceras HTTP seguras y despliegue endurecido. Desarrollo asistido por IA con revisión humana línea por línea.</p>
+            <a class="project-link" href="https://github.com" target="_blank" rel="noopener">Ver repositorios →</a>
+          </div>
+        </article>
+      </div>
+
+      <div class="carousel-dots" id="carouselDots" aria-hidden="true">
+        <span class="dot active" data-index="0"></span>
+        <span class="dot" data-index="1"></span>
+        <span class="dot" data-index="2"></span>
+      </div>
     </div>
   </div>
 </section>
@@ -307,7 +330,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="form-row">
             <div class="form-group">
               <label for="phone">Teléfono / WhatsApp</label>
-              <input type="tel" id="phone" name="phone" maxlength="25" autocomplete="tel" placeholder="+52 (664) 000-0000">
+              <input type="tel" id="phone" name="phone" maxlength="25" inputmode="tel" autocomplete="tel" placeholder="+52 (664) 000-0000" oninput="this.value = this.value.replace(/[^0-9+\s\-()]/g, '')">
             </div>
             <div class="form-group">
               <label for="service">Servicio requerido *</label>
@@ -431,7 +454,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     &nbsp;·&nbsp;
     <a href="terminos.html" style="color: inherit;">Términos y Condiciones</a>
     &nbsp;·&nbsp;
-    <button type="button" class="privacy-prefs-link" id="openPrivacySettings">Preferencias de privacidad</button>
+    <button type="button" class="site-notice-link" id="openSiteNotice">Preferencias y Privacidad</button>
   </p>
 </footer>
 
@@ -444,13 +467,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <span class="fab-label">WhatsApp</span>
 </a>
 
-<!-- Aviso de Consentimiento de Privacidad (Resistente a bloqueadores como Brave) -->
-<aside class="privacy-consent-sheet" id="privacyConsentBanner" aria-label="Aviso de privacidad y métricas" role="dialog">
-  <h3>🛡️ Privacidad y Métricas</h3>
-  <p>En LESSSO respetamos tu privacidad. Utilizamos métricas anónimas para evaluar el rendimiento técnico. No vendemos datos ni usamos rastreadores intrusivos. Puedes aceptarlas o continuar en modo privado. Consulta nuestro <a href="aviso-de-privacidad.html">Aviso de Privacidad</a>.</p>
-  <div class="privacy-consent-actions">
-    <button type="button" class="btn-consent-allow" id="consentAcceptBtn">Permitir métricas</button>
-    <button type="button" class="btn-consent-deny" id="consentRejectBtn">Solo esenciales</button>
+<!-- Dock de Estado y Privacidad (Inmune a bloqueadores y con detección de Brave/Adblock) -->
+<aside class="site-notice-dock" id="siteNoticeDock" aria-label="Aviso de privacidad y métricas" role="dialog">
+  <div class="dock-header">
+    <h3 id="dockTitle">🛡️ Privacidad & Seguridad</h3>
+    <button type="button" class="dock-close" id="dockCloseBtn" aria-label="Cerrar">&times;</button>
+  </div>
+  
+  <div id="adblockDetectedBox" class="adblock-alert" style="display: none;">
+    <div class="adblock-badge">🛡️ Brave Shields / Adblock activo</div>
+    <p>Detectamos que tu navegador bloquea rastreadores de forma activa. En LESSSO respetamos tu privacidad: las métricas están 100% desactivadas y el sitio opera con total normalidad.</p>
+  </div>
+
+  <div id="standardNoticeBox">
+    <p>Utilizamos cookies esenciales y métricas técnicas anónimas para evaluar rendimiento. Puedes aceptarlas o continuar en modo estrictamente esencial. Consulta nuestro <a href="aviso-de-privacidad.html">Aviso de Privacidad</a>.</p>
+    <div class="dock-actions">
+      <button type="button" class="btn-dock-accept" id="dockAcceptBtn">Aceptar métricas</button>
+      <button type="button" class="btn-dock-reject" id="dockRejectBtn">Solo esenciales</button>
+    </div>
   </div>
 </aside>
 

@@ -261,43 +261,63 @@ async function handleFormSubmit(event) {
   }
 
   const encodedBody = new URLSearchParams(formData).toString();
+  let submittedOk = false;
 
-  // 6. Intento de envío a Netlify con fallback de ruta
+  // 6. Intento de envío a Netlify con múltiples vías de fallback
+  // Intento 1: Netlify Forms nativo a '/'
   try {
-    let response = await fetch('/', {
+    const res1 = await fetch('/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: encodedBody
     });
+    if (res1.ok) submittedOk = true;
+  } catch (e) {
+    console.warn('Fallo intento 1 (/):', e);
+  }
 
-    // Fallback: si '/' retorna 404, intentar con '/index.html'
-    if (response.status === 404) {
-      console.warn('POST a "/" devolvió 404, reintentando en "/index.html"...');
-      response = await fetch('/index.html', {
+  // Intento 2: Endpoint Serverless Function de Netlify (/.netlify/functions/contacto)
+  if (!submittedOk) {
+    try {
+      console.warn('Reintentando vía Netlify Function...');
+      const res2 = await fetch('/.netlify/functions/contacto', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: encodedBody
       });
+      if (res2.ok) submittedOk = true;
+    } catch (e) {
+      console.warn('Fallo intento 2 (function):', e);
     }
+  }
 
-    if (response.ok) {
-      showStatus('✅ ¡Mensaje recibido con éxito! Nos comunicaremos dentro de 24 horas.', 'success');
-      form.reset();
-      setTimeout(() => {
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Enviar mensaje';
-        }
-      }, 4000);
-    } else {
-      throw new Error(`Servidor respondió con código ${response.status}`);
-    }
-  } catch (error) {
-    console.error('Error al enviar formulario:', error);
+  // Intento 3: Fallback a '/index.html'
+  if (!submittedOk) {
+    try {
+      const res3 = await fetch('/index.html', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: encodedBody
+      });
+      if (res3.ok) submittedOk = true;
+    } catch (e) {}
+  }
+
+  if (submittedOk) {
+    showStatus('✅ ¡Mensaje recibido con éxito! Nos comunicaremos dentro de 24 horas.', 'success');
+    form.reset();
+    setTimeout(() => {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Enviar mensaje';
+      }
+    }, 4000);
+  } else {
+    console.error('No se pudo enviar el formulario tras intentar todas las rutas.');
     showStatus(
-      '⚠️ No se pudo procesar el envío automático (código 404). Puedes escribirnos directamente a ' +
+      '⚠️ No se pudo procesar el envío automático. Puedes contactarnos de inmediato por ' +
       '<a href="mailto:contacto@lessso.com?subject=Contacto%20LESSSO" style="text-decoration:underline;color:inherit;font-weight:600;">contacto@lessso.com</a> ' +
-      'o enviarnos un mensaje por <a href="https://wa.me/526644267704" target="_blank" rel="noopener" style="text-decoration:underline;color:inherit;font-weight:600;">WhatsApp (+52 664 426-7704)</a>.',
+      'o escribirnos vía <a href="https://wa.me/526644267704" target="_blank" rel="noopener" style="text-decoration:underline;color:inherit;font-weight:600;">WhatsApp (+52 664 426-7704)</a>.',
       'error'
     );
     if (submitBtn) {
@@ -308,31 +328,112 @@ async function handleFormSubmit(event) {
 }
 window.handleFormSubmit = handleFormSubmit;
 
-/* 4. GESTIÓN DE CONSENTIMIENTO DE PRIVACIDAD & MÉTRICAS (Resistente a Brave / Adblockers) */
-function initCookieConsent() {
-  const banner = document.getElementById('privacyConsentBanner') || document.getElementById('cookieBanner');
-  const acceptBtn = document.getElementById('consentAcceptBtn') || document.getElementById('cookieAccept');
-  const rejectBtn = document.getElementById('consentRejectBtn') || document.getElementById('cookieReject');
-  const openPrefsBtn = document.getElementById('openPrivacySettings') || document.getElementById('openCookieBanner');
+/* 4. RESTRICCIÓN DE NÚMERO DE TELÉFONO (CERO LETRAS) */
+function initPhoneValidation() {
+  const phoneInput = document.getElementById('phone');
+  if (!phoneInput) return;
 
-  let currentConsent = null;
-  try {
-    currentConsent = localStorage.getItem('lessso-privacy-consent') || localStorage.getItem('lessso-cookie-consent');
-  } catch (e) {
-    console.warn('[Privacidad] Acceso a localStorage restringido por el navegador.');
+  phoneInput.addEventListener('keydown', (e) => {
+    // Teclas de control permitidas
+    const allowed = ['Backspace', 'Delete', 'Tab', 'Escape', 'Enter', 'ArrowLeft', 'ArrowRight', 'Home', 'End'];
+    if (allowed.includes(e.key)) return;
+    if (e.ctrlKey || e.metaKey) return; // Ctrl+C, Ctrl+V
+
+    // Bloquear cualquier carácter que no sea número, +, -, espacio o paréntesis
+    if (!/[0-9+\s\-()]/.test(e.key)) {
+      e.preventDefault();
+    }
+  });
+
+  phoneInput.addEventListener('input', (e) => {
+    e.target.value = e.target.value.replace(/[^0-9+\s\-()]/g, '');
+  });
+}
+
+/* 5. CARRUSEL HORIZONTAL DE PROYECTOS */
+function initProjectsCarousel() {
+  const slider = document.getElementById('projectsSlider');
+  const prevBtn = document.getElementById('projPrevBtn');
+  const nextBtn = document.getElementById('projNextBtn');
+  const dots = document.querySelectorAll('#carouselDots .dot');
+  if (!slider) return;
+
+  function getStep() {
+    const card = slider.querySelector('.project');
+    return card ? card.offsetWidth + 28 : 340;
   }
 
-  // Si no ha decidido y existe el contenedor, lo mostramos
-  if (!currentConsent && banner) {
-    banner.classList.add('active');
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      slider.scrollBy({ left: -getStep(), behavior: 'smooth' });
+    });
   }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      slider.scrollBy({ left: getStep(), behavior: 'smooth' });
+    });
+  }
+
+  // Actualizar indicadores (dots) al desplazarse
+  slider.addEventListener('scroll', () => {
+    const step = getStep();
+    const index = Math.round(slider.scrollLeft / step);
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === index);
+    });
+  }, { passive: true });
+
+  // Clic en dots para navegar
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      slider.scrollTo({ left: i * getStep(), behavior: 'smooth' });
+    });
+  });
+}
+
+/* 6. DOCK DE PRIVACIDAD & DETECCIÓN DE ADBLOCKERS (BRAVE / UBLOCK) */
+function initPrivacyDock() {
+  const dock = document.getElementById('siteNoticeDock');
+  const closeBtn = document.getElementById('dockCloseBtn');
+  const acceptBtn = document.getElementById('dockAcceptBtn');
+  const rejectBtn = document.getElementById('dockRejectBtn');
+  const openLink = document.getElementById('openSiteNotice');
+  const adblockBox = document.getElementById('adblockDetectedBox');
+
+  if (!dock) return;
+
+  // Detección de bloqueador de anuncios / Brave Shields
+  let hasAdblock = false;
+
+  const bait = document.createElement('div');
+  bait.className = 'ad_unit pub_300x250 text-ad ads-banner';
+  bait.style.cssText = 'width:1px!important;height:1px!important;position:absolute!important;left:-10000px!important;top:-1000px!important;';
+  document.body.appendChild(bait);
+
+  setTimeout(() => {
+    if (bait.offsetParent === null || bait.offsetHeight === 0 || window.getComputedStyle(bait).display === 'none') {
+      hasAdblock = true;
+    }
+    if ((navigator.brave && typeof navigator.brave.isBrave === 'function') || (!window.google_tag_manager && !window.dataLayer)) {
+      hasAdblock = true;
+    }
+    bait.remove();
+
+    if (hasAdblock && adblockBox) {
+      adblockBox.style.display = 'block';
+    }
+
+    // Mostrar el dock si no hay preferencia guardada
+    let saved = null;
+    try { saved = localStorage.getItem('lessso-privacy-consent'); } catch (e) {}
+    if (!saved) {
+      dock.classList.add('active');
+    }
+  }, 350);
 
   function setConsent(status) {
-    try {
-      localStorage.setItem('lessso-privacy-consent', status);
-      localStorage.setItem('lessso-cookie-consent', status);
-    } catch (e) {}
-
+    try { localStorage.setItem('lessso-privacy-consent', status); } catch (e) {}
     try {
       if (typeof window.gtag === 'function') {
         window.gtag('consent', 'update', {
@@ -340,32 +441,26 @@ function initCookieConsent() {
         });
       }
     } catch (e) {}
-
-    if (banner) {
-      banner.classList.remove('active');
-    }
+    dock.classList.remove('active');
   }
 
-  if (acceptBtn) {
-    acceptBtn.addEventListener('click', () => setConsent('granted'));
-  }
-
-  if (rejectBtn) {
-    rejectBtn.addEventListener('click', () => setConsent('denied'));
-  }
-
-  if (openPrefsBtn) {
-    openPrefsBtn.addEventListener('click', (e) => {
+  if (acceptBtn) acceptBtn.addEventListener('click', () => setConsent('granted'));
+  if (rejectBtn) rejectBtn.addEventListener('click', () => setConsent('denied'));
+  if (closeBtn) closeBtn.addEventListener('click', () => dock.classList.remove('active'));
+  if (openLink) {
+    openLink.addEventListener('click', (e) => {
       e.preventDefault();
-      if (banner) banner.classList.add('active');
+      dock.classList.add('active');
     });
   }
 }
 
-/* 5. INICIALIZACIÓN CUANDO EL DOM ESTÉ LISTO */
+/* 7. INICIALIZACIÓN CUANDO EL DOM ESTÉ LISTO */
 function initAll() {
   initTheme();
-  initCookieConsent();
+  initPhoneValidation();
+  initProjectsCarousel();
+  initPrivacyDock();
 
   // Botón de alternar tema
   const themeToggle = document.getElementById('themeToggle');
@@ -406,16 +501,6 @@ function initAll() {
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
   } else {
     document.querySelectorAll('.reveal').forEach(el => el.classList.add('in-view'));
-  }
-
-  // Cerrar modal al clickear afuera
-  const contactModal = document.getElementById('contactModal');
-  if (contactModal) {
-    contactModal.addEventListener('click', (e) => {
-      if (e.target.id === 'contactModal') {
-        contactModal.classList.remove('active');
-      }
-    });
   }
 }
 

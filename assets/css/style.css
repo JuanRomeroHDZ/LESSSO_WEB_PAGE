@@ -454,22 +454,131 @@ html[data-theme="dark"] h2::after {
   background: var(--accent-soft);
 }
 
-/* ============ PROYECTOS ============ */
-.projects-grid {
+/* ============ PROYECTOS (CAROUSEL HORIZONTAL) ============ */
+.projects-carousel-wrapper {
+  margin-top: 2rem;
+  position: relative;
+}
+
+.projects-carousel-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  padding: 0 0.25rem;
+}
+
+.carousel-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-soft);
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  letter-spacing: 0.02em;
+}
+
+.carousel-hint .hint-icon {
+  font-size: 1.1rem;
+  animation: hintSwipe 1.8s ease-in-out infinite;
+}
+
+@keyframes hintSwipe {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(4px); }
+}
+
+.carousel-arrows {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.carousel-arrow {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-top: 3rem;
+  place-items: center;
+  cursor: pointer;
+  transition: all 0.25s var(--ease);
+}
+
+.carousel-arrow svg {
+  width: 18px;
+  height: 18px;
+}
+
+.carousel-arrow:hover {
+  background: var(--accent);
+  color: var(--paper);
+  border-color: var(--accent);
+  transform: scale(1.06);
+}
+
+.projects-grid {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  gap: 1.75rem;
+  padding: 0.75rem 0.25rem 1.5rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) var(--line);
+}
+
+.projects-grid::-webkit-scrollbar {
+  height: 6px;
+}
+
+.projects-grid::-webkit-scrollbar-track {
+  background: var(--line);
+  border-radius: 3px;
+}
+
+.projects-grid::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 3px;
 }
 
 .project {
+  flex: 0 0 clamp(310px, 80vw, 370px);
+  scroll-snap-align: start;
   border: 1px solid var(--line);
-  border-radius: 10px;
+  border-radius: 12px;
   overflow: hidden;
   background: var(--paper);
   transition: all 0.3s var(--ease);
   display: flex;
   flex-direction: column;
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+
+.carousel-dots .dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--line);
+  transition: all 0.3s var(--ease);
+  cursor: pointer;
+}
+
+.carousel-dots .dot.active {
+  background: var(--accent);
+  width: 24px;
+  border-radius: 999px;
 }
 
 .project:hover {
@@ -998,9 +1107,8 @@ html[data-theme="dark"] .form-status.error {
   box-shadow: none;
 }
 
-/* ============ AVISO DE PRIVACIDAD / CONSENTIMIENTO RESILIENTE ============ */
-.privacy-consent-sheet,
-.cookie-banner {
+/* ============ DOCK DE ESTADO Y PRIVACIDAD (INMUNE A ADBLOCKERS) ============ */
+.site-notice-dock {
   position: fixed;
   bottom: 1.5rem;
   left: 1.5rem;
@@ -1009,53 +1117,91 @@ html[data-theme="dark"] .form-status.error {
   background: var(--paper);
   border: 1.5px solid var(--line);
   border-radius: 12px;
-  padding: 1.4rem;
+  padding: 1.35rem 1.45rem;
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.2);
   z-index: 999;
   display: none;
   animation: slideUp 0.35s var(--ease);
 }
 
-.privacy-consent-sheet.active,
-.cookie-banner.active {
-  display: block;
+.site-notice-dock.active {
+  display: block !important;
 }
 
-.privacy-consent-sheet h3,
-.cookie-banner h3 {
+.dock-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.65rem;
+}
+
+.dock-header h3 {
   font-family: var(--font-serif);
   font-size: 1.1rem;
   font-weight: 600;
-  margin-bottom: 0.5rem;
   color: var(--ink);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  margin: 0;
 }
 
-.privacy-consent-sheet p,
-.cookie-banner p {
+.dock-close {
+  background: none;
+  border: none;
+  font-size: 1.35rem;
+  line-height: 1;
+  color: var(--ink-faint);
+  cursor: pointer;
+  padding: 0.2rem;
+  transition: color 0.2s;
+}
+
+.dock-close:hover {
+  color: var(--ink);
+}
+
+.adblock-alert {
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 8px;
+  padding: 0.85rem;
+  margin-bottom: 0.85rem;
+}
+
+html[data-theme="dark"] .adblock-alert {
+  background: rgba(16, 185, 129, 0.14);
+}
+
+.adblock-badge {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #065f46;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.35rem;
+}
+
+html[data-theme="dark"] .adblock-badge {
+  color: #34d399;
+}
+
+.site-notice-dock p {
   font-size: 0.86rem;
   line-height: 1.55;
   color: var(--ink-soft);
-  margin-bottom: 1.1rem;
+  margin-bottom: 1rem;
 }
 
-.privacy-consent-sheet p a,
-.cookie-banner p a {
+.site-notice-dock p a {
   color: var(--accent);
   text-decoration: underline;
 }
 
-.privacy-consent-actions,
-.cookie-buttons {
+.dock-actions {
   display: flex;
   gap: 0.6rem;
   flex-wrap: wrap;
 }
 
-.btn-consent-allow,
-.cookie-btn-accept {
+.btn-dock-accept {
   flex: 1;
   min-width: 140px;
   padding: 0.65rem 1rem;
@@ -1070,14 +1216,12 @@ html[data-theme="dark"] .form-status.error {
   text-align: center;
 }
 
-.btn-consent-allow:hover,
-.cookie-btn-accept:hover {
+.btn-dock-accept:hover {
   opacity: 0.92;
   transform: translateY(-1px);
 }
 
-.btn-consent-deny,
-.cookie-btn-reject {
+.btn-dock-reject {
   padding: 0.65rem 0.95rem;
   background: transparent;
   color: var(--ink-soft);
@@ -1089,14 +1233,12 @@ html[data-theme="dark"] .form-status.error {
   transition: all 0.2s var(--ease);
 }
 
-.btn-consent-deny:hover,
-.cookie-btn-reject:hover {
+.btn-dock-reject:hover {
   color: var(--ink);
   border-color: var(--ink-soft);
 }
 
-.privacy-prefs-link,
-.cookie-prefs-btn {
+.site-notice-link {
   background: none;
   border: none;
   color: inherit;
@@ -1107,8 +1249,7 @@ html[data-theme="dark"] .form-status.error {
   padding: 0;
 }
 
-.privacy-prefs-link:hover,
-.cookie-prefs-btn:hover {
+.site-notice-link:hover {
   color: var(--accent);
 }
 
