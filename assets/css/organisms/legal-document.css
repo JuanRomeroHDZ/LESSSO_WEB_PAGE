@@ -1,0 +1,60 @@
+/* ============ ORGANISMO: DOCUMENTO LEGAL ============ */
+/* Aviso de privacidad y Términos y condiciones */
+
+.legal-header {
+  padding: 1.2rem clamp(1.25rem, 4vw, 3rem);
+  border-bottom: 1px solid var(--line);
+}
+
+.legal-doc {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem 5rem;
+}
+
+.legal-doc h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 6vw, 2.8rem);
+  margin-bottom: 0.5rem;
+}
+
+.legal-doc .updated {
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  margin-bottom: 3rem;
+}
+
+.legal-doc h2 {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  margin: 2.5rem 0 1rem;
+  color: var(--accent);
+}
+
+.legal-doc p,
+.legal-doc li,
+.legal-footer p { color: var(--ink-soft); margin-bottom: 0.9rem; }
+
+.legal-doc ul { padding-left: 1.5rem; margin-bottom: 1rem; }
+
+.legal-doc strong,
+.legal-footer strong { color: var(--ink); }
+
+.legal-doc a,
+.legal-footer a { color: var(--accent); }
+
+.legal-box {
+  background: var(--accent-soft);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.legal-footer {
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  border-top: 1px solid var(--line);
+}

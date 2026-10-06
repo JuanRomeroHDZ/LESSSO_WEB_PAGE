@@ -1,0 +1,13 @@
+/* ============ ORGANISMO: CONTACTO ============ */
+.contact-intro {
+  font-size: 1.1rem;
+  color: var(--ink-soft);
+  margin-bottom: 1.5rem;
+  line-height: 1.8;
+}
+
+.contact-note {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}

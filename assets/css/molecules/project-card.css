@@ -1,0 +1,78 @@
+/* ============ MOLÉCULA: TARJETA DE PROYECTO ============ */
+.project {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--paper);
+  transition: all 0.3s var(--ease);
+  display: flex;
+  flex-direction: column;
+}
+
+.project:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px var(--shadow);
+  border-color: var(--accent-soft);
+}
+
+.project-cover {
+  height: 160px;
+  background: linear-gradient(135deg, var(--accent) 0%, #12878a 100%);
+  display: grid;
+  place-items: center;
+  color: var(--paper);
+}
+
+html[data-theme="dark"] .project-cover { color: #0c0a09; }
+
+.project-cover svg {
+  width: 48px;
+  height: 48px;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.9;
+}
+
+.project-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.project h3 {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.project p {
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+  line-height: 1.7;
+  flex: 1;
+}
+
+.project-link {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: gap 0.3s var(--ease);
+}
+
+.project-link:hover { gap: 0.7rem; }

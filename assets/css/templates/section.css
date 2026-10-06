@@ -1,0 +1,31 @@
+/* ============ TEMPLATE: SECCIONES ============ */
+section {
+  padding: 6rem 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-header {
+  margin-bottom: 4rem;
+}
+
+.section-intro {
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+  max-width: 600px;
+  line-height: 1.8;
+}
+
+/* Sección con fondo de acento suave (antes .about-section / .contact-section) */
+.section--tinted {
+  background: var(--accent-soft);
+}
+
+@media (max-width: 768px) {
+  section { padding: 4rem 1.5rem; }
+}

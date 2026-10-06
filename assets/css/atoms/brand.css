@@ -1,0 +1,14 @@
+/* ============ ÁTOMO: LOGO / MARCA ============ */
+.brand {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  text-decoration: none;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.brand em { color: var(--accent); font-style: normal; }

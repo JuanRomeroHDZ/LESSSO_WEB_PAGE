@@ -1,0 +1,37 @@
+/* ============ UTILIDAD: ANIMACIONES DE APARICIÓN ============ */
+/* La clase .in-view la agrega reveal.js con IntersectionObserver.
+   IMPORTANTE: este archivo debe cargarse después de los componentes. */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s var(--ease) 0.1s, transform 0.8s var(--ease) 0.1s;
+}
+
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.service.reveal {
+  transition: opacity 0.8s var(--ease) 0.15s, transform 0.8s var(--ease) 0.15s;
+}
+
+.service.reveal:nth-child(2) {
+  transition-delay: 0.25s, 0.25s;
+}
+
+.service.reveal:nth-child(3) {
+  transition-delay: 0.35s, 0.35s;
+}
+
+.service.reveal:nth-child(4) {
+  transition-delay: 0.25s, 0.25s;
+}
+
+.service.reveal:nth-child(5) {
+  transition-delay: 0.35s, 0.35s;
+}
+
+.service.reveal:nth-child(6) {
+  transition-delay: 0.45s, 0.45s;
+}

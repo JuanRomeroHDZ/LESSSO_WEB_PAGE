@@ -1,0 +1,47 @@
+/* ============ TIPOGRAFÍA ============ */
+h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 11vw, 4.5rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.3em;
+}
+
+/* Subrayado ondulado de los títulos de sección */
+h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 160px;
+  height: 3px;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 3"><path d="M0 1.5 Q 18 0.2, 37 1.5 T 75 1.5 T 112 1.5 T 150 1.5" stroke="%2309363c" stroke-width="2" fill="none" stroke-linecap="round"/></svg>');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+html[data-theme="dark"] h2::after {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 3"><path d="M0 1.5 Q 18 0.2, 37 1.5 T 75 1.5 T 112 1.5 T 150 1.5" stroke="%231a9e9e" stroke-width="2" fill="none" stroke-linecap="round"/></svg>');
+}
+
+@media (max-width: 768px) {
+  h1 { margin-bottom: 1rem; }
+  h2::after { width: 120px; }
+}

@@ -1,0 +1,29 @@
+# Configuración de Netlify para LESSSO
+[build]
+  publish = "."
+
+# Ruta limpia para suscripciones: lessso.com/suscripciones -> suscripciones.html
+[[redirects]]
+  from = "/suscripciones"
+  to = "/suscripciones.html"
+  status = 200
+
+# Headers de seguridad recomendados para ciberseguridad y buen performance
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+# Cabecera para evitar indexación de la página oculta de suscripciones
+[[headers]]
+  for = "/suscripciones"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+  for = "/suscripciones.html"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"

@@ -1,0 +1,2 @@
+# Redirección para acceso limpio a suscripciones en Netlify
+/suscripciones    /suscripciones.html    200

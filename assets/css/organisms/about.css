@@ -1,0 +1,17 @@
+/* ============ ORGANISMO: SOBRE NOSOTROS ============ */
+.about-text p {
+  font-size: 1rem;
+  color: var(--ink-soft);
+  margin-bottom: 1.5rem;
+  line-height: 1.9;
+  max-width: 700px;
+}
+
+.about-text strong {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}

@@ -1,0 +1,75 @@
+/* ============ ÁTOMO: BOTONES ============ */
+
+/* Botón principal (CTA) */
+.cta {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background: var(--accent);
+  color: var(--paper);
+  text-decoration: none;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s var(--ease);
+  font-family: var(--font-hand);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.15);
+  z-index: -1;
+  transition: left 0.3s ease;
+}
+
+.cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(79, 70, 229, 0.25);
+}
+
+.cta:hover::before { left: 0; }
+
+/* Variante: ancho completo */
+.cta--block {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
+/* Variante: contorno */
+.cta--ghost {
+  background: transparent;
+  color: var(--accent);
+  border: 1.5px solid var(--accent);
+}
+
+.cta--ghost:hover { background: var(--accent-soft); }
+
+/* Botón de envío de formulario */
+.form-submit {
+  width: 100%;
+  padding: 1rem;
+  background: var(--accent);
+  color: var(--paper);
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s var(--ease);
+  font-family: var(--font-hand);
+  font-size: 1.1rem;
+}
+
+.form-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(9, 54, 60, 0.25);
+}

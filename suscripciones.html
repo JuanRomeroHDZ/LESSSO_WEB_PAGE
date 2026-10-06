@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Suscripciones — Páginas web con LESSSO</title>
+  <meta name="description" content="Tu página web profesional por una suscripción mensual: diseño, desarrollo, hosting, SSL, mantenimiento y seguridad incluidos.">
+  <!-- Página oculta: no aparece en el menú ni en buscadores -->
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://lessso.com/suscripciones">
+
+  <meta name="theme-color" content="#fafaf9" id="metaTheme">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;900&family=Fraunces:wght@400;600;700&family=Inter:wght@400;500;600&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+
+  <!-- Estilos del sitio y de suscripciones -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/subscriptions.css">
+  <script src="assets/js/main.js" defer></script>
+  <script src="assets/js/subscriptions.js" defer></script>
+</head>
+<body>
+
+<!-- Header (sin botón de suscripciones) -->
+<header class="site-header" id="header">
+  <a href="index.html" class="brand">LESSSO<em>.</em></a>
+  <nav class="site-nav" aria-label="Navegación de suscripciones">
+    <ul class="nav-links">
+      <li><a href="#planes">Planes</a></li>
+      <li><a href="#como-funciona">Cómo funciona</a></li>
+      <li><a href="#preguntas">Preguntas</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode">
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+  </nav>
+</header>
+
+<!-- Hero -->
+<section class="hero hero--compact">
+  <canvas id="canvas-bg" width="800" height="600" aria-hidden="true"></canvas>
+  <div class="hero-content">
+    <div class="hero-label">Suscripciones</div>
+    <h1>Tu página web, <span class="underline">sin complicaciones.</span></h1>
+    <p class="hero-desc">Diseño, desarrollo, hosting, certificado SSL, mantenimiento y seguridad en una sola cuota mensual. Tú te enfocas en tu negocio; nosotros mantenemos tu sitio rápido, actualizado y protegido.</p>
+    <div class="hero-actions">
+      <a class="cta" href="#planes">Ver planes</a>
+      <a class="cta cta--ghost" href="#como-funciona">Cómo funciona</a>
+    </div>
+  </div>
+</section>
+
+<!-- Planes -->
+<section id="planes" class="about-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Elige tu plan</h2>
+      <div class="section-intro">Sin pagos iniciales enormes. Una cuota mensual que incluye todo lo que tu sitio necesita para funcionar y estar seguro.</div>
+    </div>
+
+    <div class="pricing-grid">
+      <!-- Plan: Esencial -->
+      <article class="pricing-card reveal">
+        <h3 class="pricing-name">Esencial</h3>
+        <p class="pricing-desc">Presencia profesional en línea para negocios que están empezando.</p>
+        <p class="pricing-price">
+          <span class="pricing-currency">$</span>
+          <span class="pricing-amount">799</span>
+          <span class="pricing-period">MXN / mes</span>
+        </p>
+        <ul class="pricing-features">
+          <li>Sitio de una página (landing) a medida</li>
+          <li>Diseño responsivo para celular y computadora</li>
+          <li>Hosting y certificado SSL incluidos</li>
+          <li>Formulario de contacto y botón de WhatsApp</li>
+          <li>SEO básico (títulos, descripciones, Google)</li>
+          <li>1 cambio de contenido al mes</li>
+          <li>Soporte por correo</li>
+        </ul>
+        <a class="cta cta--block cta--ghost" data-plan="esencial" href="https://wa.me/526644267704?text=Hola%20LESSSO%2C%20me%20interesa%20el%20plan%20Esencial%20de%20p%C3%A1gina%20web">Elegir Esencial</a>
+      </article>
+
+      <!-- Plan: Profesional (destacado) -->
+      <article class="pricing-card pricing-card--featured reveal">
+        <span class="pricing-badge">Más elegido</span>
+        <h3 class="pricing-name">Profesional</h3>
+        <p class="pricing-desc">Para negocios que quieren crecer y generar clientes desde su sitio.</p>
+        <p class="pricing-price">
+          <span class="pricing-currency">$</span>
+          <span class="pricing-amount">1,499</span>
+          <span class="pricing-period">MXN / mes</span>
+        </p>
+        <ul class="pricing-features">
+          <li>Todo lo del plan Esencial</li>
+          <li>Hasta 5 secciones o páginas</li>
+          <li>Google Analytics y Search Console configurados</li>
+          <li>Cabeceras de seguridad y hardening del sitio</li>
+          <li>Respaldos semanales</li>
+          <li>3 cambios de contenido al mes</li>
+          <li>Soporte por WhatsApp</li>
+        </ul>
+        <a class="cta cta--block" data-plan="profesional" href="https://wa.me/526644267704?text=Hola%20LESSSO%2C%20me%20interesa%20el%20plan%20Profesional%20de%20p%C3%A1gina%20web">Elegir Profesional</a>
+      </article>
+
+      <!-- Plan: Negocio -->
+      <article class="pricing-card reveal">
+        <h3 class="pricing-name">Negocio</h3>
+        <p class="pricing-desc">Para empresas que necesitan más contenido, monitoreo y prioridad.</p>
+        <p class="pricing-price">
+          <span class="pricing-currency">$</span>
+          <span class="pricing-amount">2,499</span>
+          <span class="pricing-period">MXN / mes</span>
+        </p>
+        <ul class="pricing-features">
+          <li>Todo lo del plan Profesional</li>
+          <li>Hasta 10 páginas, blog o catálogo</li>
+          <li>Monitoreo de disponibilidad 24/7</li>
+          <li>Revisión de seguridad trimestral con reporte</li>
+          <li>Respaldos diarios</li>
+          <li>Cambios de contenido prioritarios</li>
+          <li>Soporte prioritario</li>
+        </ul>
+        <a class="cta cta--block cta--ghost" data-plan="negocio" href="https://wa.me/526644267704?text=Hola%20LESSSO%2C%20me%20interesa%20el%20plan%20Negocio%20de%20p%C3%A1gina%20web">Elegir Negocio</a>
+      </article>
+
+      <!-- ============================================================
+           PLAN DE PRUEBAS ($0 MXN) — OCULTO / PARA PROBAR Y BORRAR
+           (Para eliminarlo, solo borra este bloque <article>)
+           ============================================================ -->
+      <article class="pricing-card reveal" style="border: 1px dashed var(--line); opacity: 0.85;">
+        <span class="pricing-badge" style="background: #e11d48;">Prueba Interna</span>
+        <h3 class="pricing-name">Prueba Sandbox</h3>
+        <p class="pricing-desc">Enlace de test para verificar el flujo de Stripe sin cobro real.</p>
+        <p class="pricing-price">
+          <span class="pricing-currency">$</span>
+          <span class="pricing-amount">0</span>
+          <span class="pricing-period">MXN / test</span>
+        </p>
+        <ul class="pricing-features">
+          <li>Cobro de $0 para simulación</li>
+          <li>Verificación de redirección y checkout</li>
+          <li>Tarjeta de test de Stripe permitida</li>
+          <li>Bloque temporal (listo para borrar)</li>
+        </ul>
+        <a class="cta cta--block cta--ghost" data-plan="prueba" href="https://buy.stripe.com/test_14AdR8gGi8nX0406HEcV200">Probar Checkout ($0)</a>
+      </article>
+    </div>
+
+    <p class="pricing-note">Precios en pesos mexicanos. Pagos procesados de forma segura con Stripe; LESSSO no almacena los datos de tu tarjeta.</p>
+  </div>
+</section>
+
+<!-- Qué incluye -->
+<section id="incluye">
+  <div class="container">
+    <div class="section-header">
+      <h2>Todos los planes incluyen</h2>
+      <div class="section-intro">Lo que normalmente pagarías por separado —y casi siempre se olvida— ya viene incluido.</div>
+    </div>
+    <div class="services-grid">
+      <div class="service reveal">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18"/></svg>
+        </div>
+        <h3>Diseño a medida</h3>
+        <p>Nada de plantillas genéricas. Tu sitio se diseña según tu marca, tu público y tus objetivos.</p>
+      </div>
+
+      <div class="service reveal">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <h3>Seguridad desde el código</h3>
+        <p>Formularios protegidos, HTTPS, cabeceras seguras y dependencias actualizadas. Somos especialistas en ciberseguridad.</p>
+      </div>
+
+      <div class="service reveal">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        </div>
+        <h3>Rápido y optimizado</h3>
+        <p>Sitios ligeros que cargan en segundos, se ven bien en cualquier dispositivo y están listos para Google.</p>
+      </div>
+
+      <div class="service reveal">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 19V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M9 12h6"/></svg>
+        </div>
+        <h3>Hosting y SSL</h3>
+        <p>Alojamiento confiable y certificado SSL incluidos. Sin cuentas extra ni renovaciones que se te pasen.</p>
+      </div>
+
+      <div class="service reveal">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/><circle cx="12" cy="19" r="1"/><circle cx="12" cy="5" r="1"/></svg>
+        </div>
+        <h3>Mantenimiento continuo</h3>
+        <p>Actualizaciones, respaldos y cambios de contenido. Tu sitio nunca se queda abandonado.</p>
+      </div>
+
+      <div class="service reveal">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+        </div>
+        <h3>Soporte humano</h3>
+        <p>Hablas directamente con quien construyó tu sitio. Respuestas claras, sin tickets eternos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Cómo funciona -->
+<section id="como-funciona" class="about-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Cómo funciona</h2>
+      <div class="section-intro">De la suscripción a tu sitio publicado, en cuatro pasos.</div>
+    </div>
+    <ol class="steps">
+      <li class="step reveal">
+        <h3>Elige tu plan</h3>
+        <p>Selecciona el plan que mejor se adapta a tu negocio y suscríbete con pago seguro vía Stripe.</p>
+      </li>
+      <li class="step reveal">
+        <h3>Reunión inicial</h3>
+        <p>Platicamos sobre tu negocio, tu marca y lo que necesitas que logre tu sitio.</p>
+      </li>
+      <li class="step reveal">
+        <h3>Diseño y desarrollo</h3>
+        <p>Construimos tu sitio y lo revisamos contigo hasta que quede como lo imaginaste.</p>
+      </li>
+      <li class="step reveal">
+        <h3>Publicación y cuidado</h3>
+        <p>Lo publicamos en tu dominio y a partir de ahí lo mantenemos seguro y actualizado.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- Preguntas frecuentes -->
+<section id="preguntas">
+  <div class="container">
+    <div class="section-header">
+      <h2>Preguntas frecuentes</h2>
+    </div>
+    <div class="faq">
+      <details class="faq-item reveal">
+        <summary>¿Cómo se procesa el pago?</summary>
+        <p>Los pagos se procesan con Stripe, una de las plataformas de pago más seguras del mundo. El cargo es automático cada mes y LESSSO nunca tiene acceso a los datos de tu tarjeta.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>¿Hay plazo forzoso?</summary>
+        <p>Consulta las condiciones de permanencia de cada plan antes de suscribirte. Te las explicamos con claridad en la reunión inicial, sin letras pequeñas.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>¿El dominio es mío?</summary>
+        <p>Sí. El dominio se registra a tu nombre. Las condiciones sobre el código y el contenido se detallan en nuestros <a href="terminos.html">Términos y Condiciones</a>.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>¿Cuánto tarda en estar listo mi sitio?</summary>
+        <p>Depende del plan y de qué tan rápido tengamos tu contenido (textos, logotipo, fotos). Como referencia, un sitio de una página suele estar listo en una a dos semanas.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>¿Puedo cambiar de plan después?</summary>
+        <p>Sí. Puedes subir o bajar de plan conforme crezca tu negocio; el ajuste se refleja en tu siguiente cobro.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- Contacto -->
+<section class="contact-section" id="contact">
+  <div class="container">
+    <div class="section-header">
+      <h2>¿Tienes dudas?</h2>
+      <div class="section-intro">Si no sabes qué plan elegir o necesitas algo a la medida, escríbenos. Respondemos dentro de 24 horas.</div>
+    </div>
+    <div class="reveal">
+      <p class="contact-intro">Escríbenos directo:</p>
+      <a href="mailto:contacto@lessso.com?subject=Suscripci%C3%B3n%20de%20p%C3%A1gina%20web" class="contact-email">contacto@lessso.com</a>
+      <p class="contact-note">Consulta inicial sin costo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>&copy; 2026 <strong>LESSSO®</strong> — Marca registrada. Todos los derechos reservados.</p>
+  <p style="margin-top: 0.75rem; font-size: 0.85rem;">
+    <a href="aviso-de-privacidad.html" style="color: inherit;">Aviso de Privacidad</a>
+    &nbsp;·&nbsp;
+    <a href="terminos.html" style="color: inherit;">Términos y Condiciones</a>
+  </p>
+</footer>
+
+<!-- Botón flotante de contacto -->
+<a class="fab-contact" href="https://wa.me/526644267704?text=Hola%20LESSSO%2C%20me%20interesa%20una%20suscripci%C3%B3n%20de%20p%C3%A1gina%20web" target="_blank" rel="noopener" aria-label="Contáctame por WhatsApp">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+    <path d="M8.5 10.5h7M8.5 13.5h4"/>
+  </svg>
+  <span class="fab-label">Contáctame</span>
+</a>
+
+</body>
+</html>

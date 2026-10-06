@@ -1,0 +1,18 @@
+/* ============================================================
+   PÁGINA: LEGALES (aviso-de-privacidad.html, terminos.html)
+   ============================================================ */
+@import url("../tokens/tokens.css");
+@import url("../base/reset.css");
+@import url("../atoms/brand.css");
+@import url("../organisms/legal-document.css");
+
+/* Ajustes de tono propios de los documentos legales */
+.page-legal {
+  --ink-soft: rgba(28, 25, 23, 0.7);
+  --accent-soft: rgba(9, 54, 60, 0.08);
+
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.8;
+}

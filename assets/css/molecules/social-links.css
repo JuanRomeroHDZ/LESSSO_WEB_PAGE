@@ -1,0 +1,7 @@
+/* ============ MOLÉCULA: GRUPO DE REDES SOCIALES ============ */
+.social-links {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}

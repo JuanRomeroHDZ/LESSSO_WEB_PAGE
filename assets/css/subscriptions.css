@@ -1,0 +1,248 @@
+/* ============================================================
+   ESTILOS ESPECÍFICOS DE SUSCRIPCIONES (PÁGINA OCULTA)
+   LESSSO
+   ============================================================ */
+
+/* Hero compacto */
+.hero--compact {
+  min-height: 70vh;
+  padding: 8rem 2rem 4rem;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Grilla de precios */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+  align-items: stretch;
+}
+
+.pricing-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 2.25rem 2rem 2rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper);
+  transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease), transform 0.3s var(--ease);
+}
+
+.pricing-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 12px 24px var(--shadow);
+  transform: translateY(-4px);
+}
+
+.pricing-card--featured {
+  border: 2px solid var(--accent);
+  box-shadow: 0 12px 28px var(--shadow);
+}
+
+.pricing-badge {
+  position: absolute;
+  top: -0.9rem;
+  left: 2rem;
+  padding: 0.15rem 0.9rem;
+  background: var(--accent);
+  color: var(--paper);
+  font-family: var(--font-hand);
+  font-size: 1.05rem;
+  font-weight: 700;
+  border-radius: 999px;
+}
+
+.pricing-name {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.pricing-desc {
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+.pricing-price {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  font-family: var(--font-display);
+}
+
+.pricing-currency {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+.pricing-amount {
+  font-size: 2.6rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -1px;
+  color: var(--ink);
+}
+
+.pricing-period {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+.pricing-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  flex: 1;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+}
+
+.pricing-features li {
+  position: relative;
+  padding-left: 1.6rem;
+  font-size: 0.93rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.pricing-features li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.cta--block {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
+.cta--ghost {
+  background: transparent;
+  color: var(--accent);
+  border: 1.5px solid var(--accent);
+}
+
+.cta--ghost:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.pricing-note {
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+/* Pasos numerados */
+.steps {
+  list-style: none;
+  counter-reset: step;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.step {
+  position: relative;
+  padding-top: 3.25rem;
+  counter-increment: step;
+}
+
+.step::before {
+  content: counter(step, decimal-leading-zero);
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-family: var(--font-hand);
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--accent);
+}
+
+.step h3 {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+
+.step p {
+  font-size: 0.93rem;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+
+/* FAQs */
+.faq {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 780px;
+  margin: 3rem auto 0;
+}
+
+.faq-item {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  transition: border-color 0.3s;
+}
+
+.faq-item[open] { border-color: var(--accent); }
+
+.faq-item summary {
+  position: relative;
+  padding: 1.25rem 3rem 1.25rem 1.5rem;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  list-style: none;
+}
+
+.faq-item summary::-webkit-details-marker { display: none; }
+
+.faq-item summary::after {
+  content: '+';
+  position: absolute;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--accent);
+  transition: transform 0.3s var(--ease);
+}
+
+.faq-item[open] summary::after { transform: translateY(-50%) rotate(45deg); }
+
+.faq-item p {
+  padding: 0 1.5rem 1.25rem;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+  .hero--compact { padding: 7rem 1.5rem 3rem; }
+}

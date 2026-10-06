@@ -1,0 +1,22 @@
+/* ============ ÁTOMO: SUBRAYADO ONDULANTE ============ */
+.underline {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.3em;
+}
+
+.underline::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 3"><path d="M0 1.5 Q 25 0.2, 50 1.5 T 100 1.5 T 150 1.5 T 200 1.5" stroke="%2309363c" stroke-width="2" fill="none" stroke-linecap="round"/></svg>');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+html[data-theme="dark"] .underline::after {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 3"><path d="M0 1.5 Q 25 0.2, 50 1.5 T 100 1.5 T 150 1.5 T 200 1.5" stroke="%231a9e9e" stroke-width="2" fill="none" stroke-linecap="round"/></svg>');
+}

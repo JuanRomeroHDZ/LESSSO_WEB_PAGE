@@ -1,0 +1,15 @@
+/* ============ ORGANISMO: FOOTER ============ */
+.site-footer {
+  padding: 3rem 2rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  border-top: 1px solid var(--line);
+}
+
+.footer-legal {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+}
+
+.footer-legal a { color: inherit; }
