@@ -8,8 +8,7 @@
 const STRIPE_PLANS = {
   esencial: 'https://buy.stripe.com/6oUfZj7Kn2bbbIQ2j838400',       // Plan $799 MXN
   profesional: 'https://buy.stripe.com/dRmfZjaWzcPP9AI5vk38402',    // Plan $1,499 MXN
-  negocio: 'https://buy.stripe.com/fZu7sNc0D5nncMU0b038401',        // Plan $2,499 MXN
-  prueba: 'https://buy.stripe.com/test_14AdR8gGi8nX0406HEcV200'     // Plan Oculto Sandbox $0 (opcional para pruebas)
+  negocio: 'https://buy.stripe.com/fZu7sNc0D5nncMU0b038401'         // Plan $2,499 MXN
 };
 
 // Asignar enlaces de Stripe si están configurados
