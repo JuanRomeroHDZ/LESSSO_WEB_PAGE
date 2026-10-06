@@ -60,10 +60,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;900&family=Fraunces:wght@400;600;700&family=Inter:wght@400;500;600&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
 
-  <!-- Detección temprana de tema para evitar destello visual (FOUC) -->
+  <!-- Detección temprana de tema y capacidad JS para evitar destello visual (FOUC) -->
   <script>
     (function() {
       try {
+        document.documentElement.classList.add('js');
         var t = localStorage.getItem('lessso-theme');
         if (!t && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
           t = 'dark';
@@ -75,9 +76,9 @@
     })();
   </script>
 
-  <!-- Estilos y Script Modular -->
+  <!-- Estilos y Script Principal -->
   <link rel="stylesheet" href="assets/css/style.css">
-  <script type="module" src="assets/js/pages/home.js"></script>
+  <script defer src="assets/js/main.js"></script>
 
   <!-- Google Consent Mode v2 (Default: Denied) -->
   <script>

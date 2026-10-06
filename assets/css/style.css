@@ -1328,12 +1328,17 @@ footer {
 
 /* ============ ANIMATIONS ============ */
 .reveal {
+  opacity: 1;
+  transform: none;
+}
+
+html.js .reveal {
   opacity: 0;
   transform: translateY(24px);
   transition: opacity 0.8s var(--ease) 0.1s, transform 0.8s var(--ease) 0.1s;
 }
 
-.reveal.in-view {
+html.js .reveal.in-view {
   opacity: 1;
   transform: translateY(0);
 }
