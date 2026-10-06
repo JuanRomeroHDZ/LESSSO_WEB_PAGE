@@ -356,9 +356,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               </select>
             </div>
             <div class="form-group">
-              <label for="subject">Asunto *</label>
-              <input type="text" id="subject" name="subject" required minlength="3" maxlength="120" placeholder="Ej: Auditoría o nuevo sitio">
+              <label for="budget">Presupuesto estimado</label>
+              <select id="budget" name="budget">
+                <option value="" selected>Selecciona un rango (opcional)...</option>
+                <option value="Suscripción Web ($799 - $2,499 MXN/mes)">Suscripción Web ($799 - $2,499 MXN/mes)</option>
+                <option value="Menos de $10,000 MXN">Menos de $10,000 MXN (Básico)</option>
+                <option value="$10,000 a $25,000 MXN">$10,000 a $25,000 MXN (Medio)</option>
+                <option value="$25,000 a $50,000 MXN">$25,000 a $50,000 MXN (Avanzado)</option>
+                <option value="Más de $50,000 MXN">Más de $50,000 MXN (Empresarial)</option>
+                <option value="Por definir / Explorando">Por definir / Explorando opciones</option>
+              </select>
             </div>
+          </div>
+
+          <div class="form-group">
+            <label for="subject">Asunto *</label>
+            <input type="text" id="subject" name="subject" required minlength="3" maxlength="120" placeholder="Ej: Auditoría o nuevo sitio">
           </div>
 
           <div class="form-group">

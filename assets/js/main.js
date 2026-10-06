@@ -301,6 +301,14 @@ async function handleFormSubmit(event) {
       });
       if (res3.ok) submittedOk = true;
     } catch (e) {}
+  // Intento 4: Envío nativo como último recurso si fetch da 404
+  if (!submittedOk) {
+    try {
+      console.warn('Ejecutando fallback de envío estándar de formulario...');
+      form.onsubmit = null;
+      form.submit();
+      return;
+    } catch (e) {}
   }
 
   if (submittedOk) {

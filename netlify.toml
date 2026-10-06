@@ -1,6 +1,7 @@
 # Configuración de Netlify para LESSSO
 [build]
   publish = "."
+  functions = "netlify/functions"
 
 # Ruta limpia para suscripciones: lessso.com/suscripciones -> suscripciones.html
 [[redirects]]
