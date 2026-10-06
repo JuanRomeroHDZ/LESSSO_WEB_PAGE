@@ -103,33 +103,119 @@ function drawNetworkCanvas() {
   animationId = requestAnimationFrame(drawNetworkCanvas);
 }
 
-/* 3. MANEJADOR DEL FORMULARIO DE CONTACTO */
-function handleFormSubmit(event) {
+/* 3. MANEJADOR DEL FORMULARIO DE CONTACTO (Netlify Forms con AJAX) */
+async function handleFormSubmit(event) {
   event.preventDefault();
   const form = event.target;
-  const name = form.querySelector('#name') ? form.querySelector('#name').value : '';
-  const email = form.querySelector('#email') ? form.querySelector('#email').value : '';
-  const subject = form.querySelector('#subject') ? form.querySelector('#subject').value : '';
-  const message = form.querySelector('#message') ? form.querySelector('#message').value : '';
+  const statusEl = document.getElementById('formStatus');
+  const submitBtn = document.getElementById('submitBtn');
 
-  // Enviar por mailto como fallback
-  const mailtoLink = `mailto:contacto@lessso.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Nombre: ${name}\nEmail: ${email}\n\n${message}`)}`;
-  window.location.href = mailtoLink;
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando...';
+  }
 
-  // Cerrar modal si existe
-  const contactModal = document.getElementById('contactModal');
-  if (contactModal) {
-    setTimeout(() => {
-      contactModal.classList.remove('active');
+  if (statusEl) {
+    statusEl.style.display = 'none';
+    statusEl.className = 'form-status';
+  }
+
+  const formData = new FormData(form);
+
+  try {
+    const response = await fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(formData).toString()
+    });
+
+    if (response.ok) {
+      if (statusEl) {
+        statusEl.textContent = '✅ ¡Mensaje enviado con éxito! Te contactaremos dentro de 24 horas.';
+        statusEl.className = 'form-status success';
+        statusEl.style.display = 'block';
+      }
       form.reset();
-    }, 500);
+      setTimeout(() => {
+        const contactModal = document.getElementById('contactModal');
+        if (contactModal) contactModal.classList.remove('active');
+        if (statusEl) statusEl.style.display = 'none';
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Enviar mensaje';
+        }
+      }, 3500);
+    } else {
+      throw new Error('Error en la respuesta del servidor');
+    }
+  } catch (error) {
+    console.error('Error al enviar formulario:', error);
+    if (statusEl) {
+      statusEl.innerHTML = '⚠️ No se pudo procesar automáticamente. <a href="mailto:contacto@lessso.com" style="text-decoration:underline;color:inherit;">Haz clic aquí para escribirnos directo por correo</a>.';
+      statusEl.className = 'form-status error';
+      statusEl.style.display = 'block';
+    }
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Reintentar envío';
+    }
   }
 }
 window.handleFormSubmit = handleFormSubmit;
 
-/* 4. INICIALIZACIÓN CUANDO EL DOM ESTÉ LISTO */
+/* 4. GESTIÓN DE CONSENTIMIENTO DE COOKIES & GOOGLE TAG MANAGER */
+function initCookieConsent() {
+  const banner = document.getElementById('cookieBanner');
+  const acceptBtn = document.getElementById('cookieAccept');
+  const rejectBtn = document.getElementById('cookieReject');
+  const openPrefsBtn = document.getElementById('openCookieBanner');
+
+  let currentConsent = null;
+  try {
+    currentConsent = localStorage.getItem('lessso-cookie-consent');
+  } catch (e) {}
+
+  // Si no ha decidido, mostramos el banner
+  if (!currentConsent && banner) {
+    banner.classList.add('active');
+  }
+
+  function setConsent(status) {
+    try {
+      localStorage.setItem('lessso-cookie-consent', status);
+    } catch (e) {}
+
+    if (typeof window.gtag === 'function') {
+      window.gtag('consent', 'update', {
+        analytics_storage: status === 'granted' ? 'granted' : 'denied'
+      });
+    }
+
+    if (banner) {
+      banner.classList.remove('active');
+    }
+  }
+
+  if (acceptBtn) {
+    acceptBtn.addEventListener('click', () => setConsent('granted'));
+  }
+
+  if (rejectBtn) {
+    rejectBtn.addEventListener('click', () => setConsent('denied'));
+  }
+
+  if (openPrefsBtn) {
+    openPrefsBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (banner) banner.classList.add('active');
+    });
+  }
+}
+
+/* 5. INICIALIZACIÓN CUANDO EL DOM ESTÉ LISTO */
 function initAll() {
   initTheme();
+  initCookieConsent();
 
   // Botón de alternar tema
   const themeToggle = document.getElementById('themeToggle');
@@ -188,3 +274,4 @@ if (document.readyState === 'loading') {
 } else {
   initAll();
 }
+

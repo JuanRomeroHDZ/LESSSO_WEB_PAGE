@@ -21,8 +21,45 @@
   <link rel="stylesheet" href="assets/css/subscriptions.css">
   <script src="assets/js/main.js" defer></script>
   <script src="assets/js/subscriptions.js" defer></script>
+
+  <!-- Google Consent Mode v2 (Default: Denied) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    var savedConsent = null;
+    try { savedConsent = localStorage.getItem('lessso-cookie-consent'); } catch(e) {}
+    if (savedConsent === 'granted') {
+      gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'analytics_storage': 'granted',
+        'wait_for_update': 500
+      });
+    } else {
+      gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'analytics_storage': 'denied',
+        'wait_for_update': 500
+      });
+    }
+  </script>
+
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-PJJDBMB7');</script>
+  <!-- End Google Tag Manager -->
 </head>
 <body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PJJDBMB7"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
 <!-- Header (sin botón de suscripciones) -->
 <header class="site-header" id="header">
@@ -273,6 +310,8 @@
     <a href="aviso-de-privacidad.html" style="color: inherit;">Aviso de Privacidad</a>
     &nbsp;·&nbsp;
     <a href="terminos.html" style="color: inherit;">Términos y Condiciones</a>
+    &nbsp;·&nbsp;
+    <button type="button" class="cookie-prefs-btn" id="openCookieBanner">Preferencias de cookies</button>
   </p>
 </footer>
 
@@ -284,6 +323,16 @@
   </svg>
   <span class="fab-label">Contáctame</span>
 </a>
+
+<!-- Banner de Consentimiento de Cookies -->
+<aside class="cookie-banner" id="cookieBanner" aria-label="Aviso de privacidad y cookies" role="dialog">
+  <h3>🍪 Privacidad y Cookies</h3>
+  <p>Utilizamos cookies esenciales para el funcionamiento del sitio y herramientas analíticas (Google Tag Manager / Analytics) para medir el rendimiento y mejorar nuestros servicios. Puedes aceptar las métricas o continuar solo con las esenciales. Consulta nuestro <a href="aviso-de-privacidad.html">Aviso de Privacidad</a>.</p>
+  <div class="cookie-buttons">
+    <button type="button" class="cookie-btn-accept" id="cookieAccept">Aceptar analíticas</button>
+    <button type="button" class="cookie-btn-reject" id="cookieReject">Solo esenciales</button>
+  </div>
+</aside>
 
 </body>
 </html>

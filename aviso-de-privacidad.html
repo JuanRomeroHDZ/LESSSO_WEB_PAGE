@@ -31,12 +31,12 @@
   </div>
 
   <h2>2. Datos personales que recabamos</h2>
-  <p>A través de nuestro sitio web, formulario de contacto y canal de WhatsApp podemos recabar los siguientes datos:</p>
+  <p>A través de nuestro sitio web, formulario de contacto (procesado mediante Netlify Forms) y canal de WhatsApp podemos recabar los siguientes datos:</p>
   <ul>
     <li>Nombre completo</li>
     <li>Correo electrónico</li>
-    <li>Número de teléfono (cuando el contacto se realiza vía WhatsApp)</li>
-    <li>Contenido del mensaje o descripción del proyecto o servicio solicitado</li>
+    <li>Número de teléfono (cuando el contacto se realiza vía WhatsApp o llamada)</li>
+    <li>Asunto y contenido del mensaje o descripción del proyecto o requerimiento de seguridad</li>
     <li>Empresa u organización a la que pertenece (cuando se proporciona voluntariamente)</li>
   </ul>
   <p>No recabamos datos personales sensibles.</p>
@@ -44,25 +44,35 @@
   <h2>3. Finalidades del tratamiento de datos</h2>
   <p><strong>Finalidades primarias (obligatorias):</strong></p>
   <ul>
-    <li>Atender y dar seguimiento a las solicitudes de contacto recibidas</li>
-    <li>Elaborar y enviar cotizaciones de servicios</li>
-    <li>Prestar los servicios de ciberseguridad y desarrollo web contratados</li>
-    <li>Dar cumplimiento a obligaciones contractuales y fiscales</li>
+    <li>Atender, gestionar y dar respuesta a las solicitudes de contacto y cotizaciones recibidas</li>
+    <li>Prestar los servicios profesionales de ciberseguridad y desarrollo web contratados</li>
+    <li>Gestionar la suscripción de planes y emisión de comprobantes contractuales o fiscales</li>
+    <li>Dar cumplimiento a obligaciones legales aplicables</li>
   </ul>
   <p><strong>Finalidades secundarias (opcionales):</strong></p>
   <ul>
-    <li>Registrar sus datos en sistemas de gestión de relaciones con clientes (CRM) para seguimiento comercial</li>
-    <li>Enviar comunicaciones promocionales, boletines o información sobre nuestros servicios</li>
-    <li>Realizar análisis estadísticos internos para mejorar nuestros servicios</li>
+    <li>Registrar sus datos en nuestro sistema interno de gestión de relaciones con clientes (Twenty CRM autoalojado en infraestructura propia y aislada) para seguimiento de proyectos y atención comercial personalizada</li>
+    <li>Enviar avisos de seguridad, boletines técnicos o actualizaciones sobre nuestros servicios</li>
+    <li>Realizar análisis estadísticos y métricas de navegación para optimizar el rendimiento y seguridad de la plataforma</li>
   </ul>
   <p>Si no desea que sus datos sean tratados para las finalidades secundarias, puede manifestarlo en cualquier momento escribiendo a <a href="mailto:contacto@lessso.com">contacto@lessso.com</a>. La negativa no será motivo para negarle los servicios solicitados.</p>
 
-  <h2>4. Uso de cookies y tecnologías de rastreo</h2>
-  <p>Nuestro sitio puede utilizar cookies, píxeles y tecnologías similares de terceros (por ejemplo, Google Analytics o Meta Pixel) con fines estadísticos, de medición de audiencia y publicitarios. Estas tecnologías pueden recopilar información como tipo de navegador, páginas visitadas, tiempo de navegación y dirección IP aproximada.</p>
-  <p>Usted puede deshabilitar las cookies desde la configuración de su navegador en cualquier momento; hacerlo no impedirá la navegación básica del sitio.</p>
+  <h2>4. Uso de cookies y tecnologías de rastreo (Google Tag Manager y Consent Mode v2)</h2>
+  <p>Nuestro sitio utiliza cookies esenciales para la navegación segura y, de forma opcional, herramientas de analítica web gestionadas mediante <strong>Google Tag Manager</strong> (ID: GTM-PJJDBMB7) y Google Analytics:</p>
+  <ul>
+    <li><strong>Cookies técnicas y esenciales:</strong> Permiten funciones básicas como la navegación, el guardado de preferencias de modo visual (claro/oscuro) y la gestión del propio consentimiento. No recopilan datos personales identificables.</li>
+    <li><strong>Cookies analíticas y de medición:</strong> Permiten conocer métricas agregadas sobre el tráfico y uso del sitio web.</li>
+  </ul>
+  <p>En estricto apego al principio de privacidad desde el diseño, implementamos <strong>Google Consent Mode v2</strong>: el almacenamiento de analíticas se mantiene deshabilitado por defecto hasta que usted otorga su consentimiento expreso mediante nuestro banner de cookies o el enlace de <em>Preferencias de cookies</em> ubicado en el pie de página. Usted puede revocar o modificar su consentimiento en cualquier momento sin afectar la funcionalidad de la web.</p>
 
-  <h2>5. Transferencias de datos personales</h2>
-  <p>Sus datos personales <strong>no serán vendidos ni transferidos</strong> a terceros sin su consentimiento, salvo en los casos previstos por el artículo 37 de la LFPDPPP (requerimientos de autoridad competente, obligaciones contractuales o disposición legal). Los proveedores tecnológicos que nos auxilian (como la pasarela de pagos <strong>Stripe</strong> para el procesamiento seguro de pagos con tarjeta, servicios de correo o plataformas de mensajería como WhatsApp/Meta) tratarán los datos necesarios bajo sus estrictos estándares de seguridad y confidencialidad.</p>
+  <h2>5. Transferencias y proveedores tecnológicos</h2>
+  <p>Sus datos personales <strong>no serán vendidos, comercializados ni transferidos</strong> a terceros para fines ajenos a los servicios prestados. Compartimos únicamente la información estrictamente necesaria con los siguientes proveedores tecnológicos autorizados bajo rigurosos acuerdos de confidencialidad y estándares internacionales de seguridad:</p>
+  <ul>
+    <li><strong>Netlify:</strong> Proveedor de infraestructura de alojamiento web y procesamiento cifrado (HTTPS/TLS) de envíos de formularios.</li>
+    <li><strong>Stripe:</strong> Pasarela de pago con certificación PCI-DSS Nivel 1 para el procesamiento directo y seguro de suscripciones bancarias (LESSSO no almacena números de tarjeta ni CVV).</li>
+    <li><strong>Zoho Mail:</strong> Plataforma de correo electrónico corporativo con cifrado SPF, DKIM y DMARC.</li>
+    <li><strong>Google Maps & Google Tag Manager:</strong> Servicios interactivos integrados. El mapa embebido procesa solicitudes cartográficas protegidas hacia los servidores de Google con políticas de origen estricto (strict-origin-when-cross-origin).</li>
+  </ul>
 
   <h2>6. Derechos ARCO (Acceso, Rectificación, Cancelación y Oposición)</h2>
   <p>Usted tiene derecho a conocer qué datos personales tenemos de usted, para qué los utilizamos y las condiciones del uso (Acceso); a solicitar la corrección de su información en caso de que sea inexacta (Rectificación); a que se elimine de nuestros registros cuando considere que no está siendo utilizada conforme a los principios establecidos en la normativa (Cancelación), así como a oponerse al uso de sus datos para finalidades específicas (Oposición).</p>
