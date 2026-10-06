@@ -7,6 +7,12 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://lessso.com/suscripciones</loc>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://lessso.com/terminos.html</loc>
     <lastmod>2026-10-06</lastmod>
     <changefreq>monthly</changefreq>

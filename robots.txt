@@ -1,8 +1,6 @@
 # robots.txt for LESSSO
 User-agent: *
 Allow: /
-Disallow: /suscripciones
-Disallow: /suscripciones.html
 Disallow: /.netlify/
 
 Sitemap: https://lessso.com/sitemap.xml

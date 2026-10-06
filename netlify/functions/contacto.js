@@ -8,11 +8,7 @@ const ALLOWED_SERVICES = [
   'E-commerce / Tienda en Línea',
   'Infraestructura & Servidores Linux',
   'Seguridad Web & Hardening',
-  'Cotización General o Duda',
-  // Compatibilidad con formularios previos
-  'Auditoría de Seguridad & Pentesting',
-  'Hardening & Seguridad de Servidores',
-  'Capacitación en Ciberseguridad'
+  'Cotización General o Duda'
 ];
 
 const ALLOWED_URGENCY = [
@@ -237,11 +233,6 @@ exports.handler = async function (event, context) {
       }
     } catch (err) {
       // Si falla fetch externo, intentar vía Netlify Forms API si hay token configurado
-    }
-
-    // Si la función se ejecuta en entorno local o Netlify respondió OK
-    if (!storageSuccess && (clientIp === '127.0.0.1' || clientIp === '::1' || origin.includes('localhost'))) {
-      storageSuccess = true;
     }
 
     if (!storageSuccess) {

@@ -13,11 +13,7 @@ const ALLOWED_SERVICES = [
   'E-commerce / Tienda en Línea',
   'Infraestructura & Servidores Linux',
   'Seguridad Web & Hardening',
-  'Cotización General o Duda',
-  // Compatibilidad con formularios previos
-  'Auditoría de Seguridad & Pentesting',
-  'Hardening & Seguridad de Servidores',
-  'Capacitación en Ciberseguridad'
+  'Cotización General o Duda'
 ];
 
 const ALLOWED_URGENCY = [
