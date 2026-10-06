@@ -284,30 +284,30 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <h3>Envíanos un mensaje</h3>
         <p class="form-subtitle">Selecciona el tipo de servicio y describe qué necesitas. Consulta inicial sin costo.</p>
 
-        <form name="contacto" method="POST" netlify data-netlify="true" netlify-honeypot="bot-field" id="contactForm" onsubmit="handleFormSubmit(event)">
+        <form name="contacto" method="POST" action="/" data-netlify="true" data-netlify-honeypot="bot-field" id="contactForm" onsubmit="handleFormSubmit(event)">
           <!-- Identificador para Netlify Forms -->
           <input type="hidden" name="form-name" value="contacto">
 
-          <!-- Honeypot anti-spam oculto -->
-          <p style="display:none;">
-            <label>No completes esto si eres humano: <input name="bot-field"></label>
+          <!-- Honeypot anti-spam oculto con atributos de inaccesibilidad -->
+          <p style="position: absolute; left: -9999px; opacity: 0; pointer-events: none;" aria-hidden="true">
+            <label>No completes este campo: <input name="bot-field" tabindex="-1" autocomplete="off"></label>
           </p>
 
           <div class="form-row">
             <div class="form-group">
               <label for="name">Nombre completo *</label>
-              <input type="text" id="name" name="name" required placeholder="Tu nombre o empresa">
+              <input type="text" id="name" name="name" required minlength="2" maxlength="100" autocomplete="name" placeholder="Tu nombre o empresa">
             </div>
             <div class="form-group">
               <label for="email">Correo electrónico *</label>
-              <input type="email" id="email" name="email" required placeholder="tu@correo.com">
+              <input type="email" id="email" name="email" required maxlength="150" autocomplete="email" placeholder="tu@correo.com">
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
               <label for="phone">Teléfono / WhatsApp</label>
-              <input type="tel" id="phone" name="phone" placeholder="+52 (664) 000-0000">
+              <input type="tel" id="phone" name="phone" maxlength="25" autocomplete="tel" placeholder="+52 (664) 000-0000">
             </div>
             <div class="form-group">
               <label for="service">Servicio requerido *</label>
@@ -325,8 +325,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
           <div class="form-row">
             <div class="form-group">
-              <label for="urgency">Plazo o urgencia</label>
-              <select id="urgency" name="urgency">
+              <label for="urgency">Plazo o urgencia *</label>
+              <select id="urgency" name="urgency" required>
                 <option value="Inmediato / Menos de 1 mes">Inmediato (menos de 1 mes)</option>
                 <option value="1 a 3 meses">1 a 3 meses</option>
                 <option value="Solo explorando opciones">Solo explorando opciones</option>
@@ -334,13 +334,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </div>
             <div class="form-group">
               <label for="subject">Asunto *</label>
-              <input type="text" id="subject" name="subject" required placeholder="Ej: Auditoría o nuevo sitio">
+              <input type="text" id="subject" name="subject" required minlength="3" maxlength="120" placeholder="Ej: Auditoría o nuevo sitio">
             </div>
           </div>
 
           <div class="form-group">
             <label for="message">Mensaje o detalles del proyecto *</label>
-            <textarea id="message" name="message" required placeholder="Describe brevemente qué necesitas resolver o construir..."></textarea>
+            <textarea id="message" name="message" required minlength="10" maxlength="3000" rows="4" placeholder="Describe brevemente qué necesitas resolver o construir..."></textarea>
           </div>
 
           <!-- Aceptación obligatoria del Aviso de Privacidad -->
@@ -362,12 +362,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="contact-side">
         <div class="contact-info-card">
           <div>
-            <p class="contact-intro" style="margin-bottom: 0.75rem; font-weight: 600;">Escríbenos directo:</p>
+            <p class="contact-intro">Escríbenos directo:</p>
             <a href="mailto:contacto@lessso.com" class="contact-email">contacto@lessso.com</a>
 
             <div class="contact-details">
               <div class="contact-detail-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
                   <circle cx="12" cy="10" r="3"/>
                 </svg>
@@ -378,7 +378,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               </div>
 
               <div class="contact-detail-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
                 </svg>
                 <div class="contact-detail-text">
@@ -431,7 +431,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     &nbsp;·&nbsp;
     <a href="terminos.html" style="color: inherit;">Términos y Condiciones</a>
     &nbsp;·&nbsp;
-    <button type="button" class="cookie-prefs-btn" id="openCookieBanner">Preferencias de cookies</button>
+    <button type="button" class="privacy-prefs-link" id="openPrivacySettings">Preferencias de privacidad</button>
   </p>
 </footer>
 
@@ -444,13 +444,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <span class="fab-label">WhatsApp</span>
 </a>
 
-<!-- Banner de Consentimiento de Cookies -->
-<aside class="cookie-banner" id="cookieBanner" aria-label="Aviso de privacidad y cookies" role="dialog">
-  <h3>🍪 Privacidad y Cookies</h3>
-  <p>Utilizamos cookies esenciales para el funcionamiento del sitio y herramientas analíticas (Google Tag Manager / Analytics) para medir el rendimiento y mejorar nuestros servicios. Puedes aceptar las métricas o continuar solo con las esenciales. Consulta nuestro <a href="aviso-de-privacidad.html">Aviso de Privacidad</a>.</p>
-  <div class="cookie-buttons">
-    <button type="button" class="cookie-btn-accept" id="cookieAccept">Aceptar analíticas</button>
-    <button type="button" class="cookie-btn-reject" id="cookieReject">Solo esenciales</button>
+<!-- Aviso de Consentimiento de Privacidad (Resistente a bloqueadores como Brave) -->
+<aside class="privacy-consent-sheet" id="privacyConsentBanner" aria-label="Aviso de privacidad y métricas" role="dialog">
+  <h3>🛡️ Privacidad y Métricas</h3>
+  <p>En LESSSO respetamos tu privacidad. Utilizamos métricas anónimas para evaluar el rendimiento técnico. No vendemos datos ni usamos rastreadores intrusivos. Puedes aceptarlas o continuar en modo privado. Consulta nuestro <a href="aviso-de-privacidad.html">Aviso de Privacidad</a>.</p>
+  <div class="privacy-consent-actions">
+    <button type="button" class="btn-consent-allow" id="consentAcceptBtn">Permitir métricas</button>
+    <button type="button" class="btn-consent-deny" id="consentRejectBtn">Solo esenciales</button>
   </div>
 </aside>
 
