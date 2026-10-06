@@ -12,6 +12,29 @@
   --font-display: "Poppins", sans-serif;
   --font-serif: "Fraunces", serif;
   --font-body: "Inter", system-ui, sans-serif;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #0c0a09;
+    --ink: #f5f5f4;
+    --ink-soft: rgba(245, 245, 244, 0.7);
+    --accent: #1a9e9e;
+    --accent-soft: rgba(26, 158, 158, 0.12);
+    --line: rgba(245, 245, 244, 0.15);
+    color-scheme: dark;
+  }
+}
+
+html[data-theme="dark"] {
+  --paper: #0c0a09;
+  --ink: #f5f5f4;
+  --ink-soft: rgba(245, 245, 244, 0.7);
+  --accent: #1a9e9e;
+  --accent-soft: rgba(26, 158, 158, 0.12);
+  --line: rgba(245, 245, 244, 0.15);
+  color-scheme: dark;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { background: var(--paper); color: var(--ink); font-family: var(--font-body); line-height: 1.8; }

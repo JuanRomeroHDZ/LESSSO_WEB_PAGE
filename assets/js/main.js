@@ -174,6 +174,7 @@ async function handleFormSubmit(event) {
   const phoneRaw = sanitizeSingleLine(form.elements['phone']?.value || '');
   const serviceRaw = sanitizeSingleLine(form.elements['service']?.value || '');
   const urgencyRaw = sanitizeSingleLine(form.elements['urgency']?.value || '');
+  const budgetRaw = sanitizeSingleLine(form.elements['budget']?.value || '');
   const subjectRaw = sanitizeSingleLine(form.elements['subject']?.value || '');
   const messageRaw = sanitizeInput(form.elements['message']?.value || '');
   const privacyConsent = form.elements['privacyConsent']?.checked;
@@ -243,22 +244,10 @@ async function handleFormSubmit(event) {
   formData.set('phone', phoneRaw);
   formData.set('service', serviceRaw);
   formData.set('urgency', urgencyRaw);
+  formData.set('budget', budgetRaw);
   formData.set('subject', subjectRaw);
   formData.set('message', messageRaw);
   formData.set('form-name', 'contacto');
-
-  // En entorno local (localhost o file://), simulamos éxito sin 404
-  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:') {
-    setTimeout(() => {
-      showStatus('✅ [MODO LOCAL] Mensaje validado y enviado con éxito.', 'success');
-      form.reset();
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Enviar mensaje';
-      }
-    }, 700);
-    return;
-  }
 
   const encodedBody = new URLSearchParams(formData).toString();
   let submittedOk = false;
@@ -301,6 +290,8 @@ async function handleFormSubmit(event) {
       });
       if (res3.ok) submittedOk = true;
     } catch (e) {}
+  }
+
   // Intento 4: Envío nativo como último recurso si fetch da 404
   if (!submittedOk) {
     try {

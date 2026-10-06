@@ -50,6 +50,7 @@ exports.handler = async function (event, context) {
     const phone = (data.phone || '').trim().slice(0, 25);
     const service = (data.service || '').trim().slice(0, 120);
     const urgency = (data.urgency || '').trim().slice(0, 80);
+    const budget = (data.budget || '').trim().slice(0, 80);
     const subject = (data.subject || '').trim().slice(0, 120);
     const message = (data.message || '').trim().slice(0, 3000);
 
@@ -67,6 +68,7 @@ exports.handler = async function (event, context) {
       phone,
       service,
       urgency,
+      budget,
       subject,
       timestamp: new Date().toISOString()
     });

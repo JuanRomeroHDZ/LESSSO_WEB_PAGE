@@ -164,9 +164,10 @@ a { color: inherit; }
   height: 18px;
 }
 
+.theme-toggle .icon-moon { display: block; }
 .theme-toggle .icon-sun { display: none; }
-html[data-theme="light"] .theme-toggle .icon-sun { display: block; }
-html[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+html[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
 
 /* ============ HERO ============ */
 .hero {
