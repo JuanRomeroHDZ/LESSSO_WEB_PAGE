@@ -32,10 +32,10 @@ const ALLOWED_BUDGET = [
   'Por definir / Explorando'
 ];
 
-// Rate limiter en memoria por IP (máximo 5 envíos por ventana de 10 minutos)
+// Rate limiter en memoria por IP (máximo 15 envíos por ventana de 10 minutos)
 const rateLimitMap = new Map();
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
-const RATE_LIMIT_MAX_REQUESTS = 5;
+const RATE_LIMIT_MAX_REQUESTS = 15;
 
 function isRateLimited(ip) {
   if (!ip) return false;
@@ -104,12 +104,21 @@ exports.handler = async function (event, context) {
 
   try {
     let data = {};
+    let rawBody = event.body || '';
+    if (event.isBase64Encoded) {
+      try {
+        rawBody = Buffer.from(rawBody, 'base64').toString('utf-8');
+      } catch (e) {
+        console.error('Error decodificando base64:', e);
+      }
+    }
+
     const contentType = event.headers['content-type'] || '';
     if (contentType.includes('application/x-www-form-urlencoded')) {
-      const params = new URLSearchParams(event.body || '');
+      const params = new URLSearchParams(rawBody);
       data = Object.fromEntries(params.entries());
     } else {
-      data = JSON.parse(event.body || '{}');
+      data = JSON.parse(rawBody || '{}');
     }
 
     // 2. Comprobación de Honeypot Anti-Bot en servidor
