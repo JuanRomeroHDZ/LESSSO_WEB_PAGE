@@ -2,12 +2,17 @@
 // ==============================================================================================
 
 const ALLOWED_SERVICES = [
-  'Auditoría de Seguridad & Pentesting',
   'Desarrollo Web a la Medida',
   'Suscripción Mensual de Página Web',
+  'Mantenimiento o Actualización Web',
+  'E-commerce / Tienda en Línea',
+  'Infraestructura & Servidores Linux',
+  'Seguridad Web & Hardening',
+  'Cotización General o Duda',
+  // Compatibilidad con formularios previos
+  'Auditoría de Seguridad & Pentesting',
   'Hardening & Seguridad de Servidores',
-  'Capacitación en Ciberseguridad',
-  'Cotización General o Duda'
+  'Capacitación en Ciberseguridad'
 ];
 
 const ALLOWED_URGENCY = [
@@ -18,6 +23,7 @@ const ALLOWED_URGENCY = [
 
 const ALLOWED_BUDGET = [
   '',
+  'Suscripción Web ($800 - $2,500 MXN/mes)',
   'Suscripción Web ($799 - $2,499 MXN/mes)',
   'Menos de $10,000 MXN',
   '$10,000 a $25,000 MXN',

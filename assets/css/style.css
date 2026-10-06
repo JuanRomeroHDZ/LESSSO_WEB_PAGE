@@ -308,6 +308,30 @@ html[data-theme="dark"] .underline::after {
 
 .cta:hover::before { left: 0; }
 
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cta--ghost {
+  background: transparent;
+  color: var(--accent);
+  border: 1.5px solid var(--accent);
+}
+
+.cta--ghost:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.cta--block {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
 /* ============ SECCIONES ============ */
 section {
   padding: 6rem 2rem;
