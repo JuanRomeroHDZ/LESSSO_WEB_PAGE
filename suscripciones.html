@@ -19,8 +19,7 @@
   <!-- Estilos del sitio y de suscripciones -->
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/subscriptions.css">
-  <script src="assets/js/main.js" defer></script>
-  <script src="assets/js/subscriptions.js" defer></script>
+  <script type="module" src="assets/js/pages/subscriptions.js"></script>
 
   <!-- Google Consent Mode v2 (Default: Denied) -->
   <script>
@@ -70,7 +69,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <li><a href="#como-funciona">Cómo funciona</a></li>
       <li><a href="#preguntas">Preguntas</a></li>
     </ul>
-    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode">
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Cambiar tema">
       <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
       <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
     </button>
@@ -305,7 +304,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- Footer -->
 <footer>
-  <p>&copy; 2026 <strong>LESSSO®</strong> — Marca registrada. Todos los derechos reservados.</p>
+  <p>&copy; 2026 <strong>LESSSO</strong>. Todos los derechos reservados.</p>
   <p style="margin-top: 0.75rem; font-size: 0.85rem;">
     <a href="aviso-de-privacidad.html" style="color: inherit;">Aviso de Privacidad</a>
     &nbsp;·&nbsp;
@@ -324,22 +323,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <span class="fab-label">WhatsApp</span>
 </a>
 
-<!-- Dock de Estado y Privacidad (Inmune a bloqueadores y con detección de Brave/Adblock) -->
-<aside class="site-notice-dock" id="siteNoticeDock" aria-label="Aviso de privacidad y métricas" role="dialog">
+<!-- Dock de Estado y Privacidad (Consentimiento de Cookies) -->
+<aside class="site-notice-dock" id="siteNoticeDock" aria-label="Aviso de privacidad y cookies" role="dialog">
   <div class="dock-header">
     <h3 id="dockTitle">🛡️ Privacidad & Seguridad</h3>
     <button type="button" class="dock-close" id="dockCloseBtn" aria-label="Cerrar">&times;</button>
   </div>
-  
-  <div id="adblockDetectedBox" class="adblock-alert" style="display: none;">
-    <div class="adblock-badge">🛡️ Brave Shields / Adblock activo</div>
-    <p>Detectamos que tu navegador bloquea rastreadores de forma activa. En LESSSO respetamos tu privacidad: las métricas están 100% desactivadas y el sitio opera con total normalidad.</p>
-  </div>
 
   <div id="standardNoticeBox">
-    <p>Utilizamos cookies esenciales y métricas técnicas anónimas para evaluar rendimiento. Puedes aceptarlas o continuar en modo estrictamente esencial. Consulta nuestro <a href="aviso-de-privacidad.html">Aviso de Privacidad</a>.</p>
+    <p>Utilizamos cookies técnicas esenciales y analítica anónima para evaluar rendimiento. Puedes aceptarlas o continuar en modo estrictamente esencial. Consulta nuestro <a href="aviso-de-privacidad.html">Aviso de Privacidad</a>.</p>
     <div class="dock-actions">
-      <button type="button" class="btn-dock-accept" id="dockAcceptBtn">Aceptar métricas</button>
+      <button type="button" class="btn-dock-accept" id="dockAcceptBtn">Aceptar analítica</button>
       <button type="button" class="btn-dock-reject" id="dockRejectBtn">Solo esenciales</button>
     </div>
   </div>

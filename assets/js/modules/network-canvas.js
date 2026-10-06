@@ -1,24 +1,24 @@
 /* ============================================================
-   CANVAS ANIMATION — Red sutil de fondo
+   CANVAS ANIMATION — Red sutil de fondo (Optimizado)
+   - Pausa cuando la pestaña está inactiva (document.hidden)
+   - Respeta prefers-reduced-motion
    ============================================================ */
 import { CANVAS_PALETTE } from '../config/site.js';
 import { getTheme, THEME_CHANGE_EVENT } from './theme.js';
 
 const LINK_DISTANCE = 150;
 
-/**
- * Dibuja nodos que se mueven y se conectan cuando están cerca.
- * Se ejecuta un único ciclo de animación; los colores se actualizan
- * al escuchar el evento de cambio de tema.
- * @param {HTMLCanvasElement|null} canvas
- */
 export function initNetworkCanvas(canvas) {
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
 
   let nodes = [];
-  let colors = CANVAS_PALETTE[getTheme()];
+  let colors = CANVAS_PALETTE[getTheme()] || CANVAS_PALETTE.light;
+  let animationId = null;
+  let isRunning = false;
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   function initNodes() {
     nodes = [];
@@ -27,21 +27,25 @@ export function initNetworkCanvas(canvas) {
       nodes.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4,
         r: 2 + Math.random() * 1.5,
       });
     }
   }
 
   function resize() {
+    if (!canvas.parentElement) return;
     const rect = canvas.parentElement.getBoundingClientRect();
     canvas.width = rect.width;
     canvas.height = rect.height;
     initNodes();
+    if (prefersReducedMotion.matches) {
+      renderFrame(); // Dibujar solo un cuadro estático si prefiere movimiento reducido
+    }
   }
 
-  function draw() {
+  function renderFrame() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = colors.node;
     ctx.strokeStyle = colors.line;
@@ -76,15 +80,46 @@ export function initNetworkCanvas(canvas) {
       ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
       ctx.fill();
     }
-
-    requestAnimationFrame(draw);
   }
 
-  document.addEventListener(THEME_CHANGE_EVENT, (e) => {
-    colors = CANVAS_PALETTE[e.detail.theme];
+  function loop() {
+    if (!isRunning) return;
+    renderFrame();
+    animationId = requestAnimationFrame(loop);
+  }
+
+  function startAnimation() {
+    if (isRunning || prefersReducedMotion.matches || document.hidden) return;
+    isRunning = true;
+    animationId = requestAnimationFrame(loop);
+  }
+
+  function stopAnimation() {
+    isRunning = false;
+    if (animationId) {
+      cancelAnimationFrame(animationId);
+      animationId = null;
+    }
+  }
+
+  // Pausar cuando la pestaña esté oculta o en segundo plano
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      stopAnimation();
+    } else {
+      startAnimation();
+    }
   });
-  window.addEventListener('resize', resize);
+
+  document.addEventListener(THEME_CHANGE_EVENT, (e) => {
+    colors = CANVAS_PALETTE[e.detail.theme] || CANVAS_PALETTE.light;
+    if (prefersReducedMotion.matches) renderFrame();
+  });
+
+  window.addEventListener('resize', resize, { passive: true });
 
   resize();
-  requestAnimationFrame(draw);
+  if (!prefersReducedMotion.matches && !document.hidden) {
+    startAnimation();
+  }
 }

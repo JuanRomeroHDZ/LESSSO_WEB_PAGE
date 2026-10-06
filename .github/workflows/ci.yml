@@ -1,0 +1,44 @@
+name: CI & Security Quality Checks
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    name: Code & Security Verification
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Código
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Verificar Sintaxis de Módulos JavaScript
+        run: |
+          for file in $(find assets/js -name "*.js"); do
+            echo "Verificando $file..."
+            node --check --input-type=module < "$file"
+          done
+          node --check netlify/functions/contacto.js
+
+      - name: Verificar Integridad de Archivos Sensibles
+        run: |
+          if git ls-files --error-unmatch .env 2>/dev/null; then
+            echo "ERROR DE SEGURIDAD: .env está rastreado en Git!"
+            exit 1
+          fi
+          echo "Verificación de secretos: OK (sin .env rastreado)"
+
+      - name: Verificar Existencia de Activos Críticos
+        run: |
+          test -f og-image.jpg || (echo "Falta og-image.jpg" && exit 1)
+          test -f assets/img/favicon.svg || (echo "Falta favicon.svg" && exit 1)
+          test -f assets/css/style.css || (echo "Falta style.css" && exit 1)
+          echo "Activos esenciales presentes."

@@ -1,20 +1,12 @@
 /* ============================================================
    CONFIGURACIÓN DE SUSCRIPCIONES (STRIPE)
-   ------------------------------------------------------------
-   Cómo conectar Stripe sin backend:
-   1. Stripe Dashboard → Catálogo de productos → crea un producto
-      por plan con precio recurrente (mensual).
-   2. Stripe Dashboard → Payment Links → crea un enlace por plan.
-   3. Pega cada URL (https://buy.stripe.com/...) en `paymentLink`.
-
-   Mientras `paymentLink` esté vacío, el botón del plan conserva el
-   enlace de respaldo definido en el HTML (WhatsApp).
+   Única fuente de verdad para los Payment Links de Stripe
    ============================================================ */
 
 export const SUBSCRIPTION_PLANS = Object.freeze({
-  esencial: { paymentLink: '' },
-  profesional: { paymentLink: '' },
-  negocio: { paymentLink: '' },
+  esencial: { paymentLink: 'https://buy.stripe.com/6oUfZj7Kn2bbbIQ2j838400' },
+  profesional: { paymentLink: 'https://buy.stripe.com/dRmfZjaWzcPP9AI5vk38402' },
+  negocio: { paymentLink: 'https://buy.stripe.com/fZu7sNc0D5nncMU0b038401' },
 });
 
 /** Solo se aceptan enlaces oficiales de Stripe Checkout / Payment Links. */
