@@ -4,13 +4,12 @@
    ============================================================ */
 
 /* 1. CONFIGURACIÓN DE STRIPE PAYMENT LINKS
-   Enlaces oficiales generados en Stripe (Modo Test).
-   Para cambiar a producción más adelante, solo reemplaza los links. */
+   Enlaces oficiales de producción en Stripe. */
 const STRIPE_PLANS = {
-  prueba: 'https://buy.stripe.com/test_14AdR8gGi8nX0406HEcV200',      // Plan Oculto $0 (Para pruebas / borrar después)
-  esencial: 'https://buy.stripe.com/test_cNi3cudu6eMlaIE9TQcV201',    // Plan $799 MXN
-  profesional: 'https://buy.stripe.com/test_fZu9ASfCefQp1846HEcV202', // Plan $1,499 MXN
-  negocio: 'https://buy.stripe.com/test_cNifZgeya33D040c1YcV203'      // Plan $2,499 MXN
+  esencial: 'https://buy.stripe.com/6oUfZj7Kn2bbbIQ2j838400',       // Plan $799 MXN
+  profesional: 'https://buy.stripe.com/dRmfZjaWzcPP9AI5vk38402',    // Plan $1,499 MXN
+  negocio: 'https://buy.stripe.com/fZu7sNc0D5nncMU0b038401',        // Plan $2,499 MXN
+  prueba: 'https://buy.stripe.com/test_14AdR8gGi8nX0406HEcV200'     // Plan Oculto Sandbox $0 (opcional para pruebas)
 };
 
 // Asignar enlaces de Stripe si están configurados
