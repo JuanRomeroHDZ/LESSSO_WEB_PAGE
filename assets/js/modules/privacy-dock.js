@@ -32,15 +32,20 @@ export function initPrivacyDock() {
     }
 
     dock.classList.remove('active');
+    document.body.classList.remove('has-notice-dock');
   }
 
   acceptBtn?.addEventListener('click', () => setConsent('granted'));
   rejectBtn?.addEventListener('click', () => setConsent('denied'));
-  closeBtn?.addEventListener('click', () => dock.classList.remove('active'));
+  closeBtn?.addEventListener('click', () => {
+    dock.classList.remove('active');
+    document.body.classList.remove('has-notice-dock');
+  });
 
   openLink?.addEventListener('click', (e) => {
     e.preventDefault();
     dock.classList.add('active');
+    document.body.classList.add('has-notice-dock');
   });
 
   // Mostrar el dock si no hay preferencia previa guardada
@@ -48,6 +53,7 @@ export function initPrivacyDock() {
   if (!saved) {
     setTimeout(() => {
       dock.classList.add('active');
+      document.body.classList.add('has-notice-dock');
     }, 600);
   }
 }
