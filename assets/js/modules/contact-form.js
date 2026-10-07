@@ -24,7 +24,6 @@ const ALLOWED_URGENCY = [
 
 const ALLOWED_BUDGET = [
   '',
-  'Suscripción Web ($800 - $2,500 MXN/mes)',
   'Suscripción Web ($799 - $2,499 MXN/mes)',
   'Menos de $10,000 MXN',
   '$10,000 a $25,000 MXN',

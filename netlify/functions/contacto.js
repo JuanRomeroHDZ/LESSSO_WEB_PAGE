@@ -19,7 +19,6 @@ const ALLOWED_URGENCY = [
 
 const ALLOWED_BUDGET = [
   '',
-  'Suscripción Web ($800 - $2,500 MXN/mes)',
   'Suscripción Web ($799 - $2,499 MXN/mes)',
   'Menos de $10,000 MXN',
   '$10,000 a $25,000 MXN',
@@ -220,7 +219,8 @@ exports.handler = async function (event, context) {
     let storageSuccess = false;
 
     try {
-      const netlifyRes = await fetch('https://www.lessso.com/', {
+      const siteUrl = process.env.URL || process.env.DEPLOY_PRIME_URL || process.env.NETLIFY_SITE_URL || 'https://www.lessso.com';
+      const netlifyRes = await fetch(`${siteUrl}/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',

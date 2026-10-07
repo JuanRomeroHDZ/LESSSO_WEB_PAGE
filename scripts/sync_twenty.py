@@ -13,6 +13,7 @@ Cero puertos abiertos en tu router: 100% arquitectura Pull segura.
 import os
 import sys
 import json
+import time
 import urllib.request
 import urllib.error
 from pathlib import Path
@@ -88,6 +89,43 @@ def find_form_id(site_id, form_name, token):
     if len(forms) == 1:
         return forms[0].get("id")
     return None
+
+
+def check_twenty_connectivity(twenty_url, twenty_key):
+    """
+    Verifica si Twenty CRM está disponible antes de procesar leads.
+    Comprueba el endpoint /healthz y fallback a /rest/people.
+    """
+    if not twenty_url:
+        return False
+    # 1. Endpoint oficial de salud de Twenty
+    health_url = f"{twenty_url.rstrip('/')}/healthz"
+    try:
+        req = urllib.request.Request(
+            health_url,
+            headers={"User-Agent": "LESSSO-TwentySync/1.0"}
+        )
+        with urllib.request.urlopen(req, timeout=5) as res:
+            if res.status == 200:
+                return True
+    except Exception:
+        pass
+
+    # 2. Respaldo: verificar autenticación y disponibilidad en REST API
+    try:
+        api_url = f"{twenty_url.rstrip('/')}/rest/people?limit=1"
+        req = urllib.request.Request(
+            api_url,
+            headers={
+                "Authorization": f"Bearer {twenty_key}",
+                "User-Agent": "LESSSO-TwentySync/1.0"
+            }
+        )
+        with urllib.request.urlopen(req, timeout=5) as res:
+            return res.status in (200, 201)
+    except Exception as e:
+        log(f"⚠️ Verificación de conectividad a Twenty CRM falló en {twenty_url}: {e}")
+        return False
 
 
 def push_to_twenty(lead_data, twenty_url, twenty_key, dry_run=False):
@@ -202,7 +240,7 @@ def main():
     netlify_token = os.environ.get("NETLIFY_TOKEN", env.get("NETLIFY_TOKEN"))
     site_id = os.environ.get("NETLIFY_SITE_ID", env.get("NETLIFY_SITE_ID"))
     form_name = os.environ.get("NETLIFY_FORM_NAME", env.get("NETLIFY_FORM_NAME", "contacto"))
-    twenty_url = os.environ.get("TWENTY_API_URL", env.get("TWENTY_API_URL", "http://twenty.crm:3000"))
+    twenty_url = os.environ.get("TWENTY_API_URL", env.get("TWENTY_API_URL", "http://localhost:3000"))
     twenty_key = os.environ.get("TWENTY_API_KEY", env.get("TWENTY_API_KEY"))
 
     if test_mode:
@@ -214,7 +252,7 @@ def main():
             "phone": "+52 (664) 426-7704",
             "service": "Suscripción Mensual de Página Web",
             "urgency": "Inmediato / Menos de 1 mes",
-            "budget": "Suscripción Web ($800 - $2,500 MXN/mes)",
+            "budget": "Suscripción Web ($799 - $2,499 MXN/mes)",
             "subject": "Solicitud de sitio web por suscripción",
             "message": "Mensaje de prueba para verificar registro de prospecto de desarrollo web en People de Twenty CRM."
         }
@@ -228,6 +266,14 @@ def main():
     if not netlify_token or not site_id:
         log("❌ Error: Faltan NETLIFY_TOKEN o NETLIFY_SITE_ID en .env")
         sys.exit(1)
+
+    # Validación previa de conectividad hacia Twenty CRM
+    if not dry_run:
+        if not check_twenty_connectivity(twenty_url, twenty_key):
+            log(f"⚠️ Twenty CRM no está disponible en {twenty_url}. Abortando ciclo para no desincronizar leads.")
+            sys.exit(1)
+        if verbose:
+            log(f"✅ Twenty CRM accesible y respondiendo en {twenty_url}.")
 
     log("Iniciando verificación de nuevos leads en Netlify Forms...")
     try:
@@ -250,6 +296,7 @@ def main():
 
     processed = get_processed_ids()
     nuevos = 0
+    MAX_RETRIES = 3
 
     for sub in submissions:
         sub_id = sub.get("id")
@@ -260,10 +307,21 @@ def main():
         if verbose:
             log(f"Procesando envío ID {sub_id}: {data}")
 
-        exito = push_to_twenty(data, twenty_url, twenty_key, dry_run=dry_run)
+        exito = False
+        for intento in range(MAX_RETRIES):
+            exito = push_to_twenty(data, twenty_url, twenty_key, dry_run=dry_run)
+            if exito:
+                break
+            if intento < MAX_RETRIES - 1:
+                backoff_sec = 2 ** intento
+                log(f"   ⏳ Reintentando inserción en Twenty CRM ({intento + 1}/{MAX_RETRIES}) en {backoff_sec}s...")
+                time.sleep(backoff_sec)
+
         if exito:
             processed.add(sub_id)
             nuevos += 1
+        else:
+            log(f"   ⚠️ Lead ID {sub_id} ({data.get('email', 'sin correo')}) falló tras {MAX_RETRIES} intentos. Se conservará para reintento en el próximo ciclo.")
 
     if not dry_run and nuevos > 0:
         save_processed_ids(processed)

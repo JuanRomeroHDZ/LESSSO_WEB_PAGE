@@ -35,7 +35,7 @@ class DevHandler(http.server.SimpleHTTPRequestHandler):
         lead = {k: v[0] if v else "" for k, v in parsed.items()}
 
         env = load_env(ENV_FILE)
-        twenty_url = os.environ.get("TWENTY_API_URL", env.get("TWENTY_API_URL", "http://twenty.crm:3000"))
+        twenty_url = os.environ.get("TWENTY_API_URL", env.get("TWENTY_API_URL", "http://localhost:3000"))
         twenty_key = os.environ.get("TWENTY_API_KEY", env.get("TWENTY_API_KEY"))
 
         print(f"\n📨 [LOCAL DEV SERVER] Recibido mensaje de formulario de: {lead.get('name')} ({lead.get('email')})")

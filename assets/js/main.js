@@ -32,12 +32,13 @@
     light: { node: '#09363c', line: 'rgba(9, 54, 60, 0.1)' }
   });
 
-  var STRIPE_ALLOWED_HOSTS = ['buy.stripe.com'];
+  var STRIPE_ALLOWED_HOSTS = ['buy.stripe.com', 'checkout.stripe.com'];
 
   var SUBSCRIPTION_PLANS = {
-    basico: { paymentLink: 'https://buy.stripe.com/test_placeholder_basico' },
-    profesional: { paymentLink: 'https://buy.stripe.com/test_placeholder_profesional' },
-    negocio: { paymentLink: 'https://buy.stripe.com/test_placeholder_negocio' }
+    basico: { paymentLink: 'https://buy.stripe.com/6oUfZj7Kn2bbbIQ2j838400' },
+    esencial: { paymentLink: 'https://buy.stripe.com/6oUfZj7Kn2bbbIQ2j838400' },
+    profesional: { paymentLink: 'https://buy.stripe.com/dRmfZjaWzcPP9AI5vk38402' },
+    negocio: { paymentLink: 'https://buy.stripe.com/fZu7sNc0D5nncMU0b038401' }
   };
 
   /* ============ ALMACENAMIENTO SEGURO ============ */
@@ -330,7 +331,6 @@
 
   var ALLOWED_BUDGET = [
     '',
-    'Suscripción Web ($800 - $2,500 MXN/mes)',
     'Suscripción Web ($799 - $2,499 MXN/mes)',
     'Menos de $10,000 MXN',
     '$10,000 a $25,000 MXN',
