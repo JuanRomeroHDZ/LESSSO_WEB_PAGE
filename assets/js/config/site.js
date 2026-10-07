@@ -1,6 +1,6 @@
 /* ============================================================
-   CONFIGURACIÓN GLOBAL DEL SITIO
-   Delega a la fuente única de verdad en assets/js/config.js
+   CONFIGURACIÓN GLOBAL DEL SITIO (Re-exportación delegada)
+   Fuente Única de Verdad: assets/js/config.js
    ============================================================ */
 
-export { SITE, THEME_META_COLORS, CANVAS_PALETTE } from '../config.js';
+export * from '../config.js';

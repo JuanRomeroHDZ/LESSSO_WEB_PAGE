@@ -1,7 +1,9 @@
 /* ============================================================
-   TEMA CLARO / OSCURO (Con accesibilidad en español)
+   TEMA CLARO / OSCURO (Accesible y resiliente)
+   Principios aplicados: DRY, Law of Demeter, SRP
    ============================================================ */
-import { SITE, THEME_META_COLORS } from '../config/site.js';
+
+import { SITE, THEME_META_COLORS } from '../config.js';
 import { readStorage, writeStorage } from '../core/storage.js';
 
 const root = document.documentElement;
@@ -18,7 +20,7 @@ export function applyTheme(theme) {
   root.setAttribute('data-theme', theme);
 
   const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.setAttribute('content', THEME_META_COLORS[theme]);
+  if (meta) meta.setAttribute('content', THEME_META_COLORS[theme] || THEME_META_COLORS.light);
 
   const toggle = document.getElementById('themeToggle');
   if (toggle) {
@@ -32,24 +34,26 @@ export function applyTheme(theme) {
 function getInitialTheme() {
   const stored = readStorage(SITE.themeStorageKey);
   if (THEMES.includes(stored)) return stored;
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 }
 
 /**
  * Aplica el tema guardado (o el del sistema) y conecta el botón de cambio.
- * @param {HTMLElement|null} toggle Botón que alterna el tema.
+ * @param {HTMLElement|null} [toggle] Botón que alterna el tema.
  */
-export function initTheme(toggle) {
+export function initTheme(toggle = document.getElementById('themeToggle')) {
   applyTheme(getInitialTheme());
 
-  toggle?.addEventListener('click', () => {
+  toggle?.addEventListener('click', (e) => {
+    e.preventDefault();
     applyTheme(getTheme() === 'dark' ? 'light' : 'dark');
   });
 
-  // Escuchar cambios de preferencia en el sistema operativo
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-    if (!readStorage(SITE.themeStorageKey)) {
-      applyTheme(e.matches ? 'dark' : 'light');
-    }
-  });
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      if (!readStorage(SITE.themeStorageKey)) {
+        applyTheme(e.matches ? 'dark' : 'light');
+      }
+    });
+  }
 }

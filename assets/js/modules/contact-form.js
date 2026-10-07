@@ -1,54 +1,99 @@
 /* ============================================================
-   FORMULARIO DE CONTACTO (Arquitectura Unificada)
-   - Un solo flujo seguro: Formulario -> Validación -> /.netlify/functions/contacto
-   - Validación y saneamiento riguroso de entradas
-   - Filtro de teléfono puramente en JS (sin oninput inline)
-   - Mensajes con textContent y fallback estructurado
+   FORMULARIO DE CONTACTO (Arquitectura Modular y Segura)
+   Principios aplicados:
+   - SOLID (SRP: validación pura aislada de UI; OCP: reglas extensibles)
+   - DRY: consume opciones y listas desde CONFIG
+   - Law of Demeter: consultas DOM acotadas al contenedor del formulario
+   - KISS: flujo predecible con manejo amigable de fallos
    ============================================================ */
 
-const ALLOWED_SERVICES = [
-  'Desarrollo Web a la Medida',
-  'Suscripción Mensual de Página Web',
-  'Mantenimiento o Actualización Web',
-  'E-commerce / Tienda en Línea',
-  'Infraestructura & Servidores Linux',
-  'Seguridad Web & Hardening',
-  'Cotización General o Duda'
-];
+import { SERVICES, URGENCY_OPTIONS, BUDGET_OPTIONS } from '../config.js';
 
-const ALLOWED_URGENCY = [
-  'Inmediato / Menos de 1 mes',
-  '1 a 3 meses',
-  'Solo explorando opciones'
-];
-
-const ALLOWED_BUDGET = [
-  '',
-  'Suscripción Web ($799 - $2,499 MXN/mes)',
-  'Menos de $10,000 MXN',
-  '$10,000 a $25,000 MXN',
-  '$25,000 a $50,000 MXN',
-  'Más de $50,000 MXN',
-  'Por definir / Explorando'
-];
-
-function sanitizeString(str) {
+/**
+ * Sanitiza cadenas de texto eliminando caracteres nulos y espacios residuales.
+ * @param {unknown} str
+ * @returns {string}
+ */
+export function sanitizeString(str) {
   if (typeof str !== 'string') return '';
   return str.replace(/\0/g, '').trim();
 }
 
-function sanitizeSingleLine(str) {
+/**
+ * Sanitiza cadenas a una sola línea (para campos como nombre, email, teléfono, asunto).
+ * @param {unknown} str
+ * @returns {string}
+ */
+export function sanitizeSingleLine(str) {
   return sanitizeString(str).replace(/[\r\n\t]/g, ' ').replace(/\s+/g, ' ');
 }
 
+/**
+ * Validador puro de datos del formulario de contacto (SRP).
+ * Sin efectos secundarios ni dependencias de DOM.
+ * @param {Object} data Datos saneados del formulario.
+ * @param {Object} [options] Listas permitidas opcionales para extensión (OCP).
+ * @returns {{ isValid: boolean, error?: string, field?: string }}
+ */
+export function validateContactFormData(data, options = {}) {
+  const allowedServices = options.services || SERVICES;
+  const allowedUrgency = options.urgencyOptions || URGENCY_OPTIONS;
+  const allowedBudget = options.budgetOptions || BUDGET_OPTIONS;
+
+  const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
+
+  if (!data.name || data.name.length < 2 || data.name.length > 100) {
+    return { isValid: false, field: 'name', error: 'Por favor ingresa un nombre válido (2 a 100 caracteres).' };
+  }
+
+  if (!data.email || !emailRegex.test(data.email) || data.email.length > 150) {
+    return { isValid: false, field: 'email', error: 'Por favor introduce un correo electrónico válido.' };
+  }
+
+  if (data.phone && (data.phone.length > 25 || !/^[0-9+\-()\s.]{7,25}$/.test(data.phone))) {
+    return { isValid: false, field: 'phone', error: 'Por favor introduce un número de teléfono o WhatsApp válido.' };
+  }
+
+  if (!allowedServices.includes(data.service)) {
+    return { isValid: false, field: 'service', error: 'Por favor selecciona un servicio válido de la lista.' };
+  }
+
+  if (!allowedUrgency.includes(data.urgency)) {
+    return { isValid: false, field: 'urgency', error: 'Por favor selecciona un plazo o urgencia de la lista.' };
+  }
+
+  if (data.budget && !allowedBudget.includes(data.budget)) {
+    return { isValid: false, field: 'budget', error: 'Por favor selecciona una opción de presupuesto válida.' };
+  }
+
+  if (!data.subject || data.subject.length < 3 || data.subject.length > 120) {
+    return { isValid: false, field: 'subject', error: 'El asunto debe contener entre 3 y 120 caracteres.' };
+  }
+
+  if (!data.message || data.message.length < 10 || data.message.length > 3000) {
+    return { isValid: false, field: 'message', error: 'El mensaje debe contener entre 10 y 3,000 caracteres.' };
+  }
+
+  if (!data.privacyConsent) {
+    return { isValid: false, field: 'privacyConsent', error: 'Debes aceptar el Aviso de Privacidad para continuar.' };
+  }
+
+  return { isValid: true };
+}
+
+/**
+ * Inicializa el comportamiento interactivo del formulario de contacto.
+ * @param {HTMLFormElement|null} form Elemento del formulario.
+ */
 export function initContactForm(form) {
   if (!form) return;
 
+  // Law of Demeter: Búsqueda acotada al contexto del formulario
   const phoneInput = form.querySelector('#phone');
-  const statusEl = document.getElementById('formStatus');
-  const submitBtn = document.getElementById('submitBtn');
+  const submitBtn = form.querySelector('button[type="submit"]') || form.querySelector('#submitBtn');
+  const statusEl = form.querySelector('.form-status') || form.parentElement?.querySelector('#formStatus') || document.getElementById('formStatus');
 
-  // Restricción de teléfono: bloquear letras en tiempo real puramente en JS
+  // Filtro de teclado en tiempo real para teléfono (solo dígitos y símbolos válidos)
   if (phoneInput) {
     phoneInput.addEventListener('keydown', (e) => {
       const allowedKeys = ['Backspace', 'Delete', 'Tab', 'Escape', 'Enter', 'ArrowLeft', 'ArrowRight', 'Home', 'End'];
@@ -85,94 +130,51 @@ export function initContactForm(form) {
       return;
     }
 
-    // 2. Extracción y saneamiento
-    const name = sanitizeSingleLine(form.elements['name']?.value || '');
-    const email = sanitizeSingleLine(form.elements['email']?.value || '');
-    const phone = sanitizeSingleLine(form.elements['phone']?.value || '');
-    const service = sanitizeSingleLine(form.elements['service']?.value || '');
-    const urgency = sanitizeSingleLine(form.elements['urgency']?.value || '');
-    const budget = sanitizeSingleLine(form.elements['budget']?.value || '');
-    const subject = sanitizeSingleLine(form.elements['subject']?.value || '');
-    const message = sanitizeString(form.elements['message']?.value || '');
-    const privacyConsent = form.elements['privacyConsent']?.checked;
+    // 2. Extracción y saneamiento de datos
+    const formData = {
+      name: sanitizeSingleLine(form.elements['name']?.value || ''),
+      email: sanitizeSingleLine(form.elements['email']?.value || ''),
+      phone: sanitizeSingleLine(form.elements['phone']?.value || ''),
+      service: sanitizeSingleLine(form.elements['service']?.value || ''),
+      urgency: sanitizeSingleLine(form.elements['urgency']?.value || ''),
+      budget: sanitizeSingleLine(form.elements['budget']?.value || ''),
+      subject: sanitizeSingleLine(form.elements['subject']?.value || ''),
+      message: sanitizeString(form.elements['message']?.value || ''),
+      privacyConsent: Boolean(form.elements['privacyConsent']?.checked),
+    };
 
-    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
-
-    if (name.length < 2 || name.length > 100) {
-      showStatus('Por favor ingresa un nombre válido (2 a 100 caracteres).', 'error');
-      form.elements['name']?.focus();
+    // 3. Validación pura delegada (SRP)
+    const validation = validateContactFormData(formData);
+    if (!validation.isValid) {
+      showStatus(validation.error, 'error');
+      if (validation.field && form.elements[validation.field]) {
+        form.elements[validation.field].focus();
+      }
       return;
     }
 
-    if (!emailRegex.test(email) || email.length > 150) {
-      showStatus('Por favor introduce un correo electrónico válido.', 'error');
-      form.elements['email']?.focus();
-      return;
-    }
-
-    if (phone && (phone.length > 25 || !/^[0-9+\-()\s.]{7,25}$/.test(phone))) {
-      showStatus('Por favor introduce un número de teléfono o WhatsApp válido.', 'error');
-      form.elements['phone']?.focus();
-      return;
-    }
-
-    if (!ALLOWED_SERVICES.includes(service)) {
-      showStatus('Por favor selecciona un servicio válido de la lista.', 'error');
-      form.elements['service']?.focus();
-      return;
-    }
-
-    if (!ALLOWED_URGENCY.includes(urgency)) {
-      showStatus('Por favor selecciona un plazo o urgencia de la lista.', 'error');
-      form.elements['urgency']?.focus();
-      return;
-    }
-
-    if (budget && !ALLOWED_BUDGET.includes(budget)) {
-      showStatus('Por favor selecciona una opción de presupuesto válida.', 'error');
-      form.elements['budget']?.focus();
-      return;
-    }
-
-    if (subject.length < 3 || subject.length > 120) {
-      showStatus('El asunto debe contener entre 3 y 120 caracteres.', 'error');
-      form.elements['subject']?.focus();
-      return;
-    }
-
-    if (message.length < 10 || message.length > 3000) {
-      showStatus('El mensaje debe contener entre 10 y 3,000 caracteres.', 'error');
-      form.elements['message']?.focus();
-      return;
-    }
-
-    if (!privacyConsent) {
-      showStatus('Debes aceptar el Aviso de Privacidad para continuar.', 'error');
-      form.elements['privacyConsent']?.focus();
-      return;
-    }
-
+    // 4. Actualizar estado de interfaz
     if (submitBtn) {
       submitBtn.disabled = true;
       submitBtn.textContent = 'Enviando...';
     }
     if (statusEl) statusEl.style.display = 'none';
 
-    // 3. Envío al endpoint unificado
-    // Si estamos en localhost y corre dev_server.py en puerto 8080, POST a '/' maneja Twenty CRM directo
+    // 5. Envío al endpoint unificado
+    // Si corre dev_server.py en localhost:8080, POST a '/' maneja Twenty CRM directo
     const isDevServer = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
     const targetEndpoint = isDevServer ? '/' : '/.netlify/functions/contacto';
 
     const payload = new URLSearchParams({
       'form-name': 'contacto',
-      name,
-      email,
-      phone,
-      service,
-      urgency,
-      budget,
-      subject,
-      message
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      service: formData.service,
+      urgency: formData.urgency,
+      budget: formData.budget,
+      subject: formData.subject,
+      message: formData.message,
     }).toString();
 
     try {
@@ -180,9 +182,9 @@ export function initContactForm(form) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
-          'Accept': 'application/json'
+          'Accept': 'application/json',
         },
-        body: payload
+        body: payload,
       });
 
       const resData = await res.json().catch(() => ({}));

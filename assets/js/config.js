@@ -1,11 +1,13 @@
 /* ============================================================
    CONFIGURACIÓN CENTRALIZADA LESSSO (Fuente Única de Verdad)
+   Principios aplicados: DRY, Single Source of Truth, Immutability
    ============================================================ */
 
 export const CONFIG = Object.freeze({
   site: Object.freeze({
     contactEmail: 'contacto@lessso.com',
     themeStorageKey: 'lessso-theme',
+    consentStorageKey: 'lessso-cookie-consent',
   }),
   themeMetaColors: Object.freeze({
     dark: '#0c0a09',
@@ -64,9 +66,12 @@ export const CONFIG = Object.freeze({
   ]),
 });
 
-// Re-exportaciones para compatibilidad modular
-export const SUBSCRIPTION_PLANS = CONFIG.plans;
-export const STRIPE_ALLOWED_HOSTS = CONFIG.stripeAllowedHosts;
+// Re-exportaciones nombradas para consumo ergonómico y tipado
 export const SITE = CONFIG.site;
 export const THEME_META_COLORS = CONFIG.themeMetaColors;
 export const CANVAS_PALETTE = CONFIG.canvasPalette;
+export const STRIPE_ALLOWED_HOSTS = CONFIG.stripeAllowedHosts;
+export const SUBSCRIPTION_PLANS = CONFIG.plans;
+export const BUDGET_OPTIONS = CONFIG.budgetOptions;
+export const SERVICES = CONFIG.services;
+export const URGENCY_OPTIONS = CONFIG.urgencyOptions;

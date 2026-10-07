@@ -2,8 +2,10 @@
    CANVAS ANIMATION — Red sutil de fondo (Optimizado)
    - Pausa cuando la pestaña está inactiva (document.hidden)
    - Respeta prefers-reduced-motion
+   - Principios: DRY (importa paleta desde config.js), SRP
    ============================================================ */
-import { CANVAS_PALETTE } from '../config/site.js';
+
+import { CANVAS_PALETTE } from '../config.js';
 import { getTheme, THEME_CHANGE_EVENT } from './theme.js';
 
 const LINK_DISTANCE = 150;

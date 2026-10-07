@@ -1,6 +1,6 @@
 /* ============================================================
-   CONFIGURACIÓN DE SUSCRIPCIONES (STRIPE)
-   Delega a la fuente única de verdad en assets/js/config.js
+   CONFIGURACIÓN DE SUSCRIPCIONES (Re-exportación delegada)
+   Fuente Única de Verdad: assets/js/config.js
    ============================================================ */
 
-export { SUBSCRIPTION_PLANS, STRIPE_ALLOWED_HOSTS } from '../config.js';
+export * from '../config.js';

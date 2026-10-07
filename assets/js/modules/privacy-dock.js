@@ -1,56 +1,51 @@
 /* ============================================================
    DOCK DE PRIVACIDAD Y CONSENTIMIENTO DE COOKIES
-   - Unificado en 'lessso-cookie-consent'
-   - Sin heurísticas frágiles de bloqueo
+   - Unificado con SITE.consentStorageKey desde config.js
+   - Almacenamiento resiliente vía core/storage.js
    - Compatible con Google Consent Mode v2
+   - Principios aplicados: DRY, Law of Demeter, SRP
    ============================================================ */
 
-const CONSENT_STORAGE_KEY = 'lessso-cookie-consent';
+import { SITE } from '../config.js';
+import { readStorage, writeStorage } from '../core/storage.js';
 
 export function initPrivacyDock() {
   const dock = document.getElementById('siteNoticeDock');
-  const closeBtn = document.getElementById('dockCloseBtn');
-  const acceptBtn = document.getElementById('dockAcceptBtn');
-  const rejectBtn = document.getElementById('dockRejectBtn');
-  const openLink = document.getElementById('openSiteNotice');
-
   if (!dock) return;
 
+  const closeBtn = dock.querySelector('#dockCloseBtn') || document.getElementById('dockCloseBtn');
+  const acceptBtn = dock.querySelector('#dockAcceptBtn') || document.getElementById('dockAcceptBtn');
+  const rejectBtn = dock.querySelector('#dockRejectBtn') || document.getElementById('dockRejectBtn');
+  const openLink = document.getElementById('openSiteNotice');
+
   function setConsent(status) {
-    try {
-      localStorage.setItem(CONSENT_STORAGE_KEY, status);
-    } catch (e) {}
+    writeStorage(SITE.consentStorageKey, status);
 
     try {
       if (typeof window.gtag === 'function') {
         window.gtag('consent', 'update', {
-          analytics_storage: status === 'granted' ? 'granted' : 'denied'
+          analytics_storage: status === 'granted' ? 'granted' : 'denied',
         });
       }
-    } catch (e) {}
+    } catch {
+      // Ignorar si gtag no está disponible
+    }
 
     dock.classList.remove('active');
   }
 
-  if (acceptBtn) acceptBtn.addEventListener('click', () => setConsent('granted'));
-  if (rejectBtn) rejectBtn.addEventListener('click', () => setConsent('denied'));
-  if (closeBtn) closeBtn.addEventListener('click', () => dock.classList.remove('active'));
+  acceptBtn?.addEventListener('click', () => setConsent('granted'));
+  rejectBtn?.addEventListener('click', () => setConsent('denied'));
+  closeBtn?.addEventListener('click', () => dock.classList.remove('active'));
 
-  if (openLink) {
-    openLink.addEventListener('click', (e) => {
-      e.preventDefault();
-      dock.classList.add('active');
-    });
-  }
+  openLink?.addEventListener('click', (e) => {
+    e.preventDefault();
+    dock.classList.add('active');
+  });
 
-  // Mostrar el dock si no hay preferencia guardada previa
-  let saved = null;
-  try {
-    saved = localStorage.getItem(CONSENT_STORAGE_KEY);
-  } catch (e) {}
-
+  // Mostrar el dock si no hay preferencia previa guardada
+  const saved = readStorage(SITE.consentStorageKey);
   if (!saved) {
-    // Dar un breve retraso para no bloquear la carga inicial
     setTimeout(() => {
       dock.classList.add('active');
     }, 600);

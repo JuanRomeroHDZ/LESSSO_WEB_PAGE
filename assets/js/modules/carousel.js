@@ -1,30 +1,28 @@
 /* ============================================================
-   CARRUSEL HORIZONTAL DE PROYECTOS (Accesible)
+   CARRUSEL HORIZONTAL DE PROYECTOS (Accesible y responsivo)
+   Principios aplicados: Law of Demeter, SRP
    ============================================================ */
 
-export function initProjectsCarousel() {
-  const slider = document.getElementById('projectsSlider');
-  const prevBtn = document.getElementById('projPrevBtn');
-  const nextBtn = document.getElementById('projNextBtn');
-  const dots = document.querySelectorAll('#carouselDots .dot');
+export function initProjectsCarousel(slider = document.getElementById('projectsSlider')) {
   if (!slider) return;
+
+  const section = slider.closest('section') || document;
+  const prevBtn = section.querySelector('#projPrevBtn') || document.getElementById('projPrevBtn');
+  const nextBtn = section.querySelector('#projNextBtn') || document.getElementById('projNextBtn');
+  const dots = section.querySelectorAll('#carouselDots .dot');
 
   function getStep() {
     const card = slider.querySelector('.project');
     return card ? card.offsetWidth + 28 : 340;
   }
 
-  if (prevBtn) {
-    prevBtn.addEventListener('click', () => {
-      slider.scrollBy({ left: -getStep(), behavior: 'smooth' });
-    });
-  }
+  prevBtn?.addEventListener('click', () => {
+    slider.scrollBy({ left: -getStep(), behavior: 'smooth' });
+  });
 
-  if (nextBtn) {
-    nextBtn.addEventListener('click', () => {
-      slider.scrollBy({ left: getStep(), behavior: 'smooth' });
-    });
-  }
+  nextBtn?.addEventListener('click', () => {
+    slider.scrollBy({ left: getStep(), behavior: 'smooth' });
+  });
 
   // Actualizar dots e indicadores accesibles
   slider.addEventListener('scroll', () => {
