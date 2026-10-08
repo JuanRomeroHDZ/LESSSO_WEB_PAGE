@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aviso de Cookies | LESSSO</title>
+  <meta name="description"
+    content="Información transparente sobre las cookies esenciales y analíticas utilizadas en LESSSO, su finalidad y cómo administrarlas.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://lessso.com/avisoCookies.html">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;900&family=Fraunces:wght@400;600;700&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/legal.css">
+
+  <!-- Detección y aplicación inmediata de tema (cero FOUC) -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('lessso-theme');
+        if (!t && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          t = 'dark';
+        }
+        if (!t) t = 'light';
+        document.documentElement.setAttribute('data-theme', t);
+        document.documentElement.classList.toggle('dark', t === 'dark');
+        document.documentElement.classList.toggle('light', t === 'light');
+      } catch (e) { }
+    })();
+  </script>
+
+  <!-- Google Consent Mode v2 (Default: Denied salvo consentimiento previo del usuario) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    var savedConsent = null;
+    try { savedConsent = localStorage.getItem('lessso-cookie-consent'); } catch (e) { }
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage': savedConsent === 'granted' ? 'granted' : 'denied',
+      'wait_for_update': 500
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-229MRPLGXM"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-229MRPLGXM');
+  </script>
+
+  <style>
+    .cookies-table-wrapper {
+      overflow-x: auto;
+      margin: 1.5rem 0 2rem;
+    }
+
+    table.cookies-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    table.cookies-table th,
+    table.cookies-table td {
+      padding: 0.85rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+    }
+
+    table.cookies-table th {
+      background: var(--accent-soft);
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    table.cookies-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .badge-cookie {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.2rem 0.5rem;
+      border-radius: 999px;
+    }
+
+    .badge-cookie--tech {
+      background: rgba(18, 135, 138, 0.12);
+      color: var(--accent);
+    }
+
+    .badge-cookie--opt {
+      background: rgba(234, 88, 12, 0.12);
+      color: #ea580c;
+    }
+
+    html[data-theme="dark"] .badge-cookie--opt {
+      background: rgba(251, 146, 60, 0.15);
+      color: #fdba74;
+    }
+
+    .btn-action-pref {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent);
+      color: var(--paper);
+      padding: 0.75rem 1.25rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.92rem;
+      margin-top: 1rem;
+      transition: opacity 0.2s;
+    }
+
+    .btn-action-pref:hover {
+      opacity: 0.9;
+      color: var(--paper);
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="header-bar">
+      <a href="index.html" class="brand">LESSSO<em>.</em></a>
+      <a href="index.html" class="header-back-link">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
+          style="vertical-align:-2px;margin-right:4px;">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Volver al sitio principal
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <div class="legal-layout">
+      <aside class="legal-sidebar" aria-label="Índice de contenido">
+        <nav class="legal-toc">
+          <div class="toc-header">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="8" y1="6" x2="21" y2="6"></line>
+              <line x1="8" y1="12" x2="21" y2="12"></line>
+              <line x1="8" y1="18" x2="21" y2="18"></line>
+              <line x1="3" y1="6" x2="3.01" y2="6"></line>
+              <line x1="3" y1="12" x2="3.01" y2="12"></line>
+              <line x1="3" y1="18" x2="3.01" y2="18"></line>
+            </svg>
+            <span>Índice</span>
+          </div>
+          <ul class="toc-list">
+            <li><a href="#sec-que-son" class="toc-link">1. ¿Qué son las cookies?</a></li>
+            <li><a href="#sec-tipos" class="toc-link">2. Cookies que utilizamos</a></li>
+            <li><a href="#sec-consent-mode" class="toc-link">3. Analytics y Consent Mode v2</a></li>
+            <li><a href="#sec-gestion" class="toc-link">4. Gestión de preferencias</a></li>
+            <li><a href="#sec-modificaciones" class="toc-link">5. Modificaciones</a></li>
+            <li><a href="#sec-contacto" class="toc-link">6. Contacto</a></li>
+          </ul>
+        </nav>
+      </aside>
+      <article class="legal-content">
+        <h1>Aviso de Cookies</h1>
+        <p class="updated">Última actualización: octubre de 2026</p>
+
+        <p>En <strong>LESSSO</strong> buscamos mantener una gestión clara y transparente de las tecnologías utilizadas
+          en nuestro sitio web. Este documento explica qué son las cookies, qué información puede almacenarse mediante
+          tecnologías del navegador y cómo puedes administrar tus preferencias de privacidad.</p>
+
+        <h2 id="sec-que-son">1. ¿Qué son las cookies y el almacenamiento local?</h2>
+        <p>Las cookies son pequeños archivos de información que los sitios web pueden almacenar en tu navegador cuando
+          los visitas. El almacenamiento local (<code>localStorage</code>) y el almacenamiento de sesión
+          (<code>sessionStorage</code>) son mecanismos del navegador que permiten guardar determinada información en el
+          dispositivo del visitante para mantener preferencias o permitir el funcionamiento de determinadas funciones
+          del sitio.</p>
+        <p>En LESSSO utilizamos estas tecnologías principalmente para conservar determinadas preferencias de navegación
+          y gestionar la elección relacionada con la analítica opcional. La utilización de tecnologías de analítica se
+          encuentra sujeta a la preferencia de consentimiento seleccionada por el visitante.</p>
+
+        <h2 id="sec-tipos">2. Tipos de cookies y almacenamiento que utilizamos</h2>
+        <p>En LESSSO no utilizamos cookies publicitarias ni tecnologías destinadas a crear perfiles de consumo para
+          publicidad personalizada o redes de reorientación comercial. Las tecnologías utilizadas en el sitio pueden
+          clasificarse de la siguiente manera:</p>
+
+        <div class="cookies-table-wrapper">
+          <table class="cookies-table">
+            <thead>
+              <tr>
+                <th>Clave / Cookie</th>
+                <th>Tipo</th>
+                <th>Propósito</th>
+                <th>Duración</th>
+                <th>Categoría</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>lessso-theme</code></td>
+                <td>localStorage</td>
+                <td>Guarda la preferencia de tema claro u oscuro para conservarla durante la navegación y evitar cambios
+                  visuales innecesarios.</td>
+                <td>Persistente en navegador</td>
+                <td><span class="badge-cookie badge-cookie--tech">Esencial</span></td>
+              </tr>
+              <tr>
+                <td><code>lessso-cookie-consent</code></td>
+                <td>localStorage</td>
+                <td>Registra la decisión del visitante respecto de la analítica opcional para respetar la preferencia
+                  seleccionada.</td>
+                <td>Persistente en navegador</td>
+                <td><span class="badge-cookie badge-cookie--tech">Esencial</span></td>
+              </tr>
+              <tr>
+                <td><code>sessionStorage</code></td>
+                <td>Almacenamiento de sesión</td>
+                <td>Permite conservar temporalmente determinada información necesaria para funciones del sitio durante
+                  la sesión de navegación.</td>
+                <td>Durante la sesión</td>
+                <td><span class="badge-cookie badge-cookie--tech">Esencial</span></td>
+              </tr>
+              <tr>
+                <td><code>_ga</code>, <code>_ga_*</code></td>
+                <td>Cookie HTTP</td>
+                <td>Utilizadas por Google Analytics (ID de medición: <code>G-229MRPLGXM</code>) para obtener información
+                  estadística sobre el uso y rendimiento del sitio, como visitas, páginas consultadas y determinados
+                  datos técnicos.</td>
+                <td>Hasta 2 años</td>
+                <td><span class="badge-cookie badge-cookie--opt">Analítica (Opcional)</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Las cookies de Google Analytics corresponden a la categoría de analítica opcional y no forman parte de las
+          tecnologías esenciales utilizadas para el funcionamiento básico del sitio.</p>
+
+        <h2 id="sec-consent-mode">3. Google Analytics y Google Consent Mode v2</h2>
+        <p>Utilizamos <strong>Google Analytics 4</strong> para obtener información estadística sobre el uso y
+          rendimiento del sitio web, como el volumen de visitas, las páginas consultadas, información general sobre
+          navegadores o dispositivos y determinados datos relacionados con el rendimiento.</p>
+
+        <p>La analítica web se encuentra <strong>deshabilitada por defecto</strong>. El sitio utiliza la configuración
+          de consentimiento de Google para mantener <code>analytics_storage</code> en estado <code>denied</code> hasta
+          que el visitante otorgue su consentimiento para la analítica opcional. Si el visitante acepta la analítica,
+          esta configuración puede cambiar a <code>granted</code> y habilitar las tecnologías correspondientes de Google
+          Analytics.</p>
+
+        <div class="box">
+          <p><strong>Preferencias publicitarias:</strong> El sitio configura los parámetros <code>ad_storage</code>,
+            <code>ad_user_data</code> y <code>ad_personalization</code> como <code>denied</code>. LESSSO no utiliza
+            estas funciones para realizar publicidad personalizada o crear perfiles publicitarios a través del sitio.
+          </p>
+        </div>
+
+        <p>Google Analytics puede procesar información técnica y estadística relacionada con la navegación de acuerdo
+          con sus propias condiciones y políticas de privacidad. Para conocer y modificar la preferencia de analítica
+          utilizada en este sitio, puedes utilizar nuestro centro de preferencias.</p>
+
+        <h2 id="sec-gestion">4. Cómo gestionar o revocar tus preferencias</h2>
+        <p>Tienes la posibilidad de modificar tu preferencia respecto de la analítica opcional en cualquier momento
+          mediante nuestro centro de preferencias interactivo:</p>
+
+        <p>
+          <a href="avisoPreferenciasPrivacidad.html" class="btn-action-pref">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
+              style="vertical-align: -2px; margin-right: 6px;">
+              <circle cx="12" cy="12" r="3" />
+              <path
+                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0 1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+            </svg>Administrar Preferencias de Privacidad
+          </a>
+        </p>
+
+        <p style="margin-top: 1.5rem;">También puedes administrar o eliminar las cookies almacenadas mediante las
+          opciones de tu navegador. Ten en cuenta que algunas funciones que dependen de tecnologías esenciales podrían
+          verse afectadas si estas se bloquean:</p>
+        <ul>
+          <li><strong>Google Chrome:</strong> Configuración &gt; Privacidad y seguridad &gt; Cookies y otros datos de
+            sitios.</li>
+          <li><strong>Mozilla Firefox:</strong> Ajustes &gt; Privacidad &amp; Seguridad &gt; Cookies y datos del sitio.
+          </li>
+          <li><strong>Apple Safari:</strong> Preferencias &gt; Privacidad &gt; Administrar datos del sitio web.</li>
+          <li><strong>Microsoft Edge:</strong> Configuración &gt; Cookies y permisos del sitio &gt; Administrar y
+            eliminar cookies.</li>
+        </ul>
+
+        <h2 id="sec-modificaciones">5. Modificaciones a este Aviso de Cookies</h2>
+        <p>Podemos actualizar este aviso cuando existan cambios en las tecnologías utilizadas por el sitio, en los
+          servicios de terceros integrados o en las disposiciones aplicables. La fecha de última actualización se
+          indicará al inicio del documento.</p>
+
+        <h2 id="sec-contacto">6. Servicios de terceros y contacto</h2>
+        <p>El sitio web puede utilizar determinados servicios y recursos proporcionados por terceros. Entre ellos se
+          encuentran <strong>Google Analytics</strong> para analítica opcional, <strong>Google Maps</strong> para
+          mostrar información de ubicación relacionada con la operación de LESSSO y <strong>Google Fonts</strong> para
+          determinados recursos tipográficos utilizados en el sitio. Estos servicios pueden realizar solicitudes desde
+          el navegador del visitante y tratar información técnica conforme a sus propias políticas y condiciones.</p>
+
+        <p>El uso de Google Maps en este sitio tiene como finalidad mostrar la ubicación o zona de operación de LESSSO y
+          no se utiliza por LESSSO para solicitar o determinar la ubicación física del visitante.</p>
+
+        <p>Si tienes preguntas sobre este Aviso de Cookies o el manejo de tu información, escríbenos a <a
+            href="mailto:legal@lessso.com">legal@lessso.com</a> o a <a
+            href="mailto:contacto@lessso.com">contacto@lessso.com</a>.</p>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 <strong>LESSSO</strong>. Todos los derechos reservados.</p>
+    <p style="margin-top: 0.75rem; font-size: 0.85rem;">
+      <a href="index.html">Volver al inicio</a>
+      &nbsp;·&nbsp;
+      <a href="avisoPrivacidad.html">Aviso de Privacidad</a>
+      &nbsp;·&nbsp;
+      <a href="avisoTerminosCondiciones.html">Términos y Condiciones</a>
+      &nbsp;·&nbsp;
+      <a href="avisoPreferenciasPrivacidad.html">Preferencias de Privacidad</a>
+      &nbsp;·&nbsp;
+      <a href="avisoCookies.html">Aviso de Cookies</a>
+    </p>
+  </footer>
+
+  <script src="assets/js/modules/legal-toc.js" defer></script>
+</body>
+
+</html>

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preferencias de Privacidad | LESSSO</title>
+  <meta name="description"
+    content="Centro de preferencias de privacidad y gestión interactiva de cookies de LESSSO. Administra tu consentimiento de analítica de forma transparente.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://lessso.com/avisoPreferenciasPrivacidad.html">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;900&family=Fraunces:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/legal.css">
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('lessso-theme');
+        if (!t && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          t = 'dark';
+        }
+        if (!t) t = 'light';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) { }
+    })();
+  </script>
+
+  <!-- Google Consent Mode v2 (Default: Denied salvo consentimiento previo del usuario) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    var savedConsent = null;
+    try { savedConsent = localStorage.getItem('lessso-cookie-consent'); } catch (e) { }
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage': savedConsent === 'granted' ? 'granted' : 'denied',
+      'wait_for_update': 500
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-229MRPLGXM"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-229MRPLGXM');
+  </script>
+
+  <style>
+    .pref-card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    }
+
+    .pref-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .pref-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin: 0;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      line-height: 1.2;
+    }
+
+    .badge-essential {
+      background: rgba(18, 135, 138, 0.12);
+      color: var(--accent);
+      border: 1px solid rgba(18, 135, 138, 0.25);
+    }
+
+    .badge-status-granted {
+      background: rgba(22, 101, 52, 0.12);
+      color: #166534;
+      border: 1px solid rgba(22, 101, 52, 0.25);
+    }
+
+    html[data-theme="dark"] .badge-status-granted {
+      background: rgba(74, 222, 128, 0.15);
+      color: #86efac;
+      border-color: rgba(74, 222, 128, 0.3);
+    }
+
+    .badge-status-denied {
+      background: rgba(153, 27, 27, 0.12);
+      color: #991b1b;
+      border: 1px solid rgba(153, 27, 27, 0.25);
+    }
+
+    html[data-theme="dark"] .badge-status-denied {
+      background: rgba(248, 113, 113, 0.15);
+      color: #fca5a5;
+      border-color: rgba(248, 113, 113, 0.3);
+    }
+
+    .badge-status-unset {
+      background: rgba(180, 83, 9, 0.12);
+      color: #b45309;
+      border: 1px solid rgba(180, 83, 9, 0.25);
+    }
+
+    html[data-theme="dark"] .badge-status-unset {
+      background: rgba(251, 191, 36, 0.15);
+      color: #fde68a;
+      border-color: rgba(251, 191, 36, 0.3);
+    }
+
+    .pref-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+    }
+
+    .btn-pref {
+      padding: 0.6rem 1.15rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: var(--font-body);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--paper);
+      border: 1px solid var(--accent);
+    }
+
+    .btn-primary:hover {
+      opacity: 0.92;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--line);
+    }
+
+    .btn-secondary:hover {
+      background: var(--accent-soft);
+    }
+
+    .pref-feedback {
+      margin-top: 1rem;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      display: none;
+      background: var(--accent-soft);
+      border: 1px solid var(--line);
+      color: var(--ink);
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.25rem 0;
+      font-size: 0.9rem;
+    }
+
+    .data-table th,
+    .data-table td {
+      border: 1px solid var(--line);
+      padding: 0.75rem 1rem;
+      text-align: left;
+    }
+
+    .data-table th {
+      background: var(--accent-soft);
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .data-table td {
+      color: var(--ink-soft);
+    }
+
+    .pref-nav-links {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="header-bar">
+      <a href="index.html" class="brand">LESSSO<em>.</em></a>
+      <a href="index.html" class="header-back-link">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
+          style="vertical-align:-2px;margin-right:4px;">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Volver al sitio principal
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <div class="legal-layout">
+      <aside class="legal-sidebar" aria-label="Índice de contenido">
+        <nav class="legal-toc">
+          <div class="toc-header">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="8" y1="6" x2="21" y2="6"></line>
+              <line x1="8" y1="12" x2="21" y2="12"></line>
+              <line x1="8" y1="18" x2="21" y2="18"></line>
+              <line x1="3" y1="6" x2="3.01" y2="6"></line>
+              <line x1="3" y1="12" x2="3.01" y2="12"></line>
+              <line x1="3" y1="18" x2="3.01" y2="18"></line>
+            </svg>
+            <span>Índice</span>
+          </div>
+          <ul class="toc-list">
+            <li><a href="#sec-consentimiento" class="toc-link">1. Gestión de consentimiento</a></li>
+            <li><a href="#sec-resumen" class="toc-link">2. Resumen de datos</a></li>
+            <li><a href="#sec-documentos" class="toc-link">3. Documentos relacionados</a></li>
+            <li><a href="#sec-contacto" class="toc-link">4. Contacto y consultas</a></li>
+          </ul>
+        </nav>
+      </aside>
+      <article class="legal-content">
+        <h1>Preferencias de Privacidad</h1>
+        <p class="updated">Centro interactivo de control de consentimiento y transparencia de datos</p>
+        <p>En <strong>LESSSO</strong> buscamos aplicar principios de privacidad desde el diseño. Esta página permite
+          conocer qué tecnologías y datos técnicos pueden utilizarse en este sitio web y decidir si deseas autorizar el
+          uso de analítica web. La gestión de estas preferencias se realiza de acuerdo con nuestro Aviso de Privacidad y
+          las disposiciones aplicables en materia de protección de datos personales.</p>
+        <h2 id="sec-consentimiento">1. Gestión Interactiva de Consentimiento</h2>
+        <p>A continuación puedes revisar y modificar tu estado de consentimiento actual. Los cambios en la preferencia
+          de analítica se aplican en tu navegador mediante la configuración de consentimiento utilizada por el sitio.
+        </p>
+
+        <!-- Tarjeta: Cookies Técnicas Esenciales -->
+        <div class="pref-card">
+          <div class="pref-header">
+            <h3 class="pref-title">Cookies y Almacenamiento Técnico Esencial</h3>
+            <span class="badge badge-essential">Siempre Activas (Requeridas)</span>
+          </div>
+          <p>Son tecnologías necesarias para determinadas funciones del sitio web. Permiten recordar tu preferencia de
+            interfaz visual (tema claro u oscuro) y tu decisión relacionada con la analítica opcional. Estas tecnologías
+            no se utilizan con fines publicitarios.</p>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Clave</th>
+                <th>Tipo</th>
+                <th>Propósito</th>
+                <th>Duración</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>lessso-theme</code></td>
+                <td>localStorage</td>
+                <td>Guarda tu preferencia de tema claro u oscuro para conservarla durante la navegación.</td>
+                <td>Persistente en navegador</td>
+              </tr>
+              <tr>
+                <td><code>lessso-cookie-consent</code></td>
+                <td>localStorage</td>
+                <td>Registra tu elección respecto de la analítica opcional para respetar la preferencia seleccionada.
+                </td>
+                <td>Persistente en navegador</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Tarjeta: Analítica Web Opcional -->
+        <div class="pref-card">
+          <div class="pref-header">
+            <h3 class="pref-title">Analítica Web y Rendimiento</h3>
+            <span id="consentBadge" class="badge badge-status-unset">Estado: No configurado</span>
+          </div>
+          <p>Utilizamos <strong>Google Analytics</strong> (ID de medición: <code>G-229MRPLGXM</code>) para obtener
+            información estadística sobre el uso y rendimiento del sitio web, como el volumen de visitas, las páginas
+            consultadas, información general sobre los dispositivos o navegadores utilizados y determinados datos
+            relacionados con el rendimiento. Esta herramienta no se utiliza para solicitar directamente nombres, correos
+            electrónicos ni datos financieros a través del sitio.</p>
+          <p>La analítica permanece <strong>deshabilitada por defecto</strong>
+            (<code>analytics_storage: 'denied'</code>) hasta que el visitante otorgue su consentimiento para
+            habilitarla.</p>
+          <div class="pref-actions">
+            <button type="button" class="btn-pref btn-primary" id="btnAcceptAnalytics">Permitir Analítica</button>
+            <button type="button" class="btn-pref btn-secondary" id="btnRejectAnalytics">Rechazar Analítica</button>
+            <button type="button" class="btn-pref btn-secondary" id="btnResetAnalytics">Restablecer Preferencia</button>
+          </div>
+          <div id="consentFeedback" class="pref-feedback" role="alert" aria-live="polite"></div>
+        </div>
+        <h2 id="sec-resumen">2. Resumen de Datos que Recopilamos</h2>
+        <div class="box">
+          <p><strong>A través del formulario de contacto / cotización:</strong> Solo recabamos los datos que decides
+            proporcionar voluntariamente, como nombre, correo electrónico, teléfono o WhatsApp, servicio de interés,
+            urgencia, presupuesto aproximado y descripción del requerimiento. La información se transmite mediante una
+            conexión cifrada para procesar tu solicitud y proporcionar la atención correspondiente.</p>
+          <p><strong>Sin venta de datos:</strong> LESSSO no vende ni renta los datos personales de sus usuarios o
+            clientes para fines publicitarios o de comercialización de bases de datos.</p>
+        </div>
+        <h2 id="sec-documentos">3. Documentos Legales Relacionados</h2>
+        <p>Para conocer el alcance legal integral, las finalidades del tratamiento y los mecanismos para ejercer tus
+          derechos de Acceso, Rectificación, Cancelación y Oposición (ARCO), consulta:</p>
+        <ul>
+          <li><a href="avisoPrivacidad.html">Aviso de Privacidad Integral</a></li>
+          <li><a href="avisoTerminosCondiciones.html">Términos y Condiciones de Uso del Servicio</a></li>
+          <li><a href="avisoCookies.html">Aviso de Cookies Técnico</a></li>
+        </ul>
+        <h2 id="sec-contacto">4. Contacto y Consultas de Privacidad</h2>
+        <p>Si tienes preguntas sobre nuestras prácticas de privacidad o deseas solicitar la revocación de un
+          consentimiento, puedes escribirnos en cualquier momento a <a
+            href="mailto:legal@lessso.com">legal@lessso.com</a> con copia a <a
+            href="mailto:contacto@lessso.com">contacto@lessso.com</a>.</p>
+
+      </article>
+    </div>
+  </main>
+
+
+  <footer>
+    <p>&copy; 2026 <strong>LESSSO</strong>. Todos los derechos reservados.</p>
+    <p style="margin-top: 0.75rem; font-size: 0.85rem;">
+      <a href="index.html">Volver al inicio</a>
+      &nbsp;·&nbsp;
+      <a href="avisoPrivacidad.html">Aviso de Privacidad</a>
+      &nbsp;·&nbsp;
+      <a href="avisoTerminosCondiciones.html">Términos y Condiciones</a>
+      &nbsp;·&nbsp;
+      <a href="avisoPreferenciasPrivacidad.html">Preferencias de Privacidad</a>
+      &nbsp;·&nbsp;
+      <a href="avisoCookies.html">Aviso de Cookies</a>
+    </p>
+  </footer>
+
+  <script>
+    (function () {
+      var STORAGE_KEY = 'lessso-cookie-consent';
+      var badge = document.getElementById('consentBadge');
+      var feedback = document.getElementById('consentFeedback');
+      var btnAccept = document.getElementById('btnAcceptAnalytics');
+      var btnReject = document.getElementById('btnRejectAnalytics');
+      var btnReset = document.getElementById('btnResetAnalytics');
+
+      function updateUI(status) {
+        if (!badge) return;
+        if (status === 'granted') {
+          badge.className = 'badge badge-status-granted';
+          badge.textContent = '● Analítica Habilitada (Concedido)';
+        } else if (status === 'denied') {
+          badge.className = 'badge badge-status-denied';
+          badge.textContent = '○ Analítica Deshabilitada (Rechazado)';
+        } else {
+          badge.className = 'badge badge-status-denied';
+          badge.textContent = '○ Analítica Deshabilitada (Por defecto / Sin consentimiento)';
+        }
+      }
+
+      function showNotice(msg) {
+        if (!feedback) return;
+        feedback.textContent = msg;
+        feedback.style.display = 'block';
+        setTimeout(function () {
+          feedback.style.display = 'none';
+        }, 5000);
+      }
+
+      function applyConsent(status, msg) {
+        try {
+          if (status === null) {
+            localStorage.removeItem(STORAGE_KEY);
+          } else {
+            localStorage.setItem(STORAGE_KEY, status);
+          }
+        } catch (e) { }
+
+        var analyticsState = status === 'granted' ? 'granted' : 'denied';
+        try {
+          if (typeof window.gtag === 'function') {
+            window.gtag('consent', 'update', {
+              'analytics_storage': analyticsState
+            });
+          }
+        } catch (e) { }
+
+        updateUI(status);
+        showNotice(msg);
+      }
+
+      // Inicializar estado visual al cargar la página
+      var currentStatus = null;
+      try {
+        currentStatus = localStorage.getItem(STORAGE_KEY);
+      } catch (e) { }
+      updateUI(currentStatus);
+
+      btnAccept.addEventListener('click', function () {
+        applyConsent('granted', 'Has permitido el uso de analítica web. Tus preferencias han sido actualizadas.');
+      });
+
+      btnReject.addEventListener('click', function () {
+        applyConsent('denied', 'Has rechazado el uso de analítica web. Solo se utilizarán cookies esenciales.');
+      });
+
+      btnReset.addEventListener('click', function () {
+        applyConsent(null, 'Se ha restablecido la preferencia. El sitio operará en modo por defecto (analítica deshabilitada hasta tu consentimiento).');
+      });
+    })();
+  </script>
+
+  <script src="assets/js/modules/legal-toc.js" defer></script>
+</body>
+
+</html>

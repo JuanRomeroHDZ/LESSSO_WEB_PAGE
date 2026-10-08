@@ -10,12 +10,12 @@ export const CONFIG = Object.freeze({
     consentStorageKey: 'lessso-cookie-consent',
   }),
   themeMetaColors: Object.freeze({
-    dark: '#0c0a09',
-    light: '#fafaf9',
+    dark: '#0b0f19',
+    light: '#ffffff',
   }),
   canvasPalette: Object.freeze({
-    dark: { node: '#1a9e9e', line: 'rgba(26, 158, 158, 0.15)' },
-    light: { node: '#09363c', line: 'rgba(9, 54, 60, 0.1)' },
+    dark: { node: '#38bdf8', line: 'rgba(56, 189, 248, 0.22)' },
+    light: { node: '#0284c7', line: 'rgba(2, 132, 199, 0.18)' },
   }),
   stripeAllowedHosts: Object.freeze(['buy.stripe.com', 'checkout.stripe.com']),
   plans: Object.freeze({
@@ -43,6 +43,12 @@ export const CONFIG = Object.freeze({
   }),
   budgetOptions: Object.freeze([
     '',
+    'Plan por Suscripción',
+    'Proyecto Inicial',
+    'Proyecto Profesional',
+    'Proyecto Avanzado',
+    'A la Medida / Por definir',
+    'Suscripción Web',
     'Suscripción Web ($799 - $2,499 MXN/mes)',
     'Menos de $10,000 MXN',
     '$10,000 a $25,000 MXN',

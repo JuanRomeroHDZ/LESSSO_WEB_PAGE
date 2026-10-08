@@ -19,13 +19,17 @@ export function closeModal(modal) {
 }
 
 export function initModals(root = document) {
-  root.querySelectorAll('[data-modal-open]').forEach((trigger) => {
+  const triggers = root.querySelectorAll('[data-modal-open]');
+  const modals = root.querySelectorAll('.modal');
+  if (triggers.length === 0 && modals.length === 0) return;
+
+  triggers.forEach((trigger) => {
     const modalId = trigger.dataset.modalOpen;
     const modal = document.getElementById(modalId);
     trigger.addEventListener('click', () => openModal(modal));
   });
 
-  root.querySelectorAll('.modal').forEach((modal) => {
+  modals.forEach((modal) => {
     modal.addEventListener('click', (e) => {
       // Cerrar al hacer clic afuera (en el fondo) o en un botón de cierre
       if (e.target === modal || e.target.closest('[data-modal-close]')) {

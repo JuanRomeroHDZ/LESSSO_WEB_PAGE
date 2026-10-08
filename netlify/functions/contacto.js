@@ -19,6 +19,12 @@ const ALLOWED_URGENCY = [
 
 const ALLOWED_BUDGET = [
   '',
+  'Plan por Suscripción',
+  'Proyecto Inicial',
+  'Proyecto Profesional',
+  'Proyecto Avanzado',
+  'A la Medida / Por definir',
+  'Suscripción Web',
   'Suscripción Web ($799 - $2,499 MXN/mes)',
   'Menos de $10,000 MXN',
   '$10,000 a $25,000 MXN',
@@ -100,6 +106,16 @@ exports.handler = async function (event, context) {
   try {
     let data = {};
     let rawBody = event.body || '';
+
+    // Restricción estricta de tamaño de payload (máximo 10 KB)
+    if (rawBody.length > 10240) {
+      return {
+        statusCode: 413,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json; charset=utf-8' },
+        body: JSON.stringify({ error: 'El tamaño de la solicitud excede el límite máximo permitido.' })
+      };
+    }
+
     if (event.isBase64Encoded) {
       try {
         rawBody = Buffer.from(rawBody, 'base64').toString('utf-8');
@@ -108,7 +124,17 @@ exports.handler = async function (event, context) {
       }
     }
 
-    const contentType = event.headers['content-type'] || '';
+    const contentType = event.headers['content-type'] || event.headers['Content-Type'] || '';
+
+    // Restricción de subida de archivos (el endpoint no acepta multipart ni ficheros)
+    if (contentType.includes('multipart/form-data')) {
+      return {
+        statusCode: 415,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json; charset=utf-8' },
+        body: JSON.stringify({ error: 'Tipo de contenido no admitido. No se permite la subida de archivos.' })
+      };
+    }
+
     if (contentType.includes('application/x-www-form-urlencoded')) {
       const params = new URLSearchParams(rawBody);
       data = Object.fromEntries(params.entries());
@@ -126,15 +152,30 @@ exports.handler = async function (event, context) {
       };
     }
 
-    // 3. Sanitización y Validación estricta en servidor
-    const name = (data.name || '').trim().slice(0, 100);
-    const email = (data.email || '').trim().slice(0, 150);
-    const phone = (data.phone || '').trim().slice(0, 25);
+    // 3. Sanitización y Validación estricta en servidor (anti-XSS y anti-SQLi)
+    function sanitizeInput(str) {
+      if (typeof str !== 'string') return '';
+      return str
+        .replace(/\0/g, '')
+        .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+        .replace(/[<>]/g, '')
+        .replace(/(\b(UNION|SELECT|DROP|ALTER|INSERT|DELETE|EXEC|xp_)\b\s+)/gi, '')
+        .trim();
+    }
+
+    const name = sanitizeInput(data.name || '').slice(0, 100);
+    const email = sanitizeInput(data.email || '').slice(0, 150);
+    const rawLada = sanitizeInput(data.phoneLada || '').slice(0, 6);
+    let rawPhone = sanitizeInput(data.phone || '').slice(0, 30);
+    if (rawLada && rawPhone && !rawPhone.startsWith('+')) {
+      rawPhone = `${rawLada} ${rawPhone}`;
+    }
+    const phone = rawPhone;
     const service = (data.service || '').trim();
     const urgency = (data.urgency || '').trim();
     const budget = (data.budget || '').trim();
-    const subject = (data.subject || '').trim().slice(0, 120);
-    const message = (data.message || '').trim().slice(0, 3000);
+    const subject = sanitizeInput(data.subject || '').slice(0, 120);
+    const message = sanitizeInput(data.message || '').slice(0, 3000);
 
     const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
 
@@ -219,7 +260,7 @@ exports.handler = async function (event, context) {
     let storageSuccess = false;
 
     try {
-      const siteUrl = process.env.URL || process.env.DEPLOY_PRIME_URL || process.env.NETLIFY_SITE_URL || 'https://www.lessso.com';
+      const siteUrl = process.env.URL || process.env.DEPLOY_PRIME_URL || process.env.NETLIFY_SITE_URL || 'https://lessso.com';
       const netlifyRes = await fetch(`${siteUrl}/`, {
         method: 'POST',
         headers: {
@@ -264,7 +305,7 @@ exports.handler = async function (event, context) {
       headers: { ...corsHeaders, 'Content-Type': 'application/json; charset=utf-8' },
       body: JSON.stringify({
         ok: true,
-        message: '¡Mensaje recibido y registrado con éxito! Nos comunicaremos dentro de 24 horas.'
+        message: 'Mensaje recibido, nos comunicaremos contigo dentro de 24 horas, gracias!'
       })
     };
 

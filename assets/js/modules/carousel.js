@@ -10,34 +10,56 @@ export function initProjectsCarousel(slider = document.getElementById('projectsS
   const prevBtn = section.querySelector('#projPrevBtn') || document.getElementById('projPrevBtn');
   const nextBtn = section.querySelector('#projNextBtn') || document.getElementById('projNextBtn');
   const dots = section.querySelectorAll('#carouselDots .dot');
+  const progressBar = section.querySelector('#carouselProgressBar') || document.getElementById('carouselProgressBar');
+  const cards = slider.querySelectorAll('.project');
 
   function getStep() {
     const card = slider.querySelector('.project');
-    return card ? card.offsetWidth + 28 : 340;
+    if (!card) return 350;
+    const style = window.getComputedStyle(slider);
+    const gap = parseFloat(style.gap) || 28;
+    return card.offsetWidth + gap;
+  }
+
+  function getCurrentIndex() {
+    const step = getStep();
+    return Math.round(slider.scrollLeft / step);
+  }
+
+  function scrollToCard(index) {
+    const step = getStep();
+    const clamped = Math.max(0, Math.min(index, cards.length - 1));
+    slider.scrollTo({
+      left: clamped * step,
+      behavior: 'smooth'
+    });
   }
 
   prevBtn?.addEventListener('click', () => {
-    slider.scrollBy({ left: -getStep(), behavior: 'smooth' });
+    const idx = getCurrentIndex();
+    scrollToCard(idx - 1);
   });
 
   nextBtn?.addEventListener('click', () => {
-    slider.scrollBy({ left: getStep(), behavior: 'smooth' });
+    const idx = getCurrentIndex();
+    scrollToCard(idx + 1);
   });
 
-  // Actualizar dots e indicadores accesibles
-  slider.addEventListener('scroll', () => {
-    const step = getStep();
-    const index = Math.round(slider.scrollLeft / step);
-    dots.forEach((dot, i) => {
-      const isActive = i === index;
-      dot.classList.toggle('active', isActive);
-      dot.setAttribute('aria-current', isActive ? 'true' : 'false');
-    });
-  }, { passive: true });
+  function updateIndicators() {
+    const maxScroll = slider.scrollWidth - slider.clientWidth;
+    const progress = maxScroll > 0 ? Math.max(0, Math.min(1, slider.scrollLeft / maxScroll)) : 0;
 
-  dots.forEach((dot, i) => {
-    dot.addEventListener('click', () => {
-      slider.scrollTo({ left: i * getStep(), behavior: 'smooth' });
-    });
-  });
+    if (progressBar) {
+      const trackWidth = progressBar.parentElement ? progressBar.parentElement.offsetWidth : 140;
+      const count = cards.length || 3;
+      const barWidth = trackWidth / count;
+      progressBar.style.width = `${barWidth}px`;
+      const travel = trackWidth - barWidth;
+      progressBar.style.transform = `translateX(${progress * travel}px)`;
+    }
+  }
+
+  slider.addEventListener('scroll', updateIndicators, { passive: true });
+  window.addEventListener('resize', updateIndicators, { passive: true });
+  updateIndicators();
 }

@@ -24,14 +24,14 @@ export function initNetworkCanvas(canvas) {
 
   function initNodes() {
     nodes = [];
-    const count = Math.min(8, Math.max(4, Math.floor(canvas.width / 200)));
+    const count = Math.min(26, Math.max(12, Math.floor(canvas.width / 65)));
     for (let i = 0; i < count; i++) {
       nodes.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: (Math.random() - 0.5) * 0.4,
-        r: 2 + Math.random() * 1.5,
+        vx: (Math.random() - 0.5) * 0.45,
+        vy: (Math.random() - 0.5) * 0.45,
+        r: 2.2 + Math.random() * 1.6,
       });
     }
   }
@@ -90,8 +90,10 @@ export function initNetworkCanvas(canvas) {
     animationId = requestAnimationFrame(loop);
   }
 
+  let isIntersecting = true;
+
   function startAnimation() {
-    if (isRunning || prefersReducedMotion.matches || document.hidden) return;
+    if (isRunning || prefersReducedMotion.matches || document.hidden || !isIntersecting) return;
     isRunning = true;
     animationId = requestAnimationFrame(loop);
   }
@@ -108,10 +110,24 @@ export function initNetworkCanvas(canvas) {
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
       stopAnimation();
-    } else {
+    } else if (isIntersecting) {
       startAnimation();
     }
   });
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        isIntersecting = entry.isIntersecting;
+        if (isIntersecting) {
+          startAnimation();
+        } else {
+          stopAnimation();
+        }
+      });
+    }, { threshold: 0.05 });
+    observer.observe(canvas);
+  }
 
   document.addEventListener(THEME_CHANGE_EVENT, (e) => {
     colors = CANVAS_PALETTE[e.detail.theme] || CANVAS_PALETTE.light;
@@ -121,7 +137,7 @@ export function initNetworkCanvas(canvas) {
   window.addEventListener('resize', resize, { passive: true });
 
   resize();
-  if (!prefersReducedMotion.matches && !document.hidden) {
+  if (!prefersReducedMotion.matches && !document.hidden && isIntersecting) {
     startAnimation();
   }
 }

@@ -16,7 +16,11 @@ import { SERVICES, URGENCY_OPTIONS, BUDGET_OPTIONS } from '../config.js';
  */
 export function sanitizeString(str) {
   if (typeof str !== 'string') return '';
-  return str.replace(/\0/g, '').trim();
+  return str
+    .replace(/\0/g, '')
+    .replace(/[<>]/g, '')
+    .replace(/(\b(UNION|SELECT|DROP|ALTER|INSERT|DELETE|EXEC|xp_)\b\s+)/gi, '')
+    .trim();
 }
 
 /**
@@ -50,7 +54,7 @@ export function validateContactFormData(data, options = {}) {
     return { isValid: false, field: 'email', error: 'Por favor introduce un correo electrónico válido.' };
   }
 
-  if (data.phone && (data.phone.length > 25 || !/^[0-9+\-()\s.]{7,25}$/.test(data.phone))) {
+  if (data.phone && (data.phone.length > 30 || !/^[0-9+\-()\s.]{7,30}$/.test(data.phone))) {
     return { isValid: false, field: 'phone', error: 'Por favor introduce un número de teléfono o WhatsApp válido.' };
   }
 
@@ -90,22 +94,45 @@ export function initContactForm(form) {
 
   // Law of Demeter: Búsqueda acotada al contexto del formulario
   const phoneInput = form.querySelector('#phone');
+  const messageInput = form.querySelector('#message');
+  const counterEl = form.querySelector('#messageCounter');
   const submitBtn = form.querySelector('button[type="submit"]') || form.querySelector('#submitBtn');
   const statusEl = form.querySelector('.form-status') || form.parentElement?.querySelector('#formStatus') || document.getElementById('formStatus');
 
-  // Filtro de teclado en tiempo real para teléfono (solo dígitos y símbolos válidos)
+  // Máscara interactiva de teléfono: (xxx)-xxx-xx-xx
   if (phoneInput) {
-    phoneInput.addEventListener('keydown', (e) => {
-      const allowedKeys = ['Backspace', 'Delete', 'Tab', 'Escape', 'Enter', 'ArrowLeft', 'ArrowRight', 'Home', 'End'];
-      if (allowedKeys.includes(e.key) || e.ctrlKey || e.metaKey) return;
-      if (!/[0-9+\s\-()]/.test(e.key)) {
-        e.preventDefault();
-      }
-    });
-
     phoneInput.addEventListener('input', (e) => {
-      e.target.value = e.target.value.replace(/[^0-9+\s\-()]/g, '');
+      const digits = e.target.value.replace(/\D/g, '').slice(0, 10);
+      let formatted = '';
+      if (digits.length > 0) {
+        if (digits.length <= 3) {
+          formatted = `(${digits}`;
+        } else if (digits.length <= 6) {
+          formatted = `(${digits.slice(0, 3)})-${digits.slice(3)}`;
+        } else if (digits.length <= 8) {
+          formatted = `(${digits.slice(0, 3)})-${digits.slice(3, 6)}-${digits.slice(6)}`;
+        } else {
+          formatted = `(${digits.slice(0, 3)})-${digits.slice(3, 6)}-${digits.slice(6, 8)}-${digits.slice(8, 10)}`;
+        }
+      }
+      e.target.value = formatted;
     });
+  }
+
+  // Contador de palabras en tiempo real para el mensaje
+  if (messageInput && counterEl) {
+    const updateWordCount = () => {
+      const text = messageInput.value.trim();
+      const words = text ? text.split(/\s+/).filter(Boolean).length : 0;
+      counterEl.textContent = `${words} / 250 palabras`;
+      if (words > 250) {
+        counterEl.classList.add('counter-limit');
+      } else {
+        counterEl.classList.remove('counter-limit');
+      }
+    };
+    messageInput.addEventListener('input', updateWordCount);
+    updateWordCount();
   }
 
   function showStatus(msg, type, isHtml = false) {
@@ -125,16 +152,20 @@ export function initContactForm(form) {
     // 1. Honeypot check en cliente
     const botField = form.querySelector('[name="bot-field"]');
     if (botField && botField.value.trim() !== '') {
-      showStatus('✅ Mensaje procesado.', 'success');
+      showStatus('Mensaje recibido, nos comunicaremos contigo dentro de 24 horas, gracias!', 'success');
       form.reset();
       return;
     }
 
-    // 2. Extracción y saneamiento de datos
+    // 2. Extracción y saneamiento de datos combinando Lada
+    const lada = sanitizeSingleLine(form.elements['phoneLada']?.value || '+52');
+    const rawPhone = sanitizeSingleLine(form.elements['phone']?.value || '');
+    const combinedPhone = rawPhone ? `${lada} ${rawPhone}` : '';
+
     const formData = {
       name: sanitizeSingleLine(form.elements['name']?.value || ''),
       email: sanitizeSingleLine(form.elements['email']?.value || ''),
-      phone: sanitizeSingleLine(form.elements['phone']?.value || ''),
+      phone: combinedPhone,
       service: sanitizeSingleLine(form.elements['service']?.value || ''),
       urgency: sanitizeSingleLine(form.elements['urgency']?.value || ''),
       budget: sanitizeSingleLine(form.elements['budget']?.value || ''),
@@ -190,8 +221,9 @@ export function initContactForm(form) {
       const resData = await res.json().catch(() => ({}));
 
       if (res.ok) {
-        showStatus('✅ ¡Mensaje recibido y registrado con éxito! Nos comunicaremos dentro de 24 horas.', 'success');
+        showStatus('Mensaje recibido, nos comunicaremos contigo dentro de 24 horas, gracias!', 'success');
         form.reset();
+        if (counterEl) counterEl.textContent = '0 / 250 palabras';
         setTimeout(() => {
           if (submitBtn) {
             submitBtn.disabled = false;
@@ -200,7 +232,7 @@ export function initContactForm(form) {
         }, 3500);
       } else {
         const errorMsg = resData.error || 'Error al procesar el mensaje en el servidor.';
-        showStatus(`⚠️ ${errorMsg}`, 'error');
+        showStatus(errorMsg, 'error');
         if (submitBtn) {
           submitBtn.disabled = false;
           submitBtn.textContent = 'Reintentar envío';
@@ -209,9 +241,9 @@ export function initContactForm(form) {
     } catch (err) {
       console.error('Error de red al enviar formulario:', err);
       showStatus(
-        '⚠️ No se pudo conectar con el servidor. Puedes escribirnos directamente a ' +
+        'No se pudo conectar con el servidor. Puedes escribirnos directamente a ' +
         '<a href="mailto:contacto@lessso.com?subject=Contacto%20LESSSO" style="text-decoration:underline;color:inherit;font-weight:600;">contacto@lessso.com</a> ' +
-        'o vía <a href="https://wa.me/526644267704" target="_blank" rel="noopener" style="text-decoration:underline;color:inherit;font-weight:600;">WhatsApp (+52 664 426-7704)</a>.',
+        'o vía <a href="https://wa.me/526642276711" target="_blank" rel="noopener" style="text-decoration:underline;color:inherit;font-weight:600;">WhatsApp (+52 664 227-6711)</a>.',
         'error',
         true
       );

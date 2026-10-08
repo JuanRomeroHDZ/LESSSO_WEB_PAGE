@@ -1,2 +1,13 @@
 # Redirección para acceso limpio a suscripciones en Netlify
 /suscripciones    /suscripciones.html    200
+
+# Redirecciones 301 para páginas legales
+/aviso-de-privacidad      /avisoPrivacidad.html             301
+/aviso-de-privacidad.html /avisoPrivacidad.html             301
+/terminos                 /avisoTerminosCondiciones.html    301
+/terminos.html            /avisoTerminosCondiciones.html    301
+/preferencias             /avisoPreferenciasPrivacidad.html 301
+/preferencias.html        /avisoPreferenciasPrivacidad.html 301
+/aviso-de-cookies         /avisoCookies.html                301
+/aviso-de-cookies.html    /avisoCookies.html                301
+

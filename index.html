@@ -1,517 +1,932 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>LESSSO — Desarrollo Web y Soluciones Tecnológicas en México</title>
-  <meta name="description" content="Desarrollo web desde $799 MXN al mes con hosting, dominio y mantenimiento incluidos. Soluciones tecnológicas, sistemas e infraestructura para PyMEs y profesionistas en México.">
+  <title>Inicio | LESSSO</title>
+  <meta name="description"
+    content="Desarrollo web profesional, sistemas digitales e infraestructura tecnológica para PyMEs en México. Dominio, alojamiento y soporte continuo.">
   <meta name="author" content="LESSSO">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
   <link rel="canonical" href="https://lessso.com/">
   <meta name="geo.region" content="MX">
   <meta name="geo.placename" content="México">
-
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="LESSSO">
   <meta property="og:title" content="LESSSO — Desarrollo Web y Soluciones Tecnológicas">
-  <meta property="og:description" content="Desarrollo web desde $799 MXN al mes con dominio, hosting y mantenimiento continuo. Tecnología transparente y a tu medida para PyMEs en México.">
+  <meta property="og:description"
+    content="Desarrollo web profesional con dominio, alojamiento y mantenimiento continuo. Tecnología transparente y a tu medida para PyMEs en México.">
   <meta property="og:url" content="https://lessso.com/">
   <meta property="og:locale" content="es_MX">
   <meta property="og:image" content="https://lessso.com/og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="LESSSO — Desarrollo Web y Soluciones Tecnológicas">
-  <meta name="twitter:description" content="Desarrollo web desde $799 MXN al mes con hosting, dominio y mantenimiento continuo para negocios en México.">
+  <meta name="twitter:description"
+    content="Desarrollo web profesional con alojamiento, dominio y mantenimiento continuo para negocios en México.">
   <meta name="twitter:image" content="https://lessso.com/og-image.jpg">
-
   <!-- Datos estructurados JSON-LD -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
     "name": "LESSSO",
-    "description": "Desarrollo web y soluciones tecnológicas para PyMEs y emprendedores en México: sitios web por suscripción desde $799 MXN/mes, desarrollo a la medida, mantenimiento continuo, infraestructura Linux y seguridad web.",
+    "description": "Desarrollo web y soluciones tecnológicas para PyMEs y profesionistas en México: páginas web profesionales, desarrollo a la medida, mantenimiento continuo, infraestructura Linux y seguridad web.",
     "url": "https://lessso.com/",
     "email": "contacto@lessso.com",
-    "telephone": "+52-664-426-7704",
+    "telephone": "+52-664-227-6711",
     "areaServed": { "@type": "Country", "name": "México" },
     "priceRange": "$$",
-    "knowsAbout": ["Desarrollo Web", "Suscripción de Sitios Web", "Mantenimiento Web", "Infraestructura Linux", "Redes y Preparación CCNA", "Seguridad Web"],
-    "hasCredential": [
-      { "@type": "EducationalOccupationalCredential", "credentialCategory": "training", "name": "Formación en Infraestructura y Redes (Preparación CCNA)" }
-    ],
+    "knowsAbout": ["Desarrollo Web", "Suscripción de Sitios Web", "Mantenimiento Web", "Infraestructura Linux", "Redes Corporativas", "Seguridad Web"],
     "makesOffer": [
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Suscripción de Sitios Web desde $799 MXN/mes" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Suscripción de Páginas Web" } },
       { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Desarrollo Web a la Medida" } },
       { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Mantenimiento Técnico Continuo" } },
       { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Infraestructura & Servidores Linux" } }
     ]
   }
   </script>
-
-  <meta name="theme-color" content="#fafaf9" id="metaTheme">
+  <meta name="theme-color" content="#ffffff" id="metaTheme">
   <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;900&family=Fraunces:wght@400;600;700&family=Inter:wght@400;500;600&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
-
-  <!-- Detección temprana de tema y capacidad JS para evitar destello visual (FOUC) -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;900&family=Fraunces:wght@400;600;700&family=Inter:wght@400;500;600&family=Caveat:wght@500;700&display=swap"
+    rel="stylesheet">
+  <!-- Detección temprana y control fail-safe del tema (Cero FOUC) -->
   <script>
-    (function() {
+    (function () {
+      var STORAGE_KEY = 'lessso-theme';
+      var theme = 'light';
       try {
         document.documentElement.classList.add('js');
-        var t = localStorage.getItem('lessso-theme');
-        if (!t && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-          t = 'dark';
+        var stored = localStorage.getItem(STORAGE_KEY);
+        if (stored === 'dark' || stored === 'light') {
+          theme = stored;
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          theme = 'dark';
         }
-        if (t === 'dark' || t === 'light') {
-          document.documentElement.setAttribute('data-theme', t);
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.classList.toggle('dark', theme === 'dark');
+        document.documentElement.classList.toggle('light', theme === 'light');
+        var meta = document.getElementById('metaTheme') || document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#0c0a09' : '#fafaf9');
+      } catch (e) { }
+      // Manejador infalible de clics: activo de inmediato en local (file://) y web
+      function attachThemeListener() {
+        if (window.__lesssoThemeListenerAttached) return;
+        window.__lesssoThemeListenerAttached = true;
+        document.addEventListener('click', function (e) {
+          var btn = e.target.closest('#themeToggle, .theme-toggle');
+          if (!btn) return;
+          e.preventDefault();
+          var current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+          var next = current === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          document.documentElement.classList.toggle('dark', next === 'dark');
+          document.documentElement.classList.toggle('light', next === 'light');
+          if (document.body) {
+            document.body.setAttribute('data-theme', next);
+            document.body.classList.toggle('dark', next === 'dark');
+            document.body.classList.toggle('light', next === 'light');
+          }
+          try { localStorage.setItem(STORAGE_KEY, next); } catch (err) { }
+          var metaEl = document.getElementById('metaTheme') || document.querySelector('meta[name="theme-color"]');
+          if (metaEl) metaEl.setAttribute('content', next === 'dark' ? '#0b0f19' : '#ffffff');
+          var label = next === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro';
+          var allToggles = document.querySelectorAll('#themeToggle, .theme-toggle');
+          for (var i = 0; i < allToggles.length; i++) {
+            allToggles[i].setAttribute('aria-label', label);
+            allToggles[i].setAttribute('title', label);
+          }
+          document.dispatchEvent(new CustomEvent('lessso:themechange', { detail: { theme: next } }));
+        });
+      }
+
+      function attachHeaderNav() {
+        var header = document.getElementById('header');
+        if (!header) return;
+
+        var lastY = window.pageYOffset || document.documentElement.scrollTop || 0;
+        var threshold = 8;
+
+        window.addEventListener('scroll', function () {
+          var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+          if (y > 20) {
+            header.classList.add('scrolled');
+          } else {
+            header.classList.remove('scrolled');
+          }
+
+          var isNavOpen = header.classList.contains('is-nav-open');
+          if (y <= 60 || isNavOpen) {
+            header.classList.remove('header--hidden');
+            lastY = y;
+          } else {
+            var diff = y - lastY;
+            if (diff > threshold) {
+              header.classList.add('header--hidden');
+              lastY = y;
+            } else if (diff < -threshold) {
+              header.classList.remove('header--hidden');
+              lastY = y;
+            }
+          }
+        }, { passive: true });
+
+        var navToggle = document.getElementById('navToggle');
+        if (navToggle) {
+          navToggle.addEventListener('click', function (e) {
+            e.stopPropagation();
+            var isOpen = header.classList.toggle('is-nav-open');
+            navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            navToggle.setAttribute('aria-label', isOpen ? 'Cerrar menú' : 'Abrir menú');
+          });
+
+          var links = header.querySelectorAll('.nav-links a');
+          for (var j = 0; j < links.length; j++) {
+            links[j].addEventListener('click', function () {
+              header.classList.remove('is-nav-open');
+              navToggle.setAttribute('aria-expanded', 'false');
+            });
+          }
+
+          document.addEventListener('click', function (e) {
+            if (!header.contains(e.target) && header.classList.contains('is-nav-open')) {
+              header.classList.remove('is-nav-open');
+              navToggle.setAttribute('aria-expanded', 'false');
+            }
+          });
+
+          document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && header.classList.contains('is-nav-open')) {
+              header.classList.remove('is-nav-open');
+              navToggle.setAttribute('aria-expanded', 'false');
+              navToggle.focus();
+            }
+          });
         }
-      } catch (e) {}
+      }
+
+      function attachProjectsCarousel() {
+        var slider = document.getElementById('projectsSlider');
+        if (!slider) return;
+
+        var prevBtn = document.getElementById('projPrevBtn');
+        var nextBtn = document.getElementById('projNextBtn');
+        var progressBar = document.getElementById('carouselProgressBar');
+        var cards = slider.querySelectorAll('.project');
+
+        function getStep() {
+          var card = slider.querySelector('.project');
+          if (!card) return 350;
+          return card.offsetWidth + 28;
+        }
+
+        function getCurrentIndex() {
+          return Math.round(slider.scrollLeft / getStep());
+        }
+
+        function scrollToCard(index) {
+          var step = getStep();
+          var clamped = Math.max(0, Math.min(index, cards.length - 1));
+          slider.scrollTo({
+            left: clamped * step,
+            behavior: 'smooth'
+          });
+        }
+
+        if (prevBtn) {
+          prevBtn.addEventListener('click', function () {
+            scrollToCard(getCurrentIndex() - 1);
+          });
+        }
+
+        if (nextBtn) {
+          nextBtn.addEventListener('click', function () {
+            scrollToCard(getCurrentIndex() + 1);
+          });
+        }
+
+        function updateIndicators() {
+          var maxScroll = slider.scrollWidth - slider.clientWidth;
+          var progress = maxScroll > 0 ? Math.max(0, Math.min(1, slider.scrollLeft / maxScroll)) : 0;
+
+          if (progressBar) {
+            var track = progressBar.parentElement;
+            var trackWidth = track ? track.offsetWidth : 140;
+            var count = cards.length || 3;
+            var barWidth = trackWidth / count;
+            progressBar.style.width = barWidth + 'px';
+            var travel = trackWidth - barWidth;
+            progressBar.style.transform = 'translateX(' + (progress * travel) + 'px)';
+          }
+        }
+
+        slider.addEventListener('scroll', updateIndicators, { passive: true });
+        window.addEventListener('resize', updateIndicators, { passive: true });
+        updateIndicators();
+      }
+
+      function attachPhoneMaskAndCounter() {
+        var phone = document.getElementById('phone');
+        if (phone) {
+          phone.addEventListener('input', function () {
+            var digits = this.value.replace(/\D/g, '').slice(0, 10);
+            var formatted = '';
+            if (digits.length > 0) {
+              if (digits.length <= 3) {
+                formatted = '(' + digits;
+              } else if (digits.length <= 6) {
+                formatted = '(' + digits.slice(0, 3) + ')-' + digits.slice(3);
+              } else if (digits.length <= 8) {
+                formatted = '(' + digits.slice(0, 3) + ')-' + digits.slice(3, 6) + '-' + digits.slice(6);
+              } else {
+                formatted = '(' + digits.slice(0, 3) + ')-' + digits.slice(3, 6) + '-' + digits.slice(6, 8) + '-' + digits.slice(8, 10);
+              }
+            }
+            this.value = formatted;
+          });
+        }
+
+        var message = document.getElementById('message');
+        var counter = document.getElementById('messageCounter');
+        if (message && counter) {
+          function updateCounter() {
+            var text = message.value.trim();
+            var words = text ? text.split(/\s+/).filter(Boolean).length : 0;
+            counter.textContent = words + ' / 250 palabras';
+            if (words > 250) {
+              counter.classList.add('counter-limit');
+            } else {
+              counter.classList.remove('counter-limit');
+            }
+          }
+          message.addEventListener('input', updateCounter);
+          updateCounter();
+        }
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function () {
+          attachThemeListener();
+          attachHeaderNav();
+          attachProjectsCarousel();
+          attachPhoneMaskAndCounter();
+        });
+      } else {
+        attachThemeListener();
+        attachHeaderNav();
+        attachProjectsCarousel();
+        attachPhoneMaskAndCounter();
+      }
     })();
   </script>
-
+  <!-- Google Consent Mode v2 (Default: Denied salvo consentimiento previo del usuario) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    var savedConsent = null;
+    try { savedConsent = localStorage.getItem('lessso-cookie-consent'); } catch (e) { }
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage': savedConsent === 'granted' ? 'granted' : 'denied',
+      'wait_for_update': 500
+    });
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-229MRPLGXM"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-229MRPLGXM');
+  </script>
   <!-- Estilos y Script Principal -->
   <link rel="stylesheet" href="assets/css/style.css">
   <script type="module" src="assets/js/pages/home.js"></script>
-
-  <!-- Google Consent Mode v2 (Default: Denied) -->
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    var savedConsent = null;
-    try { savedConsent = localStorage.getItem('lessso-cookie-consent'); } catch(e) {}
-    if (savedConsent === 'granted') {
-      gtag('consent', 'default', {
-        'ad_storage': 'denied',
-        'ad_user_data': 'denied',
-        'ad_personalization': 'denied',
-        'analytics_storage': 'granted',
-        'wait_for_update': 500
-      });
-    } else {
-      gtag('consent', 'default', {
-        'ad_storage': 'denied',
-        'ad_user_data': 'denied',
-        'ad_personalization': 'denied',
-        'analytics_storage': 'denied',
-        'wait_for_update': 500
-      });
-    }
-  </script>
-
-  <!-- Google Tag Manager -->
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-PJJDBMB7');</script>
-  <!-- End Google Tag Manager -->
 </head>
+
 <body>
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PJJDBMB7"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-
-<!-- SVG filter wobble -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <filter id="wobble">
-      <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" result="noise"/>
-      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2"/>
-    </filter>
-  </defs>
-</svg>
-
-<!-- Header -->
-<header class="site-header" id="header">
-  <a href="#" class="brand">LESSSO<em>.</em></a>
-  <nav class="site-nav" aria-label="Navegación principal">
-    <ul class="nav-links">
-      <li><a href="#servicios">Servicios</a></li>
-      <li><a href="suscripciones.html">Suscripciones</a></li>
-      <li><a href="#proyectos">Proyectos</a></li>
-      <li><a href="#contact">Contacto</a></li>
-    </ul>
-    <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
-      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
-      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-    </button>
-  </nav>
-</header>
-
-<!-- Hero -->
-<section class="hero">
-  <canvas id="canvas-bg"></canvas>
-  <div class="hero-content">
-    <div class="hero-label">Desarrollo Web & Soluciones Tecnológicas</div>
-    <h1>Menos complicaciones, <span class="underline">más confianza.</span></h1>
-    <p class="hero-desc">Desarrollo web desde $799 MXN al mes con dominio, alojamiento, SSL y mantenimiento mensual incluidos. Sitios rápidos, infraestructura sólida y soporte técnico directo para que tu negocio crezca sin fricciones.</p>
-    <div class="hero-actions">
-      <a href="suscripciones.html" class="cta">Ver planes desde $799/mes</a>
-      <a href="#contact" class="cta cta--ghost">Cotizar a la medida</a>
-    </div>
-  </div>
-</section>
-
-<!-- About -->
-<section class="about-section">
-  <div class="container">
-    <div class="section-header">
-      <h2>Sobre LESSSO</h2>
-      <div class="section-intro">Construimos tecnología limpia y transparente. Trabajamos en México con empresas y profesionistas que buscan presencia digital sólida y sin rodeos.</div>
-    </div>
-    <div class="about-text reveal">
-      <p>Somos un estudio de <strong>desarrollo web y soluciones tecnológicas</strong> con un enfoque claro: entregar sitios rápidos, estables y bien construidos, explicados en español sencillo y con soporte real.</p>
-      <p>Formación técnica en <strong>infraestructura de redes y preparación para CCNA</strong>, complementada con un enfoque preventivo en seguridad web. Desarrollamos cada proyecto considerando el rendimiento, la accesibilidad y la protección de tus datos desde la primera línea de código.</p>
-      <p>Trabajamos principalmente con <strong>PyMEs, negocios locales y profesionistas independientes</strong>: presupuestos realistas, entregas puntuales y acompañamiento continuo sin plantillas infladas.</p>
-    </div>
-  </div>
-</section>
-
-<!-- Services -->
-<section id="servicios">
-  <div class="container">
-    <div class="section-header">
-      <h2>Qué hacemos</h2>
-      <div class="section-intro">Desarrollo web como servicio principal, complementado con mantenimiento continuo y soluciones especializadas de infraestructura y seguridad.</div>
-    </div>
-    <div class="services-grid">
-      <div class="service reveal">
-        <div class="service-icon">
-          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18"/></svg>
-        </div>
-        <h3>Desarrollo Web a la Medida</h3>
-        <p>Sitios informativos, páginas corporativas y plataformas personalizadas. Diseño adaptado a móviles, código ligero y tiempos de carga óptimos.</p>
-      </div>
-
-      <div class="service reveal">
-        <div class="service-icon">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-        </div>
-        <h3>Suscripción de Sitios Web</h3>
-        <p>Páginas web profesionales desde $799 MXN al mes. Incluye dominio, hosting confiable durante la vigencia del servicio, certificado SSL y mantenimiento mensual continuo.</p>
-      </div>
-
-      <div class="service reveal">
-        <div class="service-icon">
-          <svg viewBox="0 0 24 24"><path d="M4 19V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M9 12h6"/></svg>
-        </div>
-        <h3>Mantenimiento & Continuidad</h3>
-        <p>Tu sitio siempre al día. Actualizaciones técnicas de dependencias, monitoreo preventivo de disponibilidad y cambios mensuales de contenido.</p>
-      </div>
-
-      <div class="service reveal">
-        <div class="service-icon">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/><circle cx="12" cy="19" r="1"/><circle cx="12" cy="5" r="1"/></svg>
-        </div>
-        <h3>E-commerce & Tiendas Online</h3>
-        <p><small style="color:var(--text-muted);font-weight:600;">SERVICIO BAJO COTIZACIÓN</small><br>Catálogos de productos y pasarelas de pago seguras (Stripe, PayPal, Mercado Pago) diseñadas para convertir clientes con fluidez.</p>
-      </div>
-
-      <div class="service reveal">
-        <div class="service-icon">
-          <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        </div>
-        <h3>Infraestructura & Servidores</h3>
-        <p><small style="color:var(--text-muted);font-weight:600;">SERVICIO ESPECIALIZADO</small><br>Despliegue y hardening de servidores Linux, contenedores Docker, redes VPN seguras (WireGuard) y segmentación de red para PyMEs.</p>
-      </div>
-
-      <div class="service reveal">
-        <div class="service-icon">
-          <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
-        </div>
-        <h3>Seguridad Web & Hardening</h3>
-        <p><small style="color:var(--text-muted);font-weight:600;">BAJO EVALUACIÓN / DIAGNÓSTICO</small><br>Evaluación de superficie de ataque, implementación de cabeceras HTTP estrictas, prevención contra OWASP Top 10 y blindaje de formularios.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Proyectos -->
-<section id="proyectos" class="about-section">
-  <div class="container">
-    <div class="section-header">
-      <h2>Proyectos y Laboratorios</h2>
-      <div class="section-intro">Arquitectura real, laboratorios técnicos y soluciones documentadas. Cada caso demuestra nuestra capacidad técnica y metodológica.</div>
-    </div>
-    <div class="projects-carousel-wrapper">
-      <div class="projects-carousel-bar">
-        <div class="carousel-hint">
-          <span class="hint-icon">↔</span>
-          <span>Desliza para explorar casos documentados</span>
-        </div>
-        <div class="carousel-arrows">
-          <button type="button" class="carousel-arrow prev" id="projPrevBtn" aria-label="Proyecto anterior">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-          </button>
-          <button type="button" class="carousel-arrow next" id="projNextBtn" aria-label="Siguiente proyecto">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-        </div>
-      </div>
-
-      <div class="projects-grid" id="projectsSlider">
-        <article class="project reveal">
-          <div class="project-cover">
-            <svg viewBox="0 0 24 24"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg>
-          </div>
-          <div class="project-body">
-            <div class="project-tags">
-              <span class="project-tag">Desarrollo Web</span>
-              <span class="project-tag">Serverless</span>
-            </div>
-            <h3>Portal Comercial & Pipeline Desacoplado</h3>
-            <p>Arquitectura web estática ultrarrápida (Lighthouse 98+): diseño tipográfico a medida, validación de formularios en servidor con rate-limiting y sincronización continua hacia CRM interno.</p>
-            <a class="project-link" href="#contact">Solicitar arquitectura o demo →</a>
-          </div>
-        </article>
-
-        <article class="project reveal">
-          <div class="project-cover">
-            <svg viewBox="0 0 24 24"><rect x="2" y="14" width="20" height="8" rx="2"/><rect x="2" y="2" width="20" height="8" rx="2"/><path d="M6 6h.01M6 18h.01"/></svg>
-          </div>
-          <div class="project-body">
-            <div class="project-tags">
-              <span class="project-tag">Redes</span>
-              <span class="project-tag">Preparación CCNA</span>
-            </div>
-            <h3>Infraestructura de Red & VPN WireGuard</h3>
-            <p>Laboratorio de segmentación de red corporativa simulada: VLANs independientes, políticas de routing inter-VLAN, túneles VPN cifrados punto a punto y servidores Debian endurecidos con cortafuegos UFW.</p>
-            <a class="project-link" href="#contact">Consultar diseño técnico →</a>
-          </div>
-        </article>
-
-        <article class="project reveal">
-          <div class="project-cover">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
-          </div>
-          <div class="project-body">
-            <div class="project-tags">
-              <span class="project-tag">Seguridad Web</span>
-              <span class="project-tag">Hardening</span>
-            </div>
-            <h3>Endurecimiento Web & Prevención OWASP</h3>
-            <p>Implementación rigurosa de Content Security Policy (CSP), mitigación de riesgos de inyección y XSS, cabeceras estrictas de transporte (HSTS) y validación de entradas sin exposición de datos personales.</p>
-            <a class="project-link" href="#contact">Solicitar diagnóstico de seguridad →</a>
-          </div>
-        </article>
-      </div>
-
-      <div class="carousel-dots" id="carouselDots" role="tablist" aria-label="Indicadores de proyectos">
-        <button type="button" class="dot active" data-index="0" aria-label="Ver proyecto 1: Portal Comercial & Pipeline Desacoplado" aria-current="true"></button>
-        <button type="button" class="dot" data-index="1" aria-label="Ver proyecto 2: Infraestructura de Red & VPN WireGuard" aria-current="false"></button>
-        <button type="button" class="dot" data-index="2" aria-label="Ver proyecto 3: Endurecimiento Web & Prevención OWASP" aria-current="false"></button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Contact -->
-<section class="contact-section" id="contact">
-  <div class="container">
-    <div class="section-header">
-      <h2>Empecemos</h2>
-      <div class="section-intro">¿Tienes un proyecto? Cuéntanos qué necesitas. Respondemos dentro de 24 horas.</div>
-    </div>
-    <div class="contact-grid reveal">
-      <!-- Columna 1: Formulario con opciones enriquecidas -->
-      <div class="contact-form-card">
-        <h3>Envíanos un mensaje</h3>
-        <p class="form-subtitle">Selecciona el tipo de servicio y describe qué necesitas. Consulta inicial sin costo.</p>
-
-        <form name="contacto" method="POST" action="/.netlify/functions/contacto" data-netlify="true" data-netlify-honeypot="bot-field" id="contactForm">
-          <!-- Identificador para Netlify Forms -->
-          <input type="hidden" name="form-name" value="contacto">
-
-          <!-- Honeypot anti-spam oculto con atributos de inaccesibilidad -->
-          <p style="position: absolute; left: -9999px; opacity: 0; pointer-events: none;" aria-hidden="true">
-            <label>No completes este campo: <input name="bot-field" tabindex="-1" autocomplete="off"></label>
-          </p>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label for="name">Nombre completo *</label>
-              <input type="text" id="name" name="name" required minlength="2" maxlength="100" autocomplete="name" placeholder="Tu nombre o empresa">
-            </div>
-            <div class="form-group">
-              <label for="email">Correo electrónico *</label>
-              <input type="email" id="email" name="email" required maxlength="150" autocomplete="email" placeholder="tu@correo.com">
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label for="phone">Teléfono / WhatsApp</label>
-              <input type="tel" id="phone" name="phone" maxlength="25" inputmode="tel" autocomplete="tel" placeholder="+52 (664) 000-0000">
-            </div>
-            <div class="form-group">
-              <label for="service">Servicio requerido *</label>
-              <select id="service" name="service" required>
-                <option value="" disabled selected>Selecciona un servicio...</option>
-                <option value="Desarrollo Web a la Medida">Desarrollo Web a la Medida</option>
-                <option value="Suscripción Mensual de Página Web">Suscripción Mensual de Página Web ($799 - $2,499 MXN/mes)</option>
-                <option value="Mantenimiento o Actualización Web">Mantenimiento o Actualización Web</option>
-                <option value="E-commerce / Tienda en Línea">E-commerce / Tienda en Línea (Bajo cotización)</option>
-                <option value="Infraestructura & Servidores Linux">Infraestructura & Servidores Linux (Especializado)</option>
-                <option value="Seguridad Web & Hardening">Seguridad Web & Hardening (Evaluación)</option>
-                <option value="Cotización General o Duda">Cotización General o Consulta</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label for="urgency">Plazo o urgencia *</label>
-              <select id="urgency" name="urgency" required>
-                <option value="Inmediato / Menos de 1 mes">Inmediato (menos de 1 mes)</option>
-                <option value="1 a 3 meses">1 a 3 meses</option>
-                <option value="Solo explorando opciones">Solo explorando opciones</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="budget">Presupuesto estimado</label>
-              <select id="budget" name="budget">
-                <option value="" selected>Selecciona un rango (opcional)...</option>
-                <option value="Suscripción Web ($799 - $2,499 MXN/mes)">Suscripción Web ($799 - $2,499 MXN/mes)</option>
-                <option value="Menos de $10,000 MXN">Menos de $10,000 MXN (Básico / Informativo)</option>
-                <option value="$10,000 a $25,000 MXN">$10,000 a $25,000 MXN (Profesional)</option>
-                <option value="$25,000 a $50,000 MXN">$25,000 a $50,000 MXN (Avanzado / Sistema)</option>
-                <option value="Más de $50,000 MXN">Más de $50,000 MXN (A la Medida)</option>
-                <option value="Por definir / Explorando">Por definir / Consulta inicial</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="subject">Asunto *</label>
-            <input type="text" id="subject" name="subject" required minlength="3" maxlength="120" placeholder="Ej: Auditoría o nuevo sitio">
-          </div>
-
-          <div class="form-group">
-            <label for="message">Mensaje o detalles del proyecto *</label>
-            <textarea id="message" name="message" required minlength="10" maxlength="3000" rows="4" placeholder="Describe brevemente qué necesitas resolver o construir..."></textarea>
-          </div>
-
-          <!-- Aceptación obligatoria del Aviso de Privacidad -->
-          <div class="form-group form-privacy">
-            <label class="checkbox-label">
-              <input type="checkbox" id="privacyConsent" name="privacyConsent" required>
-              <span>He leído y acepto el <a href="aviso-de-privacidad.html" target="_blank" rel="noopener">Aviso de Privacidad</a>.</span>
-            </label>
-          </div>
-
-          <!-- Mensaje de estado tras envío -->
-          <div id="formStatus" class="form-status" style="display: none;"></div>
-
-          <button type="submit" class="form-submit" id="submitBtn">Enviar mensaje</button>
-        </form>
-      </div>
-
-      <!-- Columna 2: Información de contacto directo + Mapa de Tijuana -->
-      <div class="contact-side">
-        <div class="contact-info-card">
-          <div>
-            <p class="contact-intro">Escríbenos directo:</p>
-            <a href="mailto:contacto@lessso.com" class="contact-email">contacto@lessso.com</a>
-
-            <div class="contact-details">
-              <div class="contact-detail-item">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                  <circle cx="12" cy="10" r="3"/>
-                </svg>
-                <div class="contact-detail-text">
-                  <strong>Ubicación</strong>
-                  <span>Tijuana, Baja California, México</span>
-                </div>
-              </div>
-
-              <div class="contact-detail-item">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                </svg>
-                <div class="contact-detail-text">
-                  <strong>Teléfono / WhatsApp</strong>
-                  <a href="https://wa.me/526644267704" target="_blank" rel="noopener">+52 (664) 426-7704</a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <p class="contact-note">Respuesta dentro de 24 horas. Consulta inicial sin costo.</p>
-
-            <!-- Canales directos de contacto -->
-            <div class="social-links">
-              <a href="https://github.com/lessso" class="social-icon" aria-label="GitHub" title="GitHub de LESSSO" target="_blank" rel="noopener">
-                <svg viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v 3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-              </a>
-              <a href="https://wa.me/526644267704" class="social-icon" aria-label="WhatsApp" title="WhatsApp Directo" target="_blank" rel="noopener">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/><path d="M8.5 10.5h7M8.5 13.5h4"/></svg>
-              </a>
-              <a href="mailto:contacto@lessso.com" class="social-icon" aria-label="Email" title="Correo Directo">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div class="contact-map-wrapper">
-          <div class="map-badge">
-            <span>📍 Tijuana, B.C., México</span>
-          </div>
-          <div class="contact-map">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d430922.0220225211!2d-117.27170073493598!3d32.457220666501684!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80d9390226587bd3%3A0x14724bafa4e62456!2sTijuana%2C%20B.C.!5e0!3m2!1ses-419!2smx!4v1791306742167!5m2!1ses-419!2smx" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="Ubicación de LESSSO en Tijuana, Baja California"></iframe>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Footer -->
-<footer>
-  <p>&copy; 2026 <strong>LESSSO</strong>. Todos los derechos reservados.</p>
-  <p style="margin-top: 0.75rem; font-size: 0.85rem;">
-    <a href="aviso-de-privacidad.html" style="color: inherit;">Aviso de Privacidad</a>
-    &nbsp;·&nbsp;
-    <a href="terminos.html" style="color: inherit;">Términos y Condiciones</a>
-    &nbsp;·&nbsp;
-    <button type="button" class="site-notice-link" id="openSiteNotice">Preferencias y Privacidad</button>
-  </p>
-</footer>
-
-<!-- Botón flotante de WhatsApp -->
-<a class="fab-contact" href="https://wa.me/526644267704" target="_blank" rel="noopener" aria-label="WhatsApp LESSSO">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
-    <path d="M8.5 10.5h7M8.5 13.5h4"/>
+  <!-- SVG filter wobble -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <filter id="wobble">
+        <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" />
+      </filter>
+    </defs>
   </svg>
-  <span class="fab-label">WhatsApp</span>
-</a>
+  <!-- Header -->
+  <header class="site-header" id="header">
+    <a href="index.html" class="brand">LESSSO<em>.</em></a>
+    <nav class="site-nav" aria-label="Navegación principal">
+      <ul class="nav-links" id="primaryNav">
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#proyectos">Proyectos</a></li>
+        <li><a href="#contact">Contacto</a></li>
+        <li><a href="suscripciones.html" class="nav-cta">Planes</a></li>
+      </ul>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Cambiar tema" title="Cambiar tema">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
+        </svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+        </svg>
+      </button>
+      <button class="nav-toggle" id="navToggle" type="button" aria-label="Abrir menú" aria-expanded="false"
+        aria-controls="primaryNav">
+        <svg class="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+        <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+    </nav>
+  </header>
+  <!-- Hero -->
+  <section class="hero">
+    <canvas id="canvas-bg"></canvas>
+    <div class="hero-layout">
+      <div class="hero-content">
+        <div class="hero-label">Desarrollo Web & Soluciones Tecnológicas</div>
+        <h1>Menos complicaciones, <span class="underline">más confianza.</span></h1>
+        <p class="hero-desc">Haz que tu negocio tenga una presencia profesional en internet. Creamos tu página, nos
+          encargamos de ponerla en línea y la mantenemos funcionando para que tus clientes puedan encontrarte, conocerte
+          y contactarte fácilmente.</p>
+        <div class="hero-actions">
+          <a href="suscripciones.html" class="cta">Ver planes y precios</a>
+          <a href="#contact" class="cta cta--ghost">Solicitar cotización</a>
+        </div>
+      </div>
+      <!-- Roadmap Interactivo 3D del Proceso (Lado derecho en pantallas completas) -->
+      <div class="hero-roadmap-3d" aria-hidden="true">
+        <div class="roadmap-scene">
+          <div class="roadmap-stage-card step-1">
+            <div class="stage-pin">
+              <span class="stage-num">01</span>
+              <span class="stage-pulse"></span>
+            </div>
+            <div class="stage-info">
+              <span class="stage-tag">Diagnóstico</span>
+              <h4>Objetivos & Estructura</h4>
+              <span class="stage-detail">Definición de requerimientos</span>
+            </div>
+          </div>
 
-<!-- Dock de Estado y Privacidad (Consentimiento de Cookies) -->
-<aside class="site-notice-dock" id="siteNoticeDock" aria-label="Aviso de privacidad y cookies" role="dialog">
-  <div class="dock-header">
-    <h3 id="dockTitle">🛡️ Privacidad & Seguridad</h3>
-    <button type="button" class="dock-close" id="dockCloseBtn" aria-label="Cerrar">&times;</button>
-  </div>
+          <div class="roadmap-connector-3d connector-1-2">
+            <div class="connector-beam"></div>
+          </div>
 
-  <div id="standardNoticeBox">
-    <p>Utilizamos cookies técnicas esenciales y analítica anónima para evaluar rendimiento y mejorar el servicio. Puedes aceptarlas o continuar en modo estrictamente esencial. Consulta nuestro <a href="aviso-de-privacidad.html">Aviso de Privacidad</a>.</p>
-    <div class="dock-actions">
-      <button type="button" class="btn-dock-accept" id="dockAcceptBtn">Aceptar analítica</button>
-      <button type="button" class="btn-dock-reject" id="dockRejectBtn">Solo esenciales</button>
+          <div class="roadmap-stage-card step-2">
+            <div class="stage-pin">
+              <span class="stage-num">02</span>
+              <span class="stage-pulse"></span>
+            </div>
+            <div class="stage-info">
+              <span class="stage-tag">Arquitectura</span>
+              <h4>Diseño & Prototipo</h4>
+              <span class="stage-detail">UX adaptado a tu negocio</span>
+            </div>
+          </div>
+
+          <div class="roadmap-connector-3d connector-2-3">
+            <div class="connector-beam"></div>
+          </div>
+
+          <div class="roadmap-stage-card step-3">
+            <div class="stage-pin">
+              <span class="stage-num">03</span>
+              <span class="stage-pulse"></span>
+            </div>
+            <div class="stage-info">
+              <span class="stage-tag">Ingeniería</span>
+              <h4>Código, SSL & Hardening</h4>
+              <span class="stage-detail">Máxima velocidad y seguridad</span>
+            </div>
+          </div>
+
+          <div class="roadmap-connector-3d connector-3-4">
+            <div class="connector-beam"></div>
+          </div>
+
+          <div class="roadmap-stage-card step-4">
+            <div class="stage-pin">
+              <span class="stage-num">04</span>
+              <span class="stage-pulse"></span>
+            </div>
+            <div class="stage-info">
+              <span class="stage-tag">Producción</span>
+              <h4>Lanzamiento & Soporte</h4>
+              <span class="stage-detail">Monitoreo continuo 24/7</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-</aside>
+  </section>
+  <!-- About -->
+  <section class="about-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Sobre LESSSO</h2>
+        <div class="section-intro">Construimos tecnología clara y transparente. Trabajamos en México con empresas y
+          profesionistas que buscan una presencia digital sólida, sin complicaciones ni rodeos.</div>
+      </div>
+      <div class="about-text reveal">
+        <p>Somos un estudio de <strong>desarrollo web y soluciones tecnológicas</strong> con un objetivo sencillo:
+          ayudarte a tener presencia en internet, que funcione bien y que sea fácil de mantener.</p>
+        <p>Creamos sitios pensados para que tus clientes puedan <strong> encontrarte, conocer tus servicios y ponerse en
+            contacto contigo facilmente</strong>, nos encargamos de la parte técnica para que tú no tengas que
+          preocuparte por ella.</p>
+        <p>Trabajamos principalmente con <strong>PyMEs, negocios locales y profesionistas independientes</strong>,
+          ofreciendo precios claros, entregas puntuales y apoyo cuando lo necesites. Sin servicios innecesarios,
+          contratos complicados ni plantillas genéricas.</p>
+      </div>
+    </div>
+  </section>
+  <!-- Services -->
+  <section id="servicios">
+    <div class="container">
+      <div class="section-header">
+        <h2>Qué hacemos</h2>
+        <div class="section-intro">Soluciones digitales para tu negocio: páginas web profesionales, soporte continuo y
+          todo lo necesario para que tu presencia en internet sea rápida, confiable y esté siempre disponible.</div>
+      </div>
+      <div class="services-grid">
+        <div class="service reveal">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24">
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+              <path d="M9 3v18M15 3v18" />
+            </svg>
+          </div>
+          <h3>Desarrollo Web a la Medida</h3>
+          <p>Creamos páginas web para mostrar tu negocio, presentar tus servicios y ayudar a que tus clientes te
+            encuentren y se pongan en contacto contigo. Cada sitio se adapta a tu negocio y funciona correctamente desde
+            celular, tablet o computadora.</p>
+        </div>
+        <div class="service reveal">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M12 7v5l3 2" />
+            </svg>
+          </div>
+          <h3>Suscripción de Sitios Web</h3>
+          <p>Ten tu propia página web profesional por una cuota mensual, sin preocuparte por la parte técnica. Nosotros
+            nos encargamos de mantenerla en línea, actualizarla y ayudarte con los cambios que necesites mientras tengas
+            tu suscripción.</p>
+        </div>
+        <div class="service reveal">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 19V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z" />
+              <path d="M9 12h6" />
+            </svg>
+          </div>
+          <h3>Mantenimiento & Continuidad</h3>
+          <p>Nos encargamos de que tu página siga funcionando correctamente y se mantenga actualizada. Realizamos los
+            cambios que necesites en tu contenido y revisamos periódicamente que todo esté en orden, para que no tengas
+            que preocuparte por la parte técnica.</p>
+        </div>
+        <div class="service reveal">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="1" />
+              <circle cx="19" cy="12" r="1" />
+              <circle cx="5" cy="12" r="1" />
+              <circle cx="12" cy="19" r="1" />
+              <circle cx="12" cy="5" r="1" />
+            </svg>
+          </div>
+          <span class="service-badge">Servicio bajo cotización</span>
+          <h3>E-commerce & Tiendas Online</h3>
+          <p>Vende tus productos por internet con una tienda propia, donde tus clientes puedan conocer lo que ofreces,
+            hacer sus pedidos y pagar en línea de forma sencilla y segura. Adaptamos la tienda a las necesidades de tu
+            negocio.</p>
+        </div>
+        <div class="service reveal">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24">
+              <rect x="3" y="11" width="18" height="10" rx="2" />
+              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+            </svg>
+          </div>
+          <span class="service-badge">Servicio especializado</span>
+          <h3>Infraestructura & Servidores</h3>
+          <p>Configuramos y ponemos en marcha los sistemas que tu negocio necesita para trabajar de forma
+            <strong>estable, segura y confiable</strong>. Desde servidores y servicios internos hasta conexiones seguras
+            entre equipos y sucursales, adaptamos cada solución a las necesidades de tu empresa.
+          </p>
+        </div>
+        <div class="service reveal">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M9 11l3 3L22 4" />
+              <path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" />
+            </svg>
+          </div>
+          <span class="service-badge">Bajo evaluación / diagnóstico</span>
+          <h3>Seguridad Web & Protección</h3>
+          <p>Revisamos tu página para detectar <strong>riesgos y puntos débiles</strong> que puedan comprometer tu
+            información o la de tus clientes. Aplicamos medidas de protección y realizamos los ajustes necesarios para
+            que tu sitio sea más seguro y confiable.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Proyectos -->
+  <section id="proyectos" class="about-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Proyectos y Laboratorios</h2>
+        <div class="section-intro">Conoce algunos de los proyectos en los que hemos trabajado y las soluciones que hemos
+          desarrollado. Cada proyecto refleja nuestra experiencia, forma de trabajo y atención a los detalles.</div>
+      </div>
+      <div class="projects-carousel-wrapper">
+        <div class="projects-carousel-bar">
+          <div class="carousel-arrows">
+            <button type="button" class="carousel-arrow prev" id="projPrevBtn" aria-label="Proyecto anterior">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="15 18 9 12 15 6" />
+              </svg>
+            </button>
+            <button type="button" class="carousel-arrow next" id="projNextBtn" aria-label="Siguiente proyecto">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="projects-grid" id="projectsSlider">
+          <!-- Proyecto 1: Portal Comercial -->
+          <article class="project reveal">
+            <div class="project-window">
+              <div class="window-dots" aria-hidden="true">
+                <span></span><span></span><span></span>
+              </div>
+              <div class="window-url">lessso.com/portal-comercial</div>
+            </div>
+            <div class="project-preview">
+              <div class="preview-badge-row">
+                <span class="preview-chip"><span class="preview-chip-dot"></span>Producción</span>
+                <span class="preview-stat">Lighthouse 98+ · Carga &lt;1s</span>
+              </div>
+            </div>
+            <div class="project-body">
+              <div class="project-tags">
+                <span class="project-tag">Desarrollo Web</span>
+                <span class="project-tag">Alto Rendimiento</span>
+              </div>
+              <h3>Portal Comercial & Gestión de Contactos</h3>
+              <p>Sitio web corporativo veloz y optimizado para móviles, con validación de formularios en servidor,
+                integración continua hacia CRM y tiempos de carga instantáneos.</p>
+              <a class="project-link" href="#contact">Consultar detalles o demo →</a>
+            </div>
+          </article>
 
+          <!-- Proyecto 2: Infraestructura y Redes -->
+          <article class="project reveal">
+            <div class="project-window">
+              <div class="window-dots" aria-hidden="true">
+                <span></span><span></span><span></span>
+              </div>
+              <div class="window-url">lessso.com/redes-infraestructura</div>
+            </div>
+            <div class="project-preview">
+              <div class="preview-badge-row">
+                <span class="preview-chip"><span class="preview-chip-dot"></span>Enlace Activo</span>
+                <span class="preview-stat">Túnel Cifrado WireGuard · UFW</span>
+              </div>
+            </div>
+            <div class="project-body">
+              <div class="project-tags">
+                <span class="project-tag">Redes</span>
+                <span class="project-tag">Servidores Linux</span>
+              </div>
+              <h3>Infraestructura de Red & VPN Segura</h3>
+              <p>Conectividad punto a punto cifrada entre oficinas, segmentación de redes internas y configuración de
+                servidores Linux con cortafuegos perimetral endurecido.</p>
+              <a class="project-link" href="#contact">Consultar diseño técnico →</a>
+            </div>
+          </article>
+
+          <!-- Proyecto 3: Seguridad Web -->
+          <article class="project reveal">
+            <div class="project-window">
+              <div class="window-dots" aria-hidden="true">
+                <span></span><span></span><span></span>
+              </div>
+              <div class="window-url">lessso.com/seguridad-web</div>
+            </div>
+            <div class="project-preview">
+              <div class="preview-badge-row">
+                <span class="preview-chip"><span class="preview-chip-dot"></span>Blindaje Web</span>
+                <span class="preview-stat">Cabeceras CSP · HSTS Activo</span>
+              </div>
+            </div>
+            <div class="project-body">
+              <div class="project-tags">
+                <span class="project-tag">Seguridad Web</span>
+                <span class="project-tag">Protección de Datos</span>
+              </div>
+              <h3>Blindaje Web & Prevención OWASP</h3>
+              <p>Políticas de seguridad avanzadas en el navegador, prevención de inyecciones y captura segura de
+                información sensible para proteger la reputación de tu empresa.</p>
+              <a class="project-link" href="#contact">Solicitar diagnóstico de seguridad →</a>
+            </div>
+          </article>
+        </div>
+        <!-- Barra de progreso de proyectos (indicador único) -->
+        <div class="carousel-progress-track" aria-hidden="true">
+          <div class="carousel-progress-bar" id="carouselProgressBar"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Contact -->
+  <section class="contact-section" id="contact">
+    <div class="container">
+      <div class="section-header">
+        <h2>Empecemos</h2>
+        <div class="section-intro">¿Tienes un proyecto? Cuéntanos qué necesitas. <strong>Te responderemos en un máximo
+            de 24 horas</strong>.</div>
+      </div>
+      <div class="contact-grid reveal">
+        <!-- Columna 1: Formulario con opciones enriquecidas -->
+        <div class="contact-form-card">
+          <h3>Envíanos un mensaje</h3>
+          <p class="form-subtitle">Selecciona el tipo de servicio y describe qué necesitas. Consulta inicial sin costo.
+          </p>
+          <form name="contacto" method="POST" action="/.netlify/functions/contacto" data-netlify="true"
+            data-netlify-honeypot="bot-field" id="contactForm">
+            <!-- Identificador para Netlify Forms -->
+            <input type="hidden" name="form-name" value="contacto">
+            <!-- Honeypot anti-spam oculto con atributos de inaccesibilidad -->
+            <p style="position: absolute; left: -9999px; opacity: 0; pointer-events: none;" aria-hidden="true">
+              <label>No completes este campo: <input name="bot-field" tabindex="-1" autocomplete="off"></label>
+            </p>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Nombre completo *</label>
+                <input type="text" id="name" name="name" required minlength="2" maxlength="100" autocomplete="name"
+                  placeholder="Tu nombre o empresa">
+              </div>
+              <div class="form-group">
+                <label for="email">Correo electrónico *</label>
+                <input type="email" id="email" name="email" required maxlength="150" autocomplete="email"
+                  placeholder="tu@correo.com">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="phone">Teléfono / WhatsApp</label>
+                <div class="phone-input-row">
+                  <select id="phoneLada" name="phoneLada" class="phone-lada-select" aria-label="Lada de país">
+                    <option value="+52" selected>MX (+52)</option>
+                    <option value="+1">US/CA (+1)</option>
+                    <option value="+502">GT (+502)</option>
+                    <option value="+501">BZ (+501)</option>
+                    <option value="+503">SV (+503)</option>
+                    <option value="+504">HN (+504)</option>
+                    <option value="+505">NI (+505)</option>
+                    <option value="+506">CR (+506)</option>
+                    <option value="+507">PA (+507)</option>
+                    <option value="+57">CO (+57)</option>
+                    <option value="+53">CU (+53)</option>
+                    <option value="+1">DO (+1)</option>
+                    <option value="+1">PR (+1)</option>
+                    <option value="+54">AR (+54)</option>
+                    <option value="+56">CL (+56)</option>
+                    <option value="+51">PE (+51)</option>
+                    <option value="+34">ES (+34)</option>
+                  </select>
+                  <input type="tel" id="phone" name="phone" inputmode="numeric" maxlength="17"
+                    placeholder="(xxx)-xxx-xx-xx" autocomplete="tel-national">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="service">Servicio requerido *</label>
+                <select id="service" name="service" required>
+                  <option value="" disabled selected>Selecciona un servicio...</option>
+                  <option value="Desarrollo Web a la Medida">Desarrollo Web a la Medida</option>
+                  <option value="Suscripción Mensual de Página Web">Suscripción Mensual de Página Web</option>
+                  <option value="Mantenimiento o Actualización Web">Mantenimiento o Actualización Web</option>
+                  <option value="E-commerce / Tienda en Línea">E-commerce / Tienda en Línea (Bajo cotización)</option>
+                  <option value="Infraestructura & Servidores Linux">Infraestructura & Servidores Linux (Especializado)
+                  </option>
+                  <option value="Seguridad Web & Hardening">Seguridad Web & Hardening (Evaluación)</option>
+                  <option value="Cotización General o Duda">Cotización General o Consulta</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="urgency">Plazo o urgencia *</label>
+                <select id="urgency" name="urgency" required>
+                  <option value="Inmediato / Menos de 1 mes">Inmediato (menos de 1 mes)</option>
+                  <option value="1 a 3 meses">1 a 3 meses</option>
+                  <option value="Solo explorando opciones">Solo explorando opciones</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="budget">Presupuesto estimado</label>
+                <select id="budget" name="budget">
+                  <option value="" selected>Selecciona un rango (opcional)...</option>
+                  <option value="Plan por Suscripción">Plan por Suscripción Mensual</option>
+                  <option value="Proyecto Inicial">Proyecto Inicial (Informativo / Landing)</option>
+                  <option value="Proyecto Profesional">Proyecto Profesional (Corporativo / Catálogo)</option>
+                  <option value="Proyecto Avanzado">Proyecto Avanzado (Plataforma / Integraciones)</option>
+                  <option value="A la Medida / Por definir">A la Medida / Consulta inicial</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="subject">Asunto *</label>
+              <input type="text" id="subject" name="subject" required minlength="3" maxlength="120"
+                placeholder="Ej: Auditoría o nuevo sitio">
+            </div>
+            <div class="form-group">
+              <div class="form-label-row">
+                <label for="message">Mensaje o detalles del proyecto *</label>
+                <span class="char-counter" id="messageCounter" aria-live="polite">0 / 250 palabras</span>
+              </div>
+              <textarea id="message" name="message" required minlength="10" maxlength="1500" rows="4"
+                placeholder="Describe brevemente qué necesitas resolver o construir..."></textarea>
+            </div>
+            <!-- Aceptación obligatoria del Aviso de Privacidad -->
+            <div class="form-group form-privacy">
+              <label class="checkbox-label">
+                <input type="checkbox" id="privacyConsent" name="privacyConsent" required>
+                <span>He leído y acepto el <a href="avisoPrivacidad.html" target="_blank" rel="noopener">Aviso de
+                    Privacidad</a>.</span>
+              </label>
+            </div>
+            <!-- Mensaje de estado tras envío -->
+            <div id="formStatus" class="form-status" role="status" aria-live="polite" style="display: none;"></div>
+            <button type="submit" class="form-submit" id="submitBtn">Enviar mensaje</button>
+          </form>
+        </div>
+        <!-- Columna 2: Información de contacto directo + Mapa de Tijuana -->
+        <div class="contact-side">
+          <div class="contact-info-card">
+            <div>
+              <p class="contact-intro">Escríbenos directo:</p>
+              <a href="mailto:contacto@lessso.com" class="contact-email">contacto@lessso.com</a>
+              <div class="contact-details">
+                <div class="contact-detail-item">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg>
+                  <div class="contact-detail-text">
+                    <strong>Ubicación</strong>
+                    <span>Tijuana, Baja California, México</span>
+                  </div>
+                </div>
+                <div class="contact-detail-item">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path
+                      d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                  </svg>
+                  <div class="contact-detail-text">
+                    <strong>Teléfono / WhatsApp</strong>
+                    <a href="https://wa.me/526642276711" target="_blank" rel="noopener">+52 (664) 227-6711</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <p class="contact-note">Te respondemos en un máximo de 24 horas, la consulta inicial es sin costo.</p>
+              <!-- Canales directos de contacto (solo iconos) -->
+              <div class="social-links">
+                <!-- LinkedIn -->
+                <a href="https://www.linkedin.com/company/lessso/" class="social-icon" aria-label="LinkedIn"
+                  title="LinkedIn" target="_blank" rel="noopener">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                      d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                  </svg>
+                </a>
+                <!-- GitHub -->
+                <a href="https://github.com/JuanRomeroHDZ/LESSSO_WEB_PAGE" class="social-icon" aria-label="GitHub"
+                  title="GitHub" target="_blank" rel="noopener">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                      d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v 3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                  </svg>
+                </a>
+                <!-- Email -->
+                <a href="mailto:contacto@lessso.com" class="social-icon" aria-label="Email" title="Correo Electrónico">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                    <polyline points="22,6 12,13 2,6" />
+                  </svg>
+                </a>
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/lessso_mx" class="social-icon" aria-label="Instagram"
+                  title="Instagram" target="_blank" rel="noopener">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                  </svg>
+                </a>
+                <!-- TikTok -->
+                <a href="https://tiktok.com/@lessso.com" class="social-icon" aria-label="TikTok" title="TikTok"
+                  target="_blank" rel="noopener">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                      d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.24 1.07-.14 1.61.24 1.16 1.18 2.09 2.35 2.3 1.05.21 2.21-.12 2.97-.87.53-.49.88-1.17.95-1.89.05-1.99.03-3.99.03-5.99V0h.01z" />
+                  </svg>
+                </a>
+                <!-- WhatsApp -->
+                <a href="https://wa.me/526642276711" class="social-icon" aria-label="WhatsApp" title="WhatsApp"
+                  target="_blank" rel="noopener">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path
+                      d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+                    <path d="M8.5 10.5h7M8.5 13.5h4" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="contact-map-wrapper">
+            <div class="contact-map">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d430922.0220225211!2d-117.27170073493598!3d32.457220666501684!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80d9390226587bd3%3A0x14724bafa4e62456!2sTijuana%2C%20B.C.!5e0!3m2!1ses-419!2smx!4v1791306742167!5m2!1ses-419!2smx"
+                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="strict-origin-when-cross-origin"
+                title="Ubicación de LESSSO en Tijuana, Baja California"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 <strong>LESSSO</strong>. Todos los derechos reservados.</p>
+    <p style="margin-top: 0.75rem; font-size: 0.85rem;">
+      <a href="avisoPrivacidad.html" style="color: inherit;">Aviso de Privacidad</a>
+      &nbsp;·&nbsp;
+      <a href="avisoTerminosCondiciones.html" style="color: inherit;">Términos y Condiciones</a>
+      &nbsp;·&nbsp;
+      <a href="avisoPreferenciasPrivacidad.html" style="color: inherit;">Preferencias de Privacidad</a>
+      &nbsp;·&nbsp;
+      <a href="avisoCookies.html" style="color: inherit;">Aviso de Cookies</a>
+    </p>
+  </footer>
+  <!-- Botón flotante de WhatsApp -->
+  <a class="fab-contact" href="https://wa.me/526642276711" target="_blank" rel="noopener"
+    aria-label="Contactar por WhatsApp" title="Contactar por WhatsApp">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+      stroke-linejoin="round">
+      <path
+        d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+      <path d="M8.5 10.5h7M8.5 13.5h4" />
+    </svg>
+  </a>
+  <!-- Dock de Estado y Privacidad (Consentimiento de Cookies) -->
+  <aside class="site-notice-dock" id="siteNoticeDock" aria-label="Aviso de privacidad y cookies" role="dialog">
+    <div class="dock-header">
+      <h3 id="dockTitle"><svg class="dock-shield-icon" viewBox="0 0 24 24" width="16" height="16" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
+          style="vertical-align: -2px; margin-right: 6px;">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        </svg>Privacidad & Seguridad</h3>
+      <button type="button" class="dock-close" id="dockCloseBtn" aria-label="Cerrar">&times;</button>
+    </div>
+    <div id="standardNoticeBox">
+      <p>Utilizamos cookies técnicas esenciales y analítica anónima para evaluar rendimiento y mejorar el servicio.
+        Puedes aceptarlas, rechazarlas o configurar tus opciones en <a
+          href="avisoPreferenciasPrivacidad.html">Preferencias de Privacidad</a>. Consulta nuestro <a
+          href="avisoPrivacidad.html">Aviso de Privacidad</a>.</p>
+      <div class="dock-actions">
+        <button type="button" class="btn-dock-accept" id="dockAcceptBtn">Aceptar analítica</button>
+        <button type="button" class="btn-dock-reject" id="dockRejectBtn">Solo esenciales</button>
+      </div>
+    </div>
+  </aside>
 </body>
+
 </html>

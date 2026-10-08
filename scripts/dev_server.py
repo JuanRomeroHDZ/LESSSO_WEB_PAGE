@@ -16,7 +16,7 @@ from pathlib import Path
 # Importar la función push_to_twenty del sincronizador
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE_DIR / "scripts"))
-from sync_twenty import push_to_twenty, load_env
+from sync_twenty import push_to_twenty, load_env, sanitize_text
 
 PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 8080
 ENV_FILE = BASE_DIR / ".env"
@@ -31,18 +31,23 @@ class DevHandler(http.server.SimpleHTTPRequestHandler):
         post_data = self.rfile.read(content_length).decode("utf-8")
         parsed = urllib.parse.parse_qs(post_data)
 
-        # Aplanar campos del formulario
-        lead = {k: v[0] if v else "" for k, v in parsed.items()}
+        # Aplanar campos del formulario y sanitizar entradas
+        lead = {k: sanitize_text(v[0]) if v else "" for k, v in parsed.items()}
+
+        # Combinar Lada con teléfono si viene separado
+        lada = lead.pop("phoneLada", "").strip()
+        if lada and lead.get("phone") and not lead["phone"].startswith("+"):
+            lead["phone"] = f"{lada} {lead['phone']}"
 
         env = load_env(ENV_FILE)
         twenty_url = os.environ.get("TWENTY_API_URL", env.get("TWENTY_API_URL", "http://localhost:3000"))
         twenty_key = os.environ.get("TWENTY_API_KEY", env.get("TWENTY_API_KEY"))
 
-        print(f"\n📨 [LOCAL DEV SERVER] Recibido mensaje de formulario de: {lead.get('name')} ({lead.get('email')})")
-        print(f"   Servicio: {lead.get('service')} | Presupuesto: {lead.get('budget')}")
+        print(f"\n[LOCAL DEV SERVER] Recibido mensaje de formulario de: {lead.get('name')} ({lead.get('email')})")
+        print(f"   Teléfono: {lead.get('phone')} | Servicio: {lead.get('service')} | Presupuesto: {lead.get('budget')}")
 
         if not twenty_key:
-            print("   ❌ Error: No se encontró TWENTY_API_KEY en .env\n")
+            print("   [ERROR] No se encontró TWENTY_API_KEY en .env\n")
             self.send_response(500)
             self.send_header("Content-Type", "application/json; charset=utf-8")
             self.send_header("Access-Control-Allow-Origin", "*")
@@ -53,15 +58,15 @@ class DevHandler(http.server.SimpleHTTPRequestHandler):
 
         success = push_to_twenty(lead, twenty_url, twenty_key)
         if success:
-            print(f"   ✅ ¡Insertado con éxito en Twenty CRM ({twenty_url})!\n")
+            print(f"   [OK] Insertado con éxito en Twenty CRM ({twenty_url})\n")
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
             self.send_header("Access-Control-Allow-Origin", "*")
             self.end_headers()
-            ok_body = json.dumps({"ok": True, "message": "Recibido e insertado en Twenty CRM con éxito."})
+            ok_body = json.dumps({"ok": True, "message": "Mensaje recibido, nos comunicaremos contigo dentro de 24 horas, gracias!"})
             self.wfile.write(ok_body.encode("utf-8"))
         else:
-            print(f"   ❌ Falló la inserción en Twenty CRM ({twenty_url}).\n")
+            print(f"   [ERROR] Falló la inserción en Twenty CRM ({twenty_url})\n")
             self.send_response(502)
             self.send_header("Content-Type", "application/json; charset=utf-8")
             self.send_header("Access-Control-Allow-Origin", "*")
@@ -73,8 +78,8 @@ def run():
     socketserver.TCPServer.allow_reuse_address = True
     with socketserver.TCPServer(("", PORT), DevHandler) as httpd:
         print(f"============================================================")
-        print(f"🚀 Servidor de desarrollo LESSSO corriendo en http://localhost:{PORT}")
-        print(f"🔗 Conectado a Twenty CRM en tiempo real")
+        print(f"Servidor de desarrollo LESSSO corriendo en http://localhost:{PORT}")
+        print(f"Conectado a Twenty CRM en tiempo real")
         print(f"Presiona Ctrl + C para detenerlo")
         print(f"============================================================")
         try:
