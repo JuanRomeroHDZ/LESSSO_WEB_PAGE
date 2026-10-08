@@ -60,7 +60,8 @@ export function initHeaderScroll(header, topThreshold = 20) {
 
   // Control interactivo del menú móvil (A11y y Progressive Enhancement)
   const navToggle = header.querySelector('#navToggle, .nav-toggle');
-  if (navToggle) {
+  if (navToggle && !navToggle.__lesssoNavAttached) {
+    navToggle.__lesssoNavAttached = true;
     const closeNav = () => {
       header.classList.remove('is-nav-open');
       navToggle.setAttribute('aria-expanded', 'false');
@@ -70,6 +71,9 @@ export function initHeaderScroll(header, topThreshold = 20) {
     navToggle.addEventListener('click', (e) => {
       e.stopPropagation();
       const isOpen = header.classList.toggle('is-nav-open');
+      if (isOpen) {
+        header.classList.remove('header--hidden');
+      }
       navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
       navToggle.setAttribute('aria-label', isOpen ? 'Cerrar menú' : 'Abrir menú');
     });

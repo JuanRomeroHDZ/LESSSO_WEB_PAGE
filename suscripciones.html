@@ -170,10 +170,14 @@
         }, { passive: true });
 
         var navToggle = document.getElementById('navToggle');
-        if (navToggle) {
+        if (navToggle && !navToggle.__lesssoNavAttached) {
+          navToggle.__lesssoNavAttached = true;
           navToggle.addEventListener('click', function (e) {
             e.stopPropagation();
             var isOpen = header.classList.toggle('is-nav-open');
+            if (isOpen) {
+              header.classList.remove('header--hidden');
+            }
             navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
             navToggle.setAttribute('aria-label', isOpen ? 'Cerrar menú' : 'Abrir menú');
           });
@@ -183,6 +187,7 @@
             links[j].addEventListener('click', function () {
               header.classList.remove('is-nav-open');
               navToggle.setAttribute('aria-expanded', 'false');
+              navToggle.setAttribute('aria-label', 'Abrir menú');
             });
           }
 
@@ -190,6 +195,7 @@
             if (!header.contains(e.target) && header.classList.contains('is-nav-open')) {
               header.classList.remove('is-nav-open');
               navToggle.setAttribute('aria-expanded', 'false');
+              navToggle.setAttribute('aria-label', 'Abrir menú');
             }
           });
 
@@ -197,6 +203,7 @@
             if (e.key === 'Escape' && header.classList.contains('is-nav-open')) {
               header.classList.remove('is-nav-open');
               navToggle.setAttribute('aria-expanded', 'false');
+              navToggle.setAttribute('aria-label', 'Abrir menú');
               navToggle.focus();
             }
           });
